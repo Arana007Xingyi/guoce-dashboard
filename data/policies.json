@@ -1,0 +1,292 @@
+{
+  "updated_at": "2026-11-10T02:19:27.364153+00:00",
+  "sources_ok": [
+    {
+      "source": "生态环境部·中央文件",
+      "count": 14
+    },
+    {
+      "source": "生态环境部·国务院文件",
+      "count": 11
+    }
+  ],
+  "sources_failed": [],
+  "items": [
+    {
+      "id": "e1790193466931bb",
+      "title": "事业单位登记管理条例（中华人民共和国国务院令 第849号）",
+      "date": "2026-10-26",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261026_1184656.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "dd0ceafda91626a8",
+      "title": "国务院办公厅关于适应人工智能技术发展助力构建就业友好型发展方式的意见",
+      "date": "2026-10-24",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261024_1184583.shtml",
+      "topics": [
+        "人工智能",
+        "消费民生"
+      ]
+    },
+    {
+      "id": "70db797037fbf07c",
+      "title": "中共中央办公厅 国务院办公厅关于推动科技创新和产业创新深度融合的意见",
+      "date": "2026-10-22",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202610/t20261022_1184320.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "355172430ef17b76",
+      "title": "中共中央 国务院关于发展新质生产力的意见",
+      "date": "2026-10-14",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202610/t20261014_1182955.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "1dcdebd9560a80b3",
+      "title": "碳排放权交易管理暂行条例",
+      "date": "2026-10-10",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261010_1175967.shtml",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "dad83953a0f3c560",
+      "title": "南水北调工程供用水管理条例",
+      "date": "2026-10-09",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261009_1175909.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "f5df87760b4f9dd3",
+      "title": "中共中央办公厅 国务院办公厅印发《文化遗产保护传承“十五五”规划》",
+      "date": "2026-09-30",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202610/t20261014_1182964.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "28459fc0240b2edb",
+      "title": "中华人民共和国审计法实施条例（中华人民共和国国务院令 第847号）",
+      "date": "2026-09-29",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260929_1175434.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "0d909fe23698bcaa",
+      "title": "国务院办公厅转发文化和旅游部等部门《关于促进房车消费的若干措施》的通知",
+      "date": "2026-09-20",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260920_1166834.shtml",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "97bcbc255a8b5c82",
+      "title": "中共中央办公厅 国务院办公厅 中央军委办公厅印发《退役军人服务和保障“十五五”规划》",
+      "date": "2026-09-18",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202609/t20260918_1166753.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "686112922e8f1757",
+      "title": "国务院办公厅关于进一步加强烟花爆竹全链条安全监管的意见",
+      "date": "2026-09-18",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260918_1166754.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "0a7c37acdae5b808",
+      "title": "市场监督管理所条例（中华人民共和国国务院令 第846号）",
+      "date": "2026-09-11",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260911_1165970.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "8197ac724ddba4be",
+      "title": "国务院办公厅关于加强中小企业回款难问题治理有关工作的通知",
+      "date": "2026-09-10",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260910_1165789.shtml",
+      "topics": [
+        "民营经济"
+      ]
+    },
+    {
+      "id": "a83dbe09a48aa5c9",
+      "title": "电力安全事故应急处置和调查处理条例（中华人民共和国国务院令 第845号）",
+      "date": "2026-09-07",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260907_1165234.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "ce6682662b69c69c",
+      "title": "中共中央办公厅 国务院办公厅印发《党政领导干部生态环境损害责任追究办法》",
+      "date": "2026-08-25",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202608/t20260825_1164514.shtml",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "f39de3da875cdcfd",
+      "title": "国务院关于修改《住房公积金管理条例》的决定（中华人民共和国国务院令 第844号）",
+      "date": "2026-08-20",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202608/t20260820_1164286.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "9db59272a2b16b59",
+      "title": "中共中央 国务院转发《中央宣传部、司法部关于开展法治宣传教育的第九个五年规划（2026－2030年）》",
+      "date": "2026-07-30",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202607/t20260730_1163132.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "fe5769ac01d8885f",
+      "title": "中共中央 国务院印发《关于加强新时代社会工作的意见》",
+      "date": "2026-07-23",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202607/t20260730_1163128.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "75b7e6afb249c93b",
+      "title": "中共中央办公厅 国务院办公厅关于完善自然资源资产管理制度体系的意见",
+      "date": "2026-07-14",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202607/t20260714_1161683.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "dc5f8ca390d20158",
+      "title": "中共中央办公厅、国务院办公厅印发《关于用好乡镇（街道）履行职责事项清单的具体措施》",
+      "date": "2026-05-20",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202605/t20260520_1154785.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "9540668953b8fd7c",
+      "title": "中共中央办公厅 国务院办公厅印发《美丽中国建设成效考核办法》",
+      "date": "2026-05-07",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202605/t20260507_1151208.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "c20e907f860ef021",
+      "title": "中共中央办公厅 国务院办公厅关于加强新就业群体服务管理的意见",
+      "date": "2026-05-07",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202605/t20260507_1151207.shtml",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "28416604f63f22f7",
+      "title": "中共中央办公厅 国务院办公厅印发《碳达峰碳中和综合评价考核办法》",
+      "date": "2026-04-23",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202604/t20260423_1149959.shtml",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "238d3227216f7ba5",
+      "title": "中共中央办公厅 国务院办公厅关于更高水平更高质量做好节能降碳工作的意见",
+      "date": "2026-04-22",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202604/t20260422_1149910.shtml",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "aad5884d730b5104",
+      "title": "中共中央办公厅 国务院办公厅关于推动行业协会商会深化改革的意见",
+      "date": "2026-04-14",
+      "source": "生态环境部·中央文件",
+      "scope": "中央",
+      "url": "https://www.mee.gov.cn/zcwj/zyygwj/202604/t20260414_1148851.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    }
+  ]
+}
