@@ -115,8 +115,9 @@ def main():
 
     count = 0
     errors = 0
+    attempted = 0
     for p in policies:
-        if count >= MAX_PER_RUN:
+        if attempted >= MAX_PER_RUN:
             break
         content = p.get("content", "")
         if p.get("content_status") != "success" or len(content) < 300:
@@ -127,6 +128,7 @@ def main():
         content_hash = digest(p)
         if existing.get(pid, {}).get("content_hash") == content_hash:
             continue
+        attempted += 1
         try:
             analysis = analyze(p, key)
             existing[pid] = {
@@ -148,7 +150,7 @@ def main():
                 break
             print("分析失败:", str(p.get("title", ""))[:50], type(exc).__name__)
         time.sleep(1)
-    print(f"本轮分析完成：新增 {count} 条；失败 {errors} 条；累计 {len(existing)} 条")
+    print(f"本轮分析完成：尝试 {attempted} 条；新增 {count} 条；失败 {errors} 条；累计 {len(existing)} 条")
 
 if __name__ == "__main__":
     main()
