@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-10T07:03:45.462762+00:00",
+  "updated_at": "2026-11-10T07:35:16.006313+00:00",
   "sources_ok": [
     {
       "source": "生态环境部·中央文件",
@@ -7,20 +7,182 @@
     },
     {
       "source": "生态环境部·国务院文件",
-      "count": 11
+      "count": 13
+    },
+    {
+      "source": "国务院·政策文件",
+      "count": 12
+    },
+    {
+      "source": "国家发展改革委·政策通知",
+      "count": 24
+    },
+    {
+      "source": "国家发展改革委·规章",
+      "count": 23
     }
   ],
   "sources_failed": [
     {
-      "source": "国务院·政策文件",
-      "error": "未识别到带日期的政策"
-    },
-    {
-      "source": "工业和信息化部·政策文件",
-      "error": "未识别到带日期的政策"
+      "source": "工业和信息化部·政策通知",
+      "error": "未识别到符合条件且带日期的政策"
     }
   ],
   "items": [
+    {
+      "id": "b87b277d5cb2c5b6",
+      "title": "中医药传统知识保护条例",
+      "date": "2026-11-09",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202611/content_7085591.htm",
+      "topics": [
+        "医疗健康"
+      ]
+    },
+    {
+      "id": "f1e0e4c1cb1689b8",
+      "title": "关于印发《全国守信激励措施基础清单(2026年版)》的通知(发改财金〔2026〕1593号)",
+      "date": "2026-11-09",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202611/t20261109_1408709.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "f55bcb09f8721ec7",
+      "title": "中共中央发出通知 部署党的二十一大代表选举工作",
+      "date": "2026-11-07",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202611/content_7085529.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "3b818b069baafb10",
+      "title": "国务院关于辽宁等9省区国家级自然保护区和国家级风景名胜区整合优化方案的批复",
+      "date": "2026-11-05",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202611/content_7085109.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "26b75628700710d0",
+      "title": "国务院办公厅关于2027年部分节假日安排的通知",
+      "date": "2026-11-05",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202611/content_7085101.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "9560f8d913b62c96",
+      "title": "国务院关于修改和废止部分行政法规的决定",
+      "date": "2026-11-05",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202611/content_7085098.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "1f239be9e853d762",
+      "title": "国家发展改革委有关负责同志就《实施全面节约战略行动方案》答记者问",
+      "date": "2026-11-04",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202611/content_7085043.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "640d711f0b58fc50",
+      "title": "关于印发《实施全面节约战略行动方案》的通知(发改环资〔2026〕1424号)",
+      "date": "2026-11-04",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202611/t20261103_1408504.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "77681f61f5472493",
+      "title": "关于印发《生态产品总值核算规范》的通知(发改环资〔2026〕1487号)",
+      "date": "2026-11-04",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202611/t20261104_1408591.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "f521fa6d1cc31185",
+      "title": "关于印发《招标投标领域公共信用信息目录(2026年版)》的通知(发改法规〔2026〕1528号)",
+      "date": "2026-11-04",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202611/t20261104_1408585.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "f0c5e6fd5d6e838b",
+      "title": "中共中央关于持之以恒推进全面从严治党若干重大问题的决定",
+      "date": "2026-11-01",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202611/content_7084690.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "b66e8bda3566864b",
+      "title": "统筹消费投资 畅通经济循环——从“十五五”专项规划看扩大内需着力点",
+      "date": "2026-11-01",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202611/content_7084706.htm",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "7f7d9266369bdf53",
+      "title": "关于加强消费基础设施建设 促进消费投资良性互动的指导意见(发改就业〔2026〕1508号)",
+      "date": "2026-10-30",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202610/t20261030_1408459.html",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "e3ca53910c39fff1",
+      "title": "农业农村部就《全国农产品品质提升“十五五”规划》答记者问",
+      "date": "2026-10-28",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202610/content_7084405.htm",
+      "topics": [
+        "现代农业"
+      ]
+    },
     {
       "id": "e1790193466931bb",
       "title": "事业单位登记管理条例（中华人民共和国国务院令 第849号）",
@@ -28,6 +190,17 @@
       "source": "生态环境部·国务院文件",
       "scope": "国务院",
       "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261026_1184656.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "9fe0f334eee5a507",
+      "title": "事业单位登记管理条例",
+      "date": "2026-10-26",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202610/content_7084279.htm",
       "topics": [
         "其他政策"
       ]
@@ -45,6 +218,29 @@
       ]
     },
     {
+      "id": "bd1e1bd350cbb924",
+      "title": "国务院办公厅关于适应人工智能技术发展助力构建就业友好型发展方式的意见",
+      "date": "2026-10-23",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/content/202610/content_7084107.htm",
+      "topics": [
+        "人工智能",
+        "消费民生"
+      ]
+    },
+    {
+      "id": "4d2a6cd35485507f",
+      "title": "《能源保供中长期合同管理办法(试行)》 2026年第50号令",
+      "date": "2026-10-23",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202610/t20261023_1408364.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
       "id": "70db797037fbf07c",
       "title": "中共中央办公厅 国务院办公厅关于推动科技创新和产业创新深度融合的意见",
       "date": "2026-10-22",
@@ -52,7 +248,40 @@
       "scope": "中央",
       "url": "https://www.mee.gov.cn/zcwj/zyygwj/202610/t20261022_1184320.shtml",
       "topics": [
+        "科技创新"
+      ]
+    },
+    {
+      "id": "85f7ded1a5083ea2",
+      "title": "《对外投资管理办法》 2026年第49号令",
+      "date": "2026-10-22",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202610/t20261022_1408298.html",
+      "topics": [
         "其他政策"
+      ]
+    },
+    {
+      "id": "81c41f422e6d3c16",
+      "title": "中央编办、司法部负责人就《事业单位登记管理条例》答记者问",
+      "date": "2026-10-17",
+      "source": "国务院·政策文件",
+      "scope": "国务院",
+      "url": "https://www.gov.cn/zhengce/202610/content_7084292.htm",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "5b0dbb35504c2aba",
+      "title": "关于进一步完善价格形成机制 推动普惠养老服务提质扩面的指导意见(发改价格〔2026〕1476号)",
+      "date": "2026-10-16",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202610/t20261016_1408179.html",
+      "topics": [
+        "医疗健康"
       ]
     },
     {
@@ -63,7 +292,7 @@
       "scope": "中央",
       "url": "https://www.mee.gov.cn/zcwj/zyygwj/202610/t20261014_1182955.shtml",
       "topics": [
-        "其他政策"
+        "科技创新"
       ]
     },
     {
@@ -78,12 +307,34 @@
       ]
     },
     {
+      "id": "01057afe65376ea3",
+      "title": "消耗臭氧层物质管理条例",
+      "date": "2026-10-10",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261010_1175970.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
       "id": "dad83953a0f3c560",
       "title": "南水北调工程供用水管理条例",
       "date": "2026-10-09",
       "source": "生态环境部·国务院文件",
       "scope": "国务院",
       "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261009_1175909.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "df947bf44cfe48c6",
+      "title": "城镇排水与污水处理条例",
+      "date": "2026-10-09",
+      "source": "生态环境部·国务院文件",
+      "scope": "国务院",
+      "url": "https://www.mee.gov.cn/zcwj/gwywj/202610/t20261009_1175944.shtml",
       "topics": [
         "其他政策"
       ]
@@ -106,6 +357,39 @@
       "source": "生态环境部·国务院文件",
       "scope": "国务院",
       "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260929_1175434.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "2891c49b05ab7df5",
+      "title": "《水电站大坝运行安全监督管理规定》 2026第47号令",
+      "date": "2026-09-28",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202609/t20260928_1407859.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "b17ed5df4f24b5f7",
+      "title": "关于印发浙江高质量发展建设共同富裕示范区经验做法(第三批)的通知(发改办就业〔2026〕610号)",
+      "date": "2026-09-21",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202609/t20260921_1407748.html",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "147b1592cc198457",
+      "title": "《粮油仓储物流设施保护办法》 2026年第46号",
+      "date": "2026-09-21",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202609/t20260921_1407733.html",
       "topics": [
         "其他政策"
       ]
@@ -144,6 +428,17 @@
       ]
     },
     {
+      "id": "e40f700cf9a12283",
+      "title": "《人民防空工程开发利用和维护管理办法》 2026年第48号令",
+      "date": "2026-09-17",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202609/t20260917_1407686.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
       "id": "0a7c37acdae5b808",
       "title": "市场监督管理所条例（中华人民共和国国务院令 第846号）",
       "date": "2026-09-11",
@@ -166,12 +461,34 @@
       ]
     },
     {
+      "id": "58f2af7023af2f79",
+      "title": "关于重要工业品低价无序竞争成本核算有关事项的通知(发改价格〔2026〕1303号)",
+      "date": "2026-09-10",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202609/t20260910_1407524.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
       "id": "a83dbe09a48aa5c9",
       "title": "电力安全事故应急处置和调查处理条例（中华人民共和国国务院令 第845号）",
       "date": "2026-09-07",
       "source": "生态环境部·国务院文件",
       "scope": "国务院",
       "url": "https://www.mee.gov.cn/zcwj/gwywj/202609/t20260907_1165234.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "b13bc41860d37fa2",
+      "title": "关于印发《物流网建设实施方案》的通知(发改经贸〔2026〕1241号)",
+      "date": "2026-08-27",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260828_1407232.html",
       "topics": [
         "其他政策"
       ]
@@ -194,6 +511,72 @@
       "source": "生态环境部·国务院文件",
       "scope": "国务院",
       "url": "https://www.mee.gov.cn/zcwj/gwywj/202608/t20260820_1164286.shtml",
+      "topics": [
+        "消费民生"
+      ]
+    },
+    {
+      "id": "1732ff4bc455d168",
+      "title": "关于印发第五批全国社会信用体系建设示范区名单的通知(发改办财金〔2026〕589号)",
+      "date": "2026-08-20",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260820_1407094.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "6a86dad64a7e42e9",
+      "title": "关于印发《石油天然气发展“十五五”规划》的通知(发改能源〔2026〕1055号)",
+      "date": "2026-08-17",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260817_1407041.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "232f050f893900b7",
+      "title": "关于印发《煤炭工业发展“十五五”规划》的通知(发改能源〔2026〕979号)",
+      "date": "2026-08-10",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260810_1406952.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "53a2e3c87333577f",
+      "title": "关于开展2026年全国生态日活动的通知(发改办环资〔2026〕520号)",
+      "date": "2026-08-03",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260803_1406880.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "bc620246f83149f0",
+      "title": "关于印发《新型电力系统建设“十五五”规划》的通知(发改能源〔2026〕942号)",
+      "date": "2026-08-03",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202608/t20260803_1406883.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "8d44c9a59df50366",
+      "title": "《国家发展改革委关于修改、废止一批规章和行政规范性文件的决定》 2026年第45号令",
+      "date": "2026-07-31",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202607/t20260731_1406815.html",
       "topics": [
         "其他政策"
       ]
@@ -221,6 +604,61 @@
       ]
     },
     {
+      "id": "71c7e16deb159492",
+      "title": "关于印发《可再生能源发展“十五五”规划》的通知(发改能源〔2026〕1067号)",
+      "date": "2026-07-23",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202607/t20260723_1406641.html",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "15c2beac5e700efb",
+      "title": "关于印发贯彻实施民营经济促进法典型案例(第二批)的通知(发改民营〔2026〕1093号)",
+      "date": "2026-07-22",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202607/t20260722_1406623.html",
+      "topics": [
+        "民营经济"
+      ]
+    },
+    {
+      "id": "27228760f1d5a585",
+      "title": "《招标投标领域信用管理暂行办法》 2026年第44号令",
+      "date": "2026-07-17",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202607/t20260716_1406530.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "19b3afbc73521db7",
+      "title": "关于印发《海水淡化产业发展行动方案》的通知(发改环资〔2026〕1062号)",
+      "date": "2026-07-16",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202607/t20260716_1406539.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "c54a88e13eecb767",
+      "title": "《公共资源交易中心招标投标现场管理暂行办法》 2026年第43号令",
+      "date": "2026-07-15",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202607/t20260714_1406507.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
       "id": "75b7e6afb249c93b",
       "title": "中共中央办公厅 国务院办公厅关于完善自然资源资产管理制度体系的意见",
       "date": "2026-07-14",
@@ -229,6 +667,95 @@
       "url": "https://www.mee.gov.cn/zcwj/zyygwj/202607/t20260714_1161683.shtml",
       "topics": [
         "其他政策"
+      ]
+    },
+    {
+      "id": "41549e387ee8ea43",
+      "title": "关于第四监管周期省级电网输配电价、区域电网输电价格及有关事项的通知(发改价格〔2026〕1077号)",
+      "date": "2026-07-10",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202607/t20260710_1406431.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "803a72cc7fc56269",
+      "title": "关于印发《新型能源体系建设“十五五”规划》的通知(发改能源〔2026〕884号)",
+      "date": "2026-06-25",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260625_1406079.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "3d010f7b1f669df9",
+      "title": "《可再生能源消费最低比重目标和可再生能源电力消纳责任权重制度实施办法》 2026年第42号令",
+      "date": "2026-06-22",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202606/t20260612_1405837.html",
+      "topics": [
+        "绿色能源",
+        "消费民生"
+      ]
+    },
+    {
+      "id": "e9562fa8a0a1aa1a",
+      "title": "关于开展重点行业节能降碳改造攻坚三年行动的通知(发改环资〔2026〕698号)",
+      "date": "2026-06-15",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260615_1405852.html",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "3111cdb5b687b95d",
+      "title": "关于印发《生态保护修复领域中央预算内投资专项管理办法》的通知(发改农经〔2026〕713号)",
+      "date": "2026-06-08",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260608_1405753.html",
+      "topics": [
+        "财政金融"
+      ]
+    },
+    {
+      "id": "022cb0b5169f49eb",
+      "title": "关于总结推广上海浦东新区、深圳、厦门综合改革试点创新举措和经验做法的通知(发改体改〔2026〕695号)",
+      "date": "2026-06-05",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260605_1405707.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "8d30d3a1ea83625a",
+      "title": "关于在云霄直流开展输电权市场化交易的通知(发改体改〔2026〕734号)",
+      "date": "2026-06-02",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260602_1405666.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "7f15467602ca23a9",
+      "title": "关于印发《非化石能源电力消费核算指南(试行)》的通知(发改能源〔2026〕622号)",
+      "date": "2026-06-01",
+      "source": "国家发展改革委·政策通知",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202606/t20260601_1405606.html",
+      "topics": [
+        "消费民生"
       ]
     },
     {
@@ -272,7 +799,7 @@
       "scope": "中央",
       "url": "https://www.mee.gov.cn/zcwj/zyygwj/202604/t20260423_1149959.shtml",
       "topics": [
-        "绿色能源"
+        "其他政策"
       ]
     },
     {
@@ -293,6 +820,160 @@
       "source": "生态环境部·中央文件",
       "scope": "中央",
       "url": "https://www.mee.gov.cn/zcwj/zyygwj/202604/t20260414_1148851.shtml",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "7efb8a9cf54f2ebc",
+      "title": "《电力重大事故隐患判定标准及治理监督管理规定》 2026年第41号令",
+      "date": "2026-04-09",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202604/t20260409_1404577.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "c84593ee24a37586",
+      "title": "《粮食流通行政执法办法》 2026年第40号令",
+      "date": "2026-02-11",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202602/t20260211_1403694.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "fcf2ba90d737274f",
+      "title": "《国家发展改革委企业技术中心认定管理办法》 2025年第39号令",
+      "date": "2026-01-23",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202601/t20260123_1403413.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "4da3606843ae3396",
+      "title": "《中央预算内投资补助和贴息项目管理办法》 2025年第38号令",
+      "date": "2026-01-09",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202601/t20260109_1403140.html",
+      "topics": [
+        "财政金融"
+      ]
+    },
+    {
+      "id": "6c34f73a97ef5919",
+      "title": "《信用修复管理办法》 2025年第36号令",
+      "date": "2025-11-26",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202511/t20251126_1401911.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "81299a5ceffeb2c2",
+      "title": "《石油天然气基础设施规划建设与运营管理办法》 2025年第35号令",
+      "date": "2025-11-13",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202511/t20251113_1401596.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "57544a6e97b70f68",
+      "title": "《工程建设项目招标代理机构管理暂行办法》 2025年第34号令",
+      "date": "2025-10-30",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202510/t20251030_1401277.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "6eab8600e55cad0c",
+      "title": "《油气管网设施公平开放监管办法》 2025年第33号令",
+      "date": "2025-10-16",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202510/t20251015_1400985.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "13a9be8a7208fd8c",
+      "title": "《政府粮食储备安全风险事项报告管理办法（试行）》 2025年第32号令",
+      "date": "2025-10-09",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202509/t20250930_1400839.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "e4891665b5c3fd7d",
+      "title": "《固定资产投资项目节能审查和碳排放评价办法》 2025年第31号令",
+      "date": "2025-07-25",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202507/t20250725_1399391.html",
+      "topics": [
+        "绿色能源"
+      ]
+    },
+    {
+      "id": "875517c58a421c50",
+      "title": "《承装（修、试）电力设施许可证管理办法》 2025年第30号令",
+      "date": "2025-05-09",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202505/t20250509_1397646.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "87e0435d75ddbece",
+      "title": "《煤炭矿区总体规划管理规定》 2024年第29号令",
+      "date": "2024-12-23",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202412/t20241223_1395117.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "28dfbe7b3f845ee4",
+      "title": "《电力监控系统安全防护规定》 2024年第27号令",
+      "date": "2024-12-11",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202412/t20241211_1394960.html",
+      "topics": [
+        "其他政策"
+      ]
+    },
+    {
+      "id": "f50989379500a722",
+      "title": "《人民防空防护设备管理办法》 2024年第24号令",
+      "date": "2024-10-21",
+      "source": "国家发展改革委·规章",
+      "scope": "部委",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/fzggwl/202410/t20241021_1393729.html",
       "topics": [
         "其他政策"
       ]
