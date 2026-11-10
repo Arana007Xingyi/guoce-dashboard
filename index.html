@@ -231,6 +231,42 @@ select { flex: 1; min-width: 130px; }
   .stat strong { font-size: 23px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
+
+/* 政策正文阅读窗口 */
+.reader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, .78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.reader-box {
+  width: min(900px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #192338;
+  border: 1px solid #405473;
+  border-radius: 14px;
+  padding: 25px;
+}
+.reader-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.reader-content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 2;
+  font-size: 15px;
+  color: #e9eef8;
+  margin-top: 20px;
+}
+  
 </style>
 </head>
 <body>
@@ -446,6 +482,26 @@ select { flex: 1; min-width: 130px; }
 </main>
 </div>
 
+<div id="policyReader" class="reader-overlay hidden"
+     role="dialog" aria-modal="true"
+     aria-labelledby="readerTitle">
+  <div class="reader-box">
+    <div class="reader-head">
+      <div>
+        <h2 id="readerTitle">政策正文</h2>
+        <p id="readerMeta" class="muted"></p>
+      </div>
+      <button class="button secondary"
+              id="closeReader">关闭</button>
+    </div>
+    <div id="readerContent" class="reader-content"></div>
+    <p>
+      <a id="readerLink" href="#" target="_blank"
+         rel="noopener noreferrer">查看官方原文 ↗</a>
+    </p>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -521,6 +577,12 @@ function policyHtml(p) {
         ).join('')}
       </div>
       <div class="actions">
+      
+<button class="linkbutton"
+        data-read="${escapeHtml(p.url || '')}">
+  📖 阅读政策正文
+</button>
+
         <a href="${escapeHtml(validUrl(p.url))}"
            target="_blank" rel="noopener noreferrer">
           查看官方原文 ↗
@@ -817,6 +879,44 @@ async function load() {
       '。请检查 data/policies.json 与 GitHub Pages 部署状态';
   }
 }
+
+function openPolicyReader(url) {
+  const p = policies.find(item => item.url === url);
+  if (!p) return;
+
+  $('readerTitle').textContent = p.title || '政策正文';
+  $('readerMeta').textContent =
+    `${p.date || '日期未知'} · ${p.source || '来源未知'}`;
+
+  $('readerContent').textContent =
+    p.content_status === 'success' && p.content
+      ? p.content
+      : '该政策暂未采集到可阅读的正文，请查看官方原文。';
+
+  $('readerLink').href = validUrl(p.url);
+  $('policyReader').classList.remove('hidden');
+}
+
+$('closeReader').addEventListener('click', () => {
+  $('policyReader').classList.add('hidden');
+});
+
+$('policyReader').addEventListener('click', e => {
+  if (e.target.id === 'policyReader') {
+    $('policyReader').classList.add('hidden');
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    $('policyReader').classList.add('hidden');
+  }
+});
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-read]');
+  if (btn) openPolicyReader(btn.dataset.read);
+});
 
 $('refresh').addEventListener('click', load);
 
