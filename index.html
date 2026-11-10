@@ -267,6 +267,15 @@ select { flex: 1; min-width: 130px; }
   margin-top: 20px;
 }
   
+
+/* 独立 AI 分析窗口；不修改已有的正文阅读窗口 */
+.ai-overlay { position:fixed; inset:0; z-index:10010; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; padding:18px; }
+.ai-box { width:min(940px,100%); max-height:92vh; overflow:auto; background:#192338; border:1px solid #405473; border-radius:14px; padding:24px; }
+.ai-row { display:flex; justify-content:space-between; align-items:flex-start; gap:15px; }
+.ai-section { border-top:1px solid #34445e; padding:16px 0 4px; line-height:1.9; }
+.ai-section h3 { margin:0 0 7px; font-size:16px; color:#bcd6ff; }
+.ai-section p { margin:6px 0; }
+.ai-section li { margin-bottom:9px; }
 </style>
 </head>
 <body>
@@ -502,6 +511,20 @@ select { flex: 1; min-width: 130px; }
   </div>
 </div>
 
+<!-- 独立的 AI 分析阅读面板 -->
+<div id="aiPanel" class="ai-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+  <div class="ai-box">
+    <div class="ai-row">
+      <div>
+        <h2 id="aiTitle">政策智能分析</h2>
+        <p class="sub" id="aiMeta"></p>
+      </div>
+      <button class="button secondary" id="closeAi">关闭</button>
+    </div>
+    <div id="aiBody"></div>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -529,6 +552,7 @@ const escapeHtml = value =>
 
 let policies = [];
 let data = {};
+let aiAnalyses = {};
 let activePage = 'home';
 
 const STORE = 'guoce3_bookmarks';
@@ -577,6 +601,9 @@ function policyHtml(p) {
         ).join('')}
       </div>
       <div class="actions">
+      <button class="linkbutton" data-ai="${escapeHtml(p.id || '')}">
+        ✨ AI政策分析
+      </button>
       
 <button class="linkbutton"
         data-read="${escapeHtml(p.url || '')}">
@@ -872,6 +899,7 @@ async function load() {
         : ' · 数据读取成功');
 
     renderAll();
+    await loadAiAnalyses();
 
   } catch (error) {
     $('updated').textContent =
@@ -917,6 +945,113 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-read]');
   if (btn) openPolicyReader(btn.dataset.read);
 });
+
+
+/* AI 分析只读取仓库生成的静态结果，不在浏览器调用模型API。 */
+function aiText(tag, text, className) {
+  const n = document.createElement(tag);
+  n.textContent = String(text ?? '');
+  if (className) n.className = className;
+  return n;
+}
+
+function aiSection(parent, title) {
+  const section = document.createElement('section');
+  section.className = 'ai-section';
+  section.append(aiText('h3', title));
+  parent.append(section);
+  return section;
+}
+
+function openAiAnalysis(id) {
+  const p = policies.find(item => item.id === id);
+  if (!p) return;
+  const record = aiAnalyses[id];
+  $('aiTitle').textContent = p.title || '政策智能分析';
+  $('aiMeta').textContent = record
+    ? '模型：' + (record.model || '未知') + ' · 分析时间：' +
+      (record.generated_at || '未知') + ' · AI生成，请核对原文'
+    : 'AI分析尚未生成';
+  const body = $('aiBody');
+  body.replaceChildren();
+
+  if (!record || !record.analysis) {
+    body.append(aiText('p',
+      '这份政策尚无AI分析。需要先配置GitHub Secrets中的OPENAI_API_KEY，' +
+      '待工作流运行后生成结果。正文阅读和官方原文功能不受影响。', 'empty'));
+  } else {
+    const a = record.analysis;
+    aiSection(body, '① 政策核心摘要').append(aiText('p', a.summary || '无'));
+    aiSection(body, '② 政策目标').append(aiText('p', a.policy_goal || '未明确'));
+    const impacts = aiSection(body, '③ 产业影响 · 分析判断');
+    if (Array.isArray(a.industry_impacts) && a.industry_impacts.length) {
+      a.industry_impacts.forEach(x => {
+        const item = document.createElement('p');
+        item.append(aiText('strong',
+          (x.industry || '相关产业') + ' · ' +
+          (x.direction || '不明确') + ' · 置信度' + (x.confidence || '未标注')));
+        item.append(aiText('span', '：' + (x.mechanism || '')));
+        item.append(aiText('div', '原文依据：' + (x.evidence || '未提供'), 'sub'));
+        impacts.append(item);
+      });
+    } else {
+      impacts.append(aiText('p', '未识别到有明确原文依据的产业影响。'));
+    }
+    const implementation = aiSection(body, '④ 落地机制与执行要求');
+    if (Array.isArray(a.implementation) && a.implementation.length) {
+      const ul = document.createElement('ul');
+      a.implementation.forEach(x => ul.append(aiText('li', typeof x === 'string' ? x : JSON.stringify(x))));
+      implementation.append(ul);
+    } else {
+      implementation.append(aiText('p', '暂未提取到明确的执行安排。'));
+    }
+    const investment = aiSection(body, '⑤ 投资研究 · 待验证假设');
+    if (Array.isArray(a.investment_hypotheses) && a.investment_hypotheses.length) {
+      a.investment_hypotheses.forEach(x => {
+        const p = document.createElement('p');
+        p.append(aiText('strong', '假设：' + (x.hypothesis || '')));
+        p.append(aiText('div', '验证指标：' + (x.verification || '未明确')));
+        p.append(aiText('div', '风险：' + (x.risk || '未明确')));
+        investment.append(p);
+      });
+    } else {
+      investment.append(aiText('p', '没有足够依据提出具体投资假设。'));
+    }
+    aiSection(body, '信息局限与核查').append(
+      aiText('p', a.limitations || 'AI结论可能有误，请核对官方全文。'));
+  }
+  const link = aiSection(body, '核对官方原文');
+  const anchor = document.createElement('a');
+  anchor.href = validUrl(p.url);
+  anchor.target = '_blank';
+  anchor.rel = 'noopener noreferrer';
+  anchor.textContent = '前往政府官网 ↗';
+  link.append(anchor);
+  $('aiPanel').classList.remove('hidden');
+}
+
+$('closeAi').addEventListener('click', () => $('aiPanel').classList.add('hidden'));
+$('aiPanel').addEventListener('click', e => {
+  if (e.target.id === 'aiPanel') $('aiPanel').classList.add('hidden');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') $('aiPanel').classList.add('hidden');
+});
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-ai]');
+  if (btn) openAiAnalysis(btn.dataset.ai);
+});
+
+async function loadAiAnalyses() {
+  try {
+    const response = await fetch('./data/analysis.json?t=' + Date.now(), {cache:'no-store'});
+    if (!response.ok) throw Error('尚未生成分析数据');
+    const obj = await response.json();
+    aiAnalyses = obj && typeof obj.items === 'object' && obj.items ? obj.items : {};
+  } catch {
+    aiAnalyses = {};
+  }
+}
 
 $('refresh').addEventListener('click', load);
 
