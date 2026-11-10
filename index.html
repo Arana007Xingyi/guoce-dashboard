@@ -4,383 +4,828 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>国策红利工作台 2.0</title>
-
+<title>国策红利工作台 3.0</title>
 <style>
 :root {
   font-family: -apple-system, BlinkMacSystemFont,
     "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: #e8edf7;
+  color: #e9eef8;
   background: #0c111d;
 }
-
 * { box-sizing: border-box; }
-
 body { margin: 0; }
-
-header {
-  background: #151c2c;
-  border-bottom: 1px solid #2b3750;
-  padding: 30px 5%;
-}
-
-h1 {
-  margin: 0;
-  font-size: 27px;
-}
-
-header p, .muted { color: #a3b1c9; }
-
-main {
-  max-width: 1200px;
-  margin: auto;
-  padding: 26px 4%;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-.card, .panel {
-  background: #192235;
-  border: 1px solid #303f59;
-  border-radius: 14px;
-  padding: 20px;
-}
-
-.card b {
-  display: block;
-  color: #a4c6ff;
-  font-size: 30px;
-  margin-bottom: 8px;
-}
-
-.card span {
-  font-size: 13px;
-  color: #b8c5da;
-}
-
-.toolbar {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 24px 0;
-}
-
-input, select, button {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #42516b;
-  background: #242f45;
-  color: white;
-  font: inherit;
-}
-
-input {
-  flex: 2;
-  min-width: 180px;
-}
-
-select {
-  flex: 1;
-  min-width: 140px;
-}
-
-button {
-  background: #426ca9;
-  cursor: pointer;
-}
-
-button:hover { background: #5682c2; }
-
-.policy {
-  padding: 18px 0;
-  border-bottom: 1px solid #344158;
-}
-
-.policy h3 {
-  font-size: 16px;
-  line-height: 1.6;
-  margin: 8px 0;
-}
-
-.meta {
-  font-size: 12px;
-  color: #a7b8d4;
-}
-
-.tag {
-  display: inline-block;
-  padding: 5px 8px;
-  margin: 5px 5px 5px 0;
-  background: #2c435e;
-  border-radius: 5px;
-  color: #b8dbff;
-  font-size: 12px;
-}
-
+button, input, select { font: inherit; }
+button { cursor: pointer; }
 a { color: #9fc8ff; }
-
+.shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 235px;
+  background: #131b2b;
+  border-right: 1px solid #2b3851;
+  padding: 24px 15px;
+  flex-shrink: 0;
+}
+.brand {
+  font-size: 21px;
+  font-weight: 750;
+  line-height: 1.5;
+  padding: 0 9px 25px;
+}
+.brand small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: #a3b1c9;
+}
+.nav { display: flex; flex-direction: column; gap: 7px; }
+.nav button {
+  border: 0;
+  background: transparent;
+  color: #b8c7df;
+  text-align: left;
+  border-radius: 9px;
+  padding: 12px 13px;
+}
+.nav button.active, .nav button:hover {
+  background: #29456d;
+  color: white;
+}
+.main {
+  flex: 1;
+  min-width: 0;
+  max-width: 1500px;
+  padding: 30px clamp(16px, 3vw, 44px);
+}
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 23px;
+}
+.head h1 { font-size: 26px; margin: 0 0 8px; }
+.muted, .sub { color: #9eafca; }
+.sub { font-size: 13px; }
+.button {
+  border: 1px solid #5577a5;
+  background: #416ba5;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+.button.secondary { background: #26354d; }
 .notice {
-  padding: 15px;
-  background: #302b2b;
-  border-left: 3px solid #e3b65d;
-  border-radius: 6px;
-  margin-bottom: 22px;
+  border-left: 3px solid #dfb45b;
+  background: #292a31;
+  padding: 15px 18px;
+  border-radius: 7px;
   font-size: 13px;
   line-height: 1.8;
+  margin-bottom: 20px;
 }
-
-#status {
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 18px;
+}
+.stat, .panel {
+  background: #192338;
+  border: 1px solid #30405e;
+  border-radius: 13px;
+  padding: 19px;
+}
+.stat strong {
+  display: block;
+  font-size: 29px;
+  color: #a8c8ff;
+  margin-bottom: 6px;
+}
+.stat span { font-size: 13px; color: #b5c4da; }
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+}
+.panel { margin-bottom: 16px; }
+.panel h2 { font-size: 18px; margin: 0 0 15px; }
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+input, select {
+  background: #26334b;
+  color: white;
+  border: 1px solid #465976;
+  border-radius: 8px;
+  padding: 11px;
+  min-width: 0;
+}
+input { flex: 2; min-width: 190px; }
+select { flex: 1; min-width: 130px; }
+.policy {
+  padding: 15px 0;
+  border-top: 1px solid #34445e;
+}
+.policy h3 {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 7px 0;
+}
+.meta { font-size: 12px; color: #9eb2d0; }
+.tag {
+  display: inline-block;
+  background: #2b455e;
+  color: #c0dfff;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin: 4px 5px 7px 0;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
   font-size: 13px;
-  color: #b7c5db;
 }
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #8291ab;
+.linkbutton {
+  background: none;
+  border: 0;
+  color: #a9caff;
+  padding: 0;
+}
+.empty {
+  padding: 22px 0;
+  color: #aab9d0;
+  line-height: 1.8;
+}
+.barrow {
+  display: grid;
+  grid-template-columns: 100px 1fr 38px;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  margin: 12px 0;
+}
+.bar {
+  height: 9px;
+  background: #2a3850;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.bar > i {
+  display: block;
+  background: #7aa6e9;
+  height: 100%;
+  border-radius: 10px;
+}
+.pill {
+  display: inline-block;
+  padding: 5px 9px;
+  border: 1px solid #435777;
+  border-radius: 7px;
+  font-size: 12px;
+  margin: 4px;
+  color: #bcd3f4;
+}
+.warning { color: #ffd391; }
+.small { font-size: 12px; }
+.hidden { display: none !important; }
+.foot {
+  margin-top: 25px;
+  color: #8496b2;
   font-size: 12px;
 }
-
-@media(max-width:700px) {
-  .stats {
-    grid-template-columns: repeat(2,1fr);
+.sectionintro {
+  line-height: 1.8;
+  color: #b3c3db;
+  margin-bottom: 18px;
+}
+.divider {
+  height: 1px;
+  background: #34445e;
+  margin: 14px 0;
+}
+@media(max-width:950px) {
+  .sidebar { width: 190px; }
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .grid2 { grid-template-columns: 1fr; }
+}
+@media(max-width:650px) {
+  .shell { display: block; }
+  .sidebar { width: 100%; padding: 12px; }
+  .brand { padding: 0 5px 10px; font-size: 18px; }
+  .nav {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-  h1 { font-size: 22px; }
-  .card { padding: 14px; }
+  .nav button { padding: 9px 11px; flex-shrink: 0; }
+  .main { padding: 18px 12px; }
+  .head h1 { font-size: 21px; }
+  .stats { gap: 8px; }
+  .stat { padding: 13px; }
+  .stat strong { font-size: 23px; }
+  .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1>◈ 国策红利工作台 2.0</h1>
-  <p>中央政策追踪 · 官方文件溯源 · 产业机会观察</p>
-</header>
-
-<main>
-
-<div class="notice">
-  本工作台持续追踪中国中央及部委政策。
-  政策标题、发布日期和原文链接来自配置的官方栏目。
-  产业分类由关键词匹配生成，不代表确定的投资收益。
-  所有政策内容请以官方原文为准。
-</div>
-
-<section class="stats">
-  <div class="card">
-    <b id="total">—</b>
-    <span>累计收录政策</span>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand">
+    ◈ 国策红利工作台 3.0
+    <small>官方政策 · 国家战略 · 产业研究</small>
   </div>
-  <div class="card">
-    <b id="recent">—</b>
-    <span>近30天政策</span>
+  <nav class="nav" id="nav"></nav>
+</aside>
+
+<main class="main">
+  <div class="head">
+    <div>
+      <h1 id="pageTitle">首页总览</h1>
+      <div class="sub" id="updated">正在读取政策数据……</div>
+    </div>
+    <button class="button" id="refresh">刷新数据</button>
   </div>
-  <div class="card">
-    <b id="success">—</b>
-    <span>成功数据源</span>
+
+  <div class="notice">
+    本平台以官方政策文件为信息基础，自动分类仅供研究参考，
+    不代表政策力度、资金投入或投资回报。
+    请以官方原文为准；未接入的数据将明确标注。
   </div>
-  <div class="card">
-    <b id="failed">—</b>
-    <span>异常数据源</span>
+
+  <!-- 首页总览 -->
+  <section id="home" class="page">
+    <div class="stats">
+      <div class="stat">
+        <strong id="total">—</strong>
+        <span>累计收录政策</span>
+      </div>
+      <div class="stat">
+        <strong id="recent">—</strong>
+        <span>近30天政策</span>
+      </div>
+      <div class="stat">
+        <strong id="ok">—</strong>
+        <span>成功数据源</span>
+      </div>
+      <div class="stat">
+        <strong id="failed">—</strong>
+        <span>异常数据源</span>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h2>最新官方政策</h2>
+        <div id="homePolicies"></div>
+      </div>
+      <div>
+        <div class="panel">
+          <h2>重点产业 · 政策数量</h2>
+          <div id="topicBars"></div>
+        </div>
+        <div class="panel">
+          <h2>数据源健康状态</h2>
+          <div id="sourceStatus"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 政策情报 -->
+  <section id="policies" class="page hidden">
+    <p class="sectionintro">
+      检索已收录的官方文件，按产业、政策层级筛选，
+      并可打开官方原文。
+    </p>
+    <div class="panel">
+      <div class="toolbar">
+        <input id="search"
+          placeholder="搜索政策标题、来源或产业关键词">
+        <select id="topic">
+          <option value="">全部产业</option>
+        </select>
+        <select id="scope">
+          <option value="">全部层级</option>
+          <option>中央</option>
+          <option>国务院</option>
+          <option>部委</option>
+        </select>
+      </div>
+      <div id="filterCount" class="sub"></div>
+      <div id="policyList"></div>
+    </div>
+  </section>
+
+  <!-- 国家战略 -->
+  <section id="strategy" class="page hidden">
+    <div class="panel">
+      <h2>国家战略与十五五规划</h2>
+      <p class="sectionintro">
+        当前数据源仅提供政策标题与基础分类，
+        尚未建立国家规划目标、战略任务和产业地图的结构化数据库。
+      </p>
+      <div id="strategyTopics"></div>
+      <div class="divider"></div>
+      <a href="https://www.gov.cn/zhengce/"
+         target="_blank" rel="noopener noreferrer">
+        中国政府网政策栏目 · 官方入口
+      </a>
+    </div>
+  </section>
+
+  <!-- 落地进度 -->
+  <section id="progress" class="page hidden">
+    <div class="panel">
+      <h2>政策落地进度</h2>
+      <p class="sectionintro">
+        计划按政策发布、实施细则、项目启动、资金拨付、
+        效果评估等阶段跟踪。
+        现有采集器没有项目与资金数据，
+        暂不提供未经核实的进度百分比或 A/B/C 等级。
+      </p>
+      <div class="empty">
+        状态：待接入官方项目公告、财政预算执行及实施进展数据。
+      </div>
+    </div>
+  </section>
+
+  <!-- 产业景气 -->
+  <section id="industry" class="page hidden">
+    <div class="stats">
+      <div class="stat">
+        <strong id="industryCount">—</strong>
+        <span>已识别产业分类</span>
+      </div>
+      <div class="stat">
+        <strong id="classified">—</strong>
+        <span>带产业标签政策</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>产业政策分布（非产业景气指数）</h2>
+      <div id="industryBars"></div>
+    </div>
+    <div class="panel">
+      <h2>产业景气指标</h2>
+      <p class="empty">
+        工业增加值、固定资产投资、产能利用率、
+        利润增速及同比趋势尚未接入。
+        政策数量不能代替产业景气度。
+      </p>
+    </div>
+  </section>
+
+  <!-- 市场估值 -->
+  <section id="valuation" class="page hidden">
+    <div class="panel">
+      <h2>市场估值与风险观察</h2>
+      <p class="sectionintro">
+        后续可接入行业市盈率、市净率、历史估值分位、
+        成交额与资金流向等数据，辅助识别估值压力。
+      </p>
+      <div class="empty">
+        暂无可靠的市场行情数据源，
+        因此不展示实时估值、拥挤度或买卖信号。
+      </div>
+    </div>
+  </section>
+
+  <!-- 我的研究 -->
+  <section id="research" class="page hidden">
+    <div class="panel">
+      <h2>我的政策收藏</h2>
+      <p class="sub">
+        收藏保存在当前浏览器中，
+        换设备或清除浏览器数据后可能丢失。
+      </p>
+      <div id="savedList"></div>
+    </div>
+    <div class="panel">
+      <h2>我的研究方向</h2>
+      <p class="sectionintro">
+        可从政策情报页面收藏重点文件，
+        逐步形成个人政策研究清单。
+        ETF持仓与投资笔记尚未接入。
+      </p>
+      <button class="button secondary" data-page="policies">
+        去政策情报收藏
+      </button>
+    </div>
+  </section>
+
+  <!-- 智能提醒 -->
+  <section id="alerts" class="page hidden">
+    <div class="panel">
+      <h2>采集异常提醒</h2>
+      <div id="alertsList"></div>
+    </div>
+    <div class="panel">
+      <h2>政策更新提醒</h2>
+      <p class="sectionintro">
+        以下仅显示近7天内已采集的政策，不提供推送通知；
+        自动采集由 GitHub Actions 的计划任务负责。
+      </p>
+      <div id="newAlerts"></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    国策红利工作台 3.0 · 官方政策研究工具 · 不构成投资建议 ·
+    <a href="https://sousuo.www.gov.cn/zcwjk/"
+       target="_blank" rel="noopener noreferrer">
+      国务院政策文件库
+    </a>
   </div>
-</section>
-
-<div class="toolbar">
-  <input
-    id="search"
-    placeholder="搜索政策、发布机构、产业关键词"
-    aria-label="搜索政策"
-  >
-
-  <select id="topic" aria-label="产业分类">
-    <option value="">全部产业</option>
-  </select>
-
-  <select id="scope" aria-label="政策层级">
-    <option value="">全部层级</option>
-    <option value="中央">中央</option>
-    <option value="国务院">国务院</option>
-    <option value="部委">部委</option>
-  </select>
-
-  <button onclick="load()">刷新政策</button>
-</div>
-
-<section class="panel">
-  <h2>最新政策文件</h2>
-  <p id="status">正在读取数据……</p>
-  <div id="list"></div>
-</section>
-
-<p class="muted">
-  官方政策查询：
-  <a
-    href="https://sousuo.www.gov.cn/zcwjk/"
-    target="_blank"
-    rel="noopener noreferrer"
-  >国务院政策文件库</a>
-</p>
-
 </main>
-
-<footer>
-  国策红利工作台 2.0 · 官方政策信息研究
-</footer>
+</div>
 
 <script>
+'use strict';
+
+const pages = [
+  ['home', '🏠 首页总览'],
+  ['policies', '📜 政策情报'],
+  ['strategy', '🧭 国家战略'],
+  ['progress', '📊 落地进度'],
+  ['industry', '📈 产业景气'],
+  ['valuation', '💹 市场估值'],
+  ['research', '⭐ 我的研究'],
+  ['alerts', '🔔 智能提醒']
+];
+
+const $ = id => document.getElementById(id);
+
+const escapeHtml = value =>
+  String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[c]));
+
 let policies = [];
+let data = {};
+let activePage = 'home';
 
-const el = id => document.getElementById(id);
+const STORE = 'guoce3_bookmarks';
 
-const esc = value => String(value ?? "").replace(
-  /[&<>"']/g,
-  char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]
-);
+function bookmarks() {
+  try {
+    return JSON.parse(localStorage.getItem(STORE) || '[]');
+  } catch {
+    return [];
+  }
+}
 
-function render() {
-  const query = el("search").value.toLowerCase();
-  const topic = el("topic").value;
-  const scope = el("scope").value;
+function setBookmarks(items) {
+  try {
+    localStorage.setItem(STORE, JSON.stringify(items));
+  } catch {
+    alert('浏览器无法保存收藏，请检查隐私设置。');
+  }
+}
 
-  const filtered = policies.filter(p => {
-    const searchable = [
+function validUrl(url) {
+  try {
+    const u = new URL(url);
+    return ['https:', 'http:'].includes(u.protocol)
+      ? u.href : '#';
+  } catch {
+    return '#';
+  }
+}
+
+function policyHtml(p) {
+  const saved = bookmarks().includes(p.url);
+  const tags = Array.isArray(p.topics) ? p.topics : [];
+
+  return `
+    <article class="policy">
+      <div class="meta">
+        ${escapeHtml(p.date || '日期未知')} ·
+        ${escapeHtml(p.source || '来源未知')} ·
+        ${escapeHtml(p.scope || '层级未知')}
+      </div>
+      <h3>${escapeHtml(p.title || '无标题')}</h3>
+      <div>
+        ${tags.map(t =>
+          `<span class="tag">${escapeHtml(t)}</span>`
+        ).join('')}
+      </div>
+      <div class="actions">
+        <a href="${escapeHtml(validUrl(p.url))}"
+           target="_blank" rel="noopener noreferrer">
+          查看官方原文 ↗
+        </a>
+        <button class="linkbutton"
+                data-save="${escapeHtml(p.url || '')}">
+          ${saved ? '★ 取消收藏' : '☆ 收藏政策'}
+        </button>
+      </div>
+    </article>
+  `;
+}
+
+function showPage(id) {
+  if (!pages.some(p => p[0] === id)) id = 'home';
+
+  activePage = id;
+
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.toggle('hidden', p.id !== id);
+  });
+
+  document.querySelectorAll('#nav button').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === id);
+  });
+
+  $('pageTitle').textContent =
+    pages.find(p => p[0] === id)[1].slice(3);
+
+  if (location.hash !== '#' + id) location.hash = id;
+
+  if (id === 'research') renderSaved();
+}
+
+$('nav').innerHTML = pages.map(([id, label]) =>
+  `<button data-page="${id}">${label}</button>`
+).join('');
+
+document.addEventListener('click', e => {
+  const page = e.target.closest('[data-page]');
+
+  if (page) {
+    showPage(page.dataset.page);
+    return;
+  }
+
+  const save = e.target.closest('[data-save]');
+
+  if (save) {
+    const url = save.dataset.save;
+    if (!url) return;
+
+    const s = bookmarks();
+
+    setBookmarks(
+      s.includes(url)
+        ? s.filter(x => x !== url)
+        : [...s, url]
+    );
+
+    renderAll();
+  }
+});
+
+function counts() {
+  const result = {};
+
+  policies.forEach(p => {
+    (p.topics || []).forEach(t => {
+      if (t !== '其他政策') {
+        result[t] = (result[t] || 0) + 1;
+      }
+    });
+  });
+
+  return result;
+}
+
+function bars(container, countsObj) {
+  const entries = Object.entries(countsObj)
+    .sort((a, b) => b[1] - a[1]);
+
+  const max = Math.max(1, ...entries.map(x => x[1]));
+
+  $(container).innerHTML = entries.length
+    ? entries.map(([name, n]) => `
+      <div class="barrow">
+        <span>${escapeHtml(name)}</span>
+        <div class="bar">
+          <i style="width:${n / max * 100}%"></i>
+        </div>
+        <b>${n}</b>
+      </div>
+    `).join('')
+    : '<div class="empty">暂无产业分类数据</div>';
+}
+
+function renderAll() {
+  const now = Date.now();
+  const month = 30 * 86400000;
+
+  const recent = policies.filter(p => {
+    const t = Date.parse(
+      (p.date || '') + 'T00:00:00+08:00'
+    );
+
+    return Number.isFinite(t) &&
+      t <= now && now - t < month;
+  });
+
+  $('total').textContent = policies.length;
+  $('recent').textContent = recent.length;
+  $('ok').textContent = (data.sources_ok || []).length;
+  $('failed').textContent =
+    (data.sources_failed || []).length;
+
+  $('homePolicies').innerHTML = policies.length
+    ? policies.slice(0, 6).map(policyHtml).join('')
+    : '<div class="empty">暂无政策数据，请检查采集结果。</div>';
+
+  const c = counts();
+
+  bars('topicBars', c);
+  bars('industryBars', c);
+
+  $('industryCount').textContent = Object.keys(c).length;
+
+  $('classified').textContent = policies.filter(p =>
+    (p.topics || []).some(t => t !== '其他政策')
+  ).length;
+
+  const successes = (data.sources_ok || []).map(s => `
+    <p class="small">
+      ✓ ${escapeHtml(s.source)} · ${escapeHtml(s.count)} 条
+    </p>
+  `);
+
+  const failures = (data.sources_failed || []).map(s => `
+    <p class="small warning">
+      ⚠ ${escapeHtml(s.source)} ·
+      ${escapeHtml(s.error || '采集失败')}
+    </p>
+  `);
+
+  $('sourceStatus').innerHTML =
+    [...successes, ...failures].join('') ||
+    '<p class="empty">暂无采集状态记录</p>';
+
+  $('strategyTopics').innerHTML =
+    Object.keys(c).map(t => `
+      <span class="pill">
+        ${escapeHtml(t)} · ${c[t]}条政策
+      </span>
+    `).join('') ||
+    '<div class="empty">暂无可用的产业标签</div>';
+
+  $('alertsList').innerHTML =
+    (data.sources_failed || []).length
+      ? (data.sources_failed || []).map(s => `
+        <p class="warning">
+          ⚠ ${escapeHtml(s.source)}：
+          ${escapeHtml(s.error || '采集失败')}
+        </p>
+      `).join('')
+      : '<p class="empty">当前数据记录未报告采集失败。注意：这不代表全部官方渠道均已覆盖。</p>';
+
+  $('newAlerts').innerHTML = policies.filter(p => {
+    const t = Date.parse(
+      (p.date || '') + 'T00:00:00+08:00'
+    );
+
+    return Number.isFinite(t) &&
+      t <= now && now - t < 7 * 86400000;
+  }).slice(0, 15).map(policyHtml).join('') ||
+    '<p class="empty">当前收录记录中没有近7天的政策。</p>';
+
+  const topics = [
+    ...new Set(policies.flatMap(p => p.topics || []))
+  ].sort();
+
+  const selected = $('topic').value;
+
+  $('topic').innerHTML =
+    '<option value="">全部产业</option>' +
+    topics.map(t => `
+      <option value="${escapeHtml(t)}">
+        ${escapeHtml(t)}
+      </option>
+    `).join('');
+
+  $('topic').value =
+    topics.includes(selected) ? selected : '';
+
+  renderFiltered();
+  renderSaved();
+}
+
+function renderFiltered() {
+  const q = $('search').value.trim().toLowerCase();
+  const topic = $('topic').value;
+  const scope = $('scope').value;
+
+  const matches = policies.filter(p => {
+    const text = [
       p.title,
       p.source,
       ...(p.topics || [])
-    ].join(" ").toLowerCase();
+    ].join(' ').toLowerCase();
 
     return (
-      (!query || searchable.includes(query)) &&
+      (!q || text.includes(q)) &&
       (!topic || (p.topics || []).includes(topic)) &&
       (!scope || p.scope === scope)
     );
   });
 
-  if (!filtered.length) {
-    el("list").innerHTML =
-      '<p class="muted">暂无符合条件的政策</p>';
-    return;
-  }
+  $('filterCount').textContent =
+    `找到 ${matches.length} 条政策 · 最多显示前200条`;
 
-  el("list").innerHTML = filtered.slice(0, 100).map(p => `
-    <article class="policy">
-      <div class="meta">
-        ${esc(p.date)} ·
-        ${esc(p.source)} ·
-        ${esc(p.scope)}
-      </div>
-
-      <h3>${esc(p.title)}</h3>
-
-      <div>
-        ${(p.topics || []).map(t =>
-          '<span class="tag">' + esc(t) + '</span>'
-        ).join("")}
-      </div>
-
-      <a
-        href="${esc(p.url)}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >查看官方原文 ↗</a>
-    </article>
-  `).join("");
+  $('policyList').innerHTML = matches.length
+    ? matches.slice(0, 200).map(policyHtml).join('')
+    : '<p class="empty">没有符合条件的政策</p>';
 }
 
-async function load() {
-  el("status").textContent = "正在加载政策数据……";
+function renderSaved() {
+  const s = bookmarks();
 
-  try {
-    const response = await fetch(
-      "./data/policies.json?t=" + Date.now(),
-      { cache: "no-store" }
-    );
+  const found = s.map(url =>
+    policies.find(p => p.url === url)
+  ).filter(Boolean);
 
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status);
-    }
-
-    const data = await response.json();
-    policies = data.items || [];
-
-    el("total").textContent = policies.length;
-
-    const now = Date.now();
-    const thirtyDays = 30 * 86400000;
-
-    el("recent").textContent = policies.filter(p => {
-      const timestamp = new Date(
-        p.date + "T00:00:00+08:00"
-      ).getTime();
-
-      return timestamp <= now &&
-        now - timestamp < thirtyDays;
-    }).length;
-
-    el("success").textContent =
-      (data.sources_ok || []).length;
-
-    el("failed").textContent =
-      (data.sources_failed || []).length;
-
-    const topics = [
-      ...new Set(
-        policies.flatMap(p => p.topics || [])
-      )
-    ].sort();
-
-    el("topic").innerHTML =
-      '<option value="">全部产业</option>' +
-      topics.map(t =>
-        '<option value="' + esc(t) + '">' +
-        esc(t) + '</option>'
-      ).join("");
-
-    const updated = data.updated_at
-      ? new Date(data.updated_at).toLocaleString(
-          "zh-CN",
-          { timeZone: "Asia/Shanghai" }
-        )
-      : "未知";
-
-    const failures =
-      (data.sources_failed || []).length;
-
-    el("status").textContent =
-      "最近采集时间（北京时间）：" + updated +
-      (failures
-        ? " · 部分数据源采集失败"
-        : " · 数据加载成功");
-
-    render();
-
-  } catch (error) {
-    el("status").textContent =
-      "无法加载政策数据：" + error.message +
-      "。请先在 GitHub Actions 中运行采集任务。";
-  }
+  $('savedList').innerHTML = found.length
+    ? found.map(policyHtml).join('')
+    : '<p class="empty">暂无收藏。进入「政策情报」，点击政策下方的「收藏政策」。</p>';
 }
 
-["search", "topic", "scope"].forEach(id => {
-  el(id).addEventListener(
-    id === "search" ? "input" : "change",
-    render
+['search', 'topic', 'scope'].forEach(id => {
+  $(id).addEventListener(
+    id === 'search' ? 'input' : 'change',
+    renderFiltered
   );
 });
 
+async function load() {
+  $('updated').textContent = '正在加载政策数据……';
+
+  try {
+    const response = await fetch(
+      './data/policies.json?t=' + Date.now(),
+      { cache: 'no-store' }
+    );
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+
+    const result = await response.json();
+
+    if (!Array.isArray(result.items)) {
+      throw new Error('数据格式不正确');
+    }
+
+    data = result;
+
+    policies = result.items.slice().sort((a, b) =>
+      String(b.date || '').localeCompare(
+        String(a.date || '')
+      )
+    );
+
+    let stamp = '未知';
+
+    if (result.updated_at) {
+      const date = new Date(result.updated_at);
+
+      if (!isNaN(date.getTime())) {
+        stamp = date.toLocaleString('zh-CN', {
+          timeZone: 'Asia/Shanghai'
+        });
+      }
+    }
+
+    $('updated').textContent =
+      '最近采集（北京时间）：' + stamp +
+      ((result.sources_failed || []).length
+        ? ' · 部分数据源异常'
+        : ' · 数据读取成功');
+
+    renderAll();
+
+  } catch (error) {
+    $('updated').textContent =
+      '读取失败：' + error.message +
+      '。请检查 data/policies.json 与 GitHub Pages 部署状态';
+  }
+}
+
+$('refresh').addEventListener('click', load);
+
+window.addEventListener('hashchange', () => {
+  showPage(location.hash.slice(1));
+});
+
+showPage(location.hash.slice(1) || 'home');
 load();
 </script>
-
 </body>
 </html>
