@@ -10,8 +10,17 @@ from bs4 import BeautifulSoup
 
 OUT = Path("data/policies.json")
 SOURCES = [
-    ("生态环境部·中央文件", "https://www.mee.gov.cn/zcwj/zyygwj/", "中央"),
-    ("生态环境部·国务院文件", "https://www.mee.gov.cn/zcwj/gwywj/", "国务院"),
+    ("生态环境部·中央文件",
+     "https://www.mee.gov.cn/zcwj/zyygwj/", "中央"),
+
+    ("生态环境部·国务院文件",
+     "https://www.mee.gov.cn/zcwj/gwywj/", "国务院"),
+
+    ("国务院·政策文件",
+     "https://www.gov.cn/zhengce/zuixin/", "国务院"),
+
+    ("工业和信息化部·政策文件",
+     "https://www.miit.gov.cn/zwgk/zcwj/index.html", "部委"),
 ]
 KEYWORDS = ["意见", "通知", "方案", "规划", "条例", "办法", "措施", "决定", "规定"]
 TOPICS = {
