@@ -29,11 +29,19 @@ jobs:
       - name: Collect official policies
         run: python collector.py
 
+      - name: Analyze policies with AI (if configured)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
+          MAX_ANALYSES_PER_RUN: "5"
+        run: python analyzer.py
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/policies.json
+          if [ -f data/analysis.json ]; then git add data/analysis.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update official policy data"
             git push
