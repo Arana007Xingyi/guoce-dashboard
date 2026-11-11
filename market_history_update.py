@@ -214,6 +214,18 @@ def main():
             id_ = info["id"]
             record = recorded.get(id_, {})
             record.update({**info, "kind": kind})
+            if kind == "index":
+                record["pe_source_field"] = "peg"
+                record["pe_basis_verified"] = False
+                record["pe_basis_note"] = (
+                    "CSI interface peg field is interpreted as PE by independent "
+                    "client code; official TTM definition not yet verified."
+                )
+                record["turnover_unit_verified"] = False
+                record["turnover_basis_note"] = (
+                    "CSI API amount units not independently verified; "
+                    "never scale to RMB or 100m RMB without official spec."
+                )
             record.setdefault("points", [])
             old = record["points"]
             # Backfill up to 6y on first run; later runs look back 10 days
@@ -234,7 +246,10 @@ def main():
                 merged, changed = merge(old, fresh)
                 record["points"] = merged
                 record["last_data_date"] = merged[-1]["date"]
+                # Exploratory distribution rank only; NOT certified official
+                # historical PE-TTM percentile until CSI field semantics checked.
                 record["pe_percentile"] = percentile(merged) if kind == "index" else None
+                record["pe_percentile_verified"] = False
                 status.update({"state": "ok", "new_or_updated_rows": changed,
                                "rows_total": len(merged), "last_data_date": merged[-1]["date"]})
                 print("行情采集成功", id_, "rows", len(merged), "changes", changed)
