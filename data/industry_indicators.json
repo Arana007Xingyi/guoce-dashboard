@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-11",
+  "methodology": "按研究赛道整理官方月度统计指标；直接指标仅描述原统计口径，相关指标仅是代理观察，不等于该赛道自身营业收入、利润或真实景气指数。9月数据为单月同比；1—9月为累计同比；1—6月为累计同比。不同区间不可直接比较高低。",
+  "sectors": [
+    {
+      "id": "ai",
+      "name": "AI人工智能与智能科技",
+      "group": "数字科技",
+      "description": "模型、算力、软件和智能应用；目前没有可直接代表整个AI产业的官方月度产值口径。",
+      "terms": [
+        "人工智能",
+        "算力",
+        "大模型",
+        "数据要素",
+        "智能",
+        "软件"
+      ],
+      "indicators": [
+        {
+          "name": "规模以上高技术制造业增加值",
+          "value": 15.3,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "高技术制造业，涵盖范围广于AI产业",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "软件业务收入与利润",
+        "算力基础设施建设",
+        "AI应用收入（需找到可复核口径）"
+      ]
+    },
+    {
+      "id": "semiconductor",
+      "name": "半导体与芯片",
+      "group": "数字科技",
+      "description": "半导体设计、制造、封测、设备与材料。",
+      "terms": [
+        "集成电路",
+        "半导体",
+        "芯片",
+        "光电子",
+        "电子信息"
+      ],
+      "indicators": [
+        {
+          "name": "集成电路产量同比",
+          "value": 23.1,
+          "unit": "%",
+          "period": "2026-H1",
+          "basis": "1—6月累计同比",
+          "relation": "direct",
+          "scope": "集成电路产品产量增速，不代表行业利润",
+          "source_url": "https://www.miit.gov.cn/jgsj/yxj/xxfb/art/2026/art_bf554117789c490fad07ec9827f98acd.html"
+        },
+        {
+          "name": "集成电路产量",
+          "value": 2798,
+          "unit": "亿块",
+          "period": "2026-H1",
+          "basis": "1—6月累计总量",
+          "relation": "direct",
+          "scope": "工信部披露集成电路产量",
+          "source_url": "https://www.miit.gov.cn/jgsj/yxj/xxfb/art/2026/art_bf554117789c490fad07ec9827f98acd.html"
+        }
+      ],
+      "track": [
+        "集成电路制造增加值",
+        "半导体设备产量",
+        "芯片企业利润"
+      ]
+    },
+    {
+      "id": "robots",
+      "name": "智能机器人与自动化",
+      "group": "智能制造",
+      "description": "工业机器人、服务机器人与具身智能；工业机器人产量不是人形机器人出货量。",
+      "terms": [
+        "机器人",
+        "自动化",
+        "智能制造",
+        "具身智能",
+        "机械"
+      ],
+      "indicators": [
+        {
+          "name": "工业机器人产量同比",
+          "value": 18.9,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "direct",
+          "scope": "规模以上工业企业工业机器人产量",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "工业机器人产量",
+          "value": 96752,
+          "unit": "套",
+          "period": "2026-09",
+          "basis": "当月产量",
+          "relation": "direct",
+          "scope": "工业机器人，非人形机器人",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "服务机器人产量同比",
+          "value": -17.8,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "direct",
+          "scope": "服务机器人产品产量",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "工业机器人月度产量",
+        "机器人零部件景气",
+        "具身智能单列数据缺口"
+      ]
+    },
+    {
+      "id": "nev",
+      "name": "新能源汽车与智能驾驶",
+      "group": "新能源与交通",
+      "description": "新能源整车及智能驾驶供应链；产量指标不能直接代表销量、盈利或智能驾驶渗透率。",
+      "terms": [
+        "新能源汽车",
+        "汽车",
+        "智能驾驶",
+        "电动车",
+        "电池"
+      ],
+      "indicators": [
+        {
+          "name": "新能源汽车产量同比",
+          "value": 16.9,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "direct",
+          "scope": "新能源汽车生产增速",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "新能源汽车产量",
+          "value": 187,
+          "unit": "万辆",
+          "period": "2026-09",
+          "basis": "当月产量",
+          "relation": "direct",
+          "scope": "新能源汽车产量",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "汽车制造业增加值",
+          "value": 6.7,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "全部汽车制造业，不限新能源汽车",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "新能源汽车销量与出口",
+        "动力电池产销",
+        "汽车业利润"
+      ]
+    },
+    {
+      "id": "health",
+      "name": "医疗健康与制药",
+      "group": "医疗健康",
+      "description": "医药制造、医疗器械与医疗服务。",
+      "terms": [
+        "医疗",
+        "医药",
+        "药品",
+        "医院",
+        "医疗器械",
+        "健康"
+      ],
+      "indicators": [
+        {
+          "name": "医药制造业增加值同比",
+          "value": 4.9,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "direct",
+          "scope": "医药制造业；不包含全部医疗服务",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "医药制造业利润",
+        "医疗器械行业产值",
+        "医疗服务与卫生支出"
+      ]
+    },
+    {
+      "id": "biotech",
+      "name": "创新药与生物科技",
+      "group": "医疗健康",
+      "description": "创新药研发、商业化、生命科学和生物制造。",
+      "terms": [
+        "创新药",
+        "生物科技",
+        "生物医药",
+        "医药",
+        "制药"
+      ],
+      "indicators": [
+        {
+          "name": "医药制造业增加值同比",
+          "value": 4.9,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "全医药制造业是创新药研发的宽口径代理，不代表创新药盈利",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "创新药审批数量",
+        "创新药销售与出海交易",
+        "研发投入"
+      ]
+    },
+    {
+      "id": "newenergy",
+      "name": "光伏、风电与储能",
+      "group": "新能源与交通",
+      "description": "新能源发电设备、储能系统和配套电气设备。",
+      "terms": [
+        "光伏",
+        "风电",
+        "储能",
+        "绿色能源",
+        "可再生能源",
+        "新能源"
+      ],
+      "indicators": [
+        {
+          "name": "电气机械和器材制造业增加值",
+          "value": 8.1,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "电气机械行业包含非新能源产品",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "光伏电池产量",
+        "储能装机",
+        "风光发电量和设备利润"
+      ]
+    },
+    {
+      "id": "advanced",
+      "name": "高端装备与工业母机",
+      "group": "智能制造",
+      "description": "工业母机、专用装备与制造业升级。",
+      "terms": [
+        "工业母机",
+        "数控",
+        "高端装备",
+        "机械",
+        "智能制造",
+        "专用设备"
+      ],
+      "indicators": [
+        {
+          "name": "专用设备制造业增加值",
+          "value": 12.1,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "全部专用设备制造业，范围大于工业母机",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "通用设备制造业增加值",
+          "value": 8.5,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "通用设备制造业",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "金属切削机床产量",
+        "装备制造业利润",
+        "工业设备投资"
+      ]
+    },
+    {
+      "id": "aerospace",
+      "name": "低空经济与航空航天",
+      "group": "前沿产业",
+      "description": "低空飞行器、无人机、航空航天和相关装备。",
+      "terms": [
+        "低空经济",
+        "无人机",
+        "航空",
+        "航天",
+        "运输设备"
+      ],
+      "indicators": [
+        {
+          "name": "铁路船舶航空航天等运输设备制造业增加值",
+          "value": 11.7,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "含铁路及船舶，不能作为低空经济专属增速",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "民用无人机产量",
+        "低空应用运营规模",
+        "航空航天制造业增加值"
+      ]
+    },
+    {
+      "id": "consumer",
+      "name": "消费制造与消费品牌",
+      "group": "消费与民生",
+      "description": "食品饮料、消费品制造与品牌需求。",
+      "terms": [
+        "消费",
+        "食品",
+        "饮料",
+        "家电",
+        "零售",
+        "品牌"
+      ],
+      "indicators": [
+        {
+          "name": "食品制造业增加值",
+          "value": 7.3,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "食品制造子行业，非全部消费市场",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        },
+        {
+          "name": "酒饮料及精制茶制造业增加值",
+          "value": 5.5,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "饮料相关制造子行业",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "社会消费品零售总额",
+        "居民消费",
+        "消费品行业利润"
+      ]
+    },
+    {
+      "id": "materials",
+      "name": "新材料与有色金属",
+      "group": "材料与基础工业",
+      "description": "有色金属、功能材料与新材料供应链。",
+      "terms": [
+        "新材料",
+        "有色金属",
+        "铜",
+        "铝",
+        "材料"
+      ],
+      "indicators": [
+        {
+          "name": "有色金属冶炼和压延业增加值",
+          "value": -5.1,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "金属冶炼行业，不等于先进功能材料",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "新材料产量",
+        "有色金属价格",
+        "行业利润"
+      ]
+    },
+    {
+      "id": "agri",
+      "name": "现代农业与农业科技",
+      "group": "消费与民生",
+      "description": "农业生产、农机、农产品加工与农业科技。",
+      "terms": [
+        "农业",
+        "农机",
+        "粮食",
+        "农产品",
+        "乡村振兴"
+      ],
+      "indicators": [
+        {
+          "name": "农副食品加工业增加值",
+          "value": 4.1,
+          "unit": "%",
+          "period": "2026-09",
+          "basis": "当月同比",
+          "relation": "proxy",
+          "scope": "农副食品加工，不等于整个农业增加值",
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+        }
+      ],
+      "track": [
+        "农机产量",
+        "粮食产量",
+        "农业固定资产投资"
+      ]
+    }
+  ]
+}
