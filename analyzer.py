@@ -66,6 +66,33 @@ def valid_analysis(result):
             return False
     return True
 
+def call_model(req):
+    """Retry only temporary 429/5xx responses; never switch to a paid model."""
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=100) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            body = exc.read(1200).decode("utf-8", errors="replace")
+            # Log only provider error code and short message, never request headers or API key.
+            try:
+                detail = json.loads(body)
+                error = detail.get("error", detail)
+                if not isinstance(error, dict):
+                    error = {}
+                reason = str(error.get("code", detail.get("code", "unknown")))[:30]
+                message = str(error.get("message", detail.get("message", "")))[:130]
+            except (ValueError, AttributeError, TypeError):
+                reason, message = "unknown", "无法解析服务商错误信息"
+            print(f"智谱响应: HTTP {exc.code} / 业务码 {reason} / {message}")
+            if exc.code in (429, 500, 502, 503, 504) and attempt < 2:
+                delay = (15, 40)[attempt]
+                print(f"临时限制，等待 {delay} 秒后重试第 {attempt + 2} 次")
+                time.sleep(delay)
+                continue
+            raise
+
+
 def analyze(policy, key):
     user = {
         "title": policy.get("title"),
@@ -90,8 +117,7 @@ def analyze(policy, key):
                  "Content-Type": "application/json"},
         method="POST"
     )
-    with urllib.request.urlopen(req, timeout=100) as response:
-        raw = json.load(response)
+    raw = call_model(req)
     text = raw["choices"][0]["message"]["content"]
     answer = json.loads(text)
     if not valid_analysis(answer):
