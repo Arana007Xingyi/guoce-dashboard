@@ -634,6 +634,7 @@ select { flex: 1; min-width: 130px; }
       <div class="toolbar">
         <select id="valuationSector"><option value="">全部产业</option></select>
         <select id="valuationBenchmark">
+          <option value="sector">优先使用细分行业指数</option>
           <option value="csi300">沪深300 · 宽基估值对照</option>
           <option value="sse50">上证50 · 宽基估值对照</option>
           <option value="csi500">中证500 · 宽基估值对照</option>
@@ -798,6 +799,8 @@ let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
 let industryCollectorStatus = {index_state:'not_run',checked_at:null,new_points_added:0};
 let marketHistory = {instruments:[],status:[],updated_at:null};
+let industryProfits = {records:[],updated_at:null};
+let marketConfig = {indices:[],etfs:[]};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1431,6 +1434,20 @@ function renderMarketHistory() {
       (isIndex?'中证指数':'ETF数据接口说明')+' ↗</a></p></article>';
   }).join('') : '<div class="empty">尚未取得符合条件的行情。请检查采集状态；没有数据时不展示虚假估值。</div>';
 }
+async function loadIndustryProfitsAndMarketConfig() {
+  const fetchJson=async (path)=>{
+    const res=await fetch('./data/'+path+'?t='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw Error('无法读取'+path);
+    return res.json();
+  };
+  const [profit,config]=await Promise.allSettled([
+    fetchJson('industry_profit.json'),fetchJson('market_config.json')
+  ]);
+  industryProfits=profit.status==='fulfilled'&&Array.isArray(profit.value.records)
+    ?profit.value:{records:[],updated_at:null};
+  marketConfig=config.status==='fulfilled'&&Array.isArray(config.value.indices)
+    ?config.value:{indices:[],etfs:[]};
+}
 async function loadMarketHistory() {
   try {
     const res=await fetch('./data/market_history.json?t='+Date.now(),{cache:'no-store'});
@@ -1457,39 +1474,65 @@ $('marketInstrument').addEventListener('change',renderMarketHistory);
 $('marketKind').addEventListener('change',renderMarketHistory);
 function renderValuationTriptych() {
   const target=$('valuationTriptych');
-  if(!target) return;
+  if(!target)return;
   const selected=$('valuationSector').value;
-  const targetSectors=(industryClimate.sectors||[]).filter(s=>!selected||s.id===selected);
-  const benchmark=(marketHistory.instruments||[]).find(x=>x.kind==='index'&&x.id===$('valuationBenchmark').value);
-  const peRows=(benchmark?.points||[]).filter(p=>Number.isFinite(p.pe_ttm));
-  const peLast=peRows.length?peRows[peRows.length-1]:null;
-  const pct=Number.isFinite(benchmark?.pe_percentile)?benchmark.pe_percentile:null;
+  const targetSectors=(industryClimate.sectors||[]).filter(x=>!selected||x.id===selected);
+  const mode=$('valuationBenchmark').value||'sector';
+  const all=marketHistory.instruments||[];
+  const config=marketConfig.indices||[];
   target.innerHTML=targetSectors.map(sector=>{
+    const profit=(industryProfits.records||[]).find(x=>x.sector_id===sector.id);
+    const match=config.find(x=>(x.sector_ids||[]).includes(sector.id));
+    const officialIndex=match?all.find(x=>x.id===match.id):null;
+    const benchmark=mode==='sector'?officialIndex:all.find(x=>x.kind==='index'&&x.id===mode);
+    const isSectorIndex=mode==='sector'&&Boolean(match);
+    const peRecords=(benchmark?.points||[]).filter(x=>Number.isFinite(x.pe_ttm));
+    const last=peRecords.at(-1);
+    const percentile=Number.isFinite(benchmark?.pe_percentile)?benchmark.pe_percentile:null;
     const prod=primaryHistory(sector.id);
-    const candidates=(marketHistory.instruments||[]).filter(x=>
-      x.kind==='etf'&&(x.sector_ids||[]).includes(sector.id));
-    const etf=candidates.find(x=>(x.points||[]).length>1)||candidates[0];
+    const matched=(all||[]).filter(x=>x.kind==='etf'&&(x.sector_ids||[]).includes(sector.id));
+    const etf=matched.find(x=>(x.points||[]).length>1)||matched[0];
     const etfLast=etf?.points?.at(-1);
+    const peDescription=match?
+      '指数：'+escapeHtml(match.name)+'（'+escapeHtml(match.code)+'）。'+
+      escapeHtml(match.scope_note||'行业指数成份口径与统计局分类不同'):
+      '暂未配置对应的中证细分指数';
+    const peStatus=last?
+      '最新 '+escapeHtml(last.date)+' · PE源字段 '+escapeHtml(formatMarketNumber(last.pe_ttm))+
+      ' · 样本内分位：'+(percentile===null?'样本不足或PE不可用':escapeHtml(formatMarketNumber(percentile,1)+'%（待核）')):
+      '当前没有有效历史PE，不推算、不用宽基代替';
+    const profitDetail=profit?
+      '规模以上工业 '+escapeHtml(profit.industry)+' 利润：'+
+      '<strong>'+escapeHtml((profit.profit_yoy_pct>0?'+':'')+profit.profit_yoy_pct+'%')+'</strong>（同比）'+
+      ' · 利润总额 '+escapeHtml(formatMarketNumber(profit.profit_100m,1))+'亿元'+
+      ' · '+escapeHtml(profit.period_label)+
+      '<p class="triptych-hint">'+escapeHtml(profit.disclaimer||'')+
+      '。利润数据是累计同比，不是单月增速；不可与工业生产当月同比直接作差。</p>'+
+      '<a target="_blank" rel="noopener noreferrer" href="'+escapeHtml(strategyUrl(profit.source_url))+'">国家统计局利润原文 ↗</a>':
+      '目前没有可核对的行业利润数据';
     return '<article class="valuation-triptych"><h3>'+escapeHtml(sector.name)+'</h3>'+
       '<div class="triptych-columns">'+
-      '<div class="triptych-panel"><h4>① 产业工业生产同比</h4>'+
-        historicalChart(prod)+'<p class="triptych-hint">'+
-        (prod?escapeHtml(prod.relation==='direct'?'官方直接指标':'宽口径代理指标')+
-         ' · '+escapeHtml(prod.label):'无可比月度指标')+
-        '。生产增长不代表行业盈利增长。</p></div>'+
-      '<div class="triptych-panel"><h4>② 宽基指数PE · '+escapeHtml(benchmark?.name||'未选择')+'</h4>'+
-        marketTrendSvg(benchmark?.points||[],'pe_ttm','中证 peg 字段 · 历史变化')+
-        '<p class="triptych-hint">'+(peLast?'最近交易日 '+escapeHtml(peLast.date)+
-        ' · PE字段 '+escapeHtml(formatMarketNumber(peLast.pe_ttm)):'暂无有效PE')+
-        ' · 样本内分位：'+(pct===null?'暂无有效历史样本':escapeHtml(formatMarketNumber(pct,1)+'%（待核验）'))+
-        '。这是宽基指数，非行业专属估值；peg字段的PE-TTM定义仍待官方核实。</p></div>'+
+      '<div class="triptych-panel"><h4>① 产业产出与行业利润</h4>'+
+      historicalChart(prod)+
+      '<p class="triptych-hint">'+(prod?escapeHtml(prod.label)+' · '+
+        (prod.relation==='direct'?'直接统计':'相关代理'):'暂无历史工业生产数据')+'</p>'+
+      '<div class="triptych-hint">'+profitDetail+'</div></div>'+
+      '<div class="triptych-panel"><h4>② '+(isSectorIndex?'细分行业指数':'宽基指数')+'PE历史</h4>'+
+      (benchmark?marketTrendSvg(benchmark.points||[],'pe_ttm','中证接口 peg 字段，PE口径待核'):
+        '<p class="empty">指数已配置，等待首次行业指数数据采集</p>')+
+      '<p class="triptych-hint">'+
+      (mode==='sector'?peDescription:escapeHtml(benchmark?.name||'宽基指数')+'；仅作市场比较，非行业估值')+'</p>'+
+      '<p class="triptych-hint">'+peStatus+
+      '。peg是否为PE-TTM尚未经官方定义验证，历史分位只作参考。</p>'+
+      (match?'<a href="'+escapeHtml(strategyUrl(match.factsheet_url))+
+        '" target="_blank" rel="noopener noreferrer">中证指数官方事实清单 ↗</a>':'')+'</div>'+
       '<div class="triptych-panel"><h4>③ 相关ETF收盘价</h4>'+
-        (etf?marketTrendSvg(etf.points||[],'close',etf.name):'<p class="empty">未映射相关ETF</p>')+
-        '<p class="triptych-hint">'+(etf?escapeHtml(etf.name)+
-        (etfLast?' · 最近交易日 '+escapeHtml(etfLast.date):' · 暂无价格'):'无相关ETF')+
-        '。ETF行情不是行业盈利或指数估值。</p></div>'+
-      '</div><p class="triptych-hint">研究性对照：三列统计期间与口径可能不同，不构成高估、低估或交易信号。行业专属PE和行业利润尚待接入。</p></article>';
-  }).join('')||'<div class="empty">行业或行情数据尚未加载</div>';
+      (etf?marketTrendSvg(etf.points||[],'close',etf.name):'<p class="empty">暂无对应ETF</p>')+
+      '<p class="triptych-hint">'+(etf?escapeHtml(etf.name)+
+        (etfLast?' · '+escapeHtml(etfLast.date):' · 暂无行情'):'尚未建立ETF对应')+
+      '。ETF价格不代表行业盈利或指数PE。</p></div>'+
+      '</div><p class="triptych-hint">产业统计、指数成份和ETF持仓范围不同，不可据此直接判断买卖时机。资料均保留来源。</p></article>';
+  }).join('')||'<p class="empty">暂无对应行业</p>';
 }
 function renderValuationLinks() {
   const select=$('valuationSector');
@@ -2072,7 +2115,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
