@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 PATH = Path("data/industry_history.json")
 INDEX = "https://www.stats.gov.cn/sj/zxfb/"
 TIMEOUT = 18
-TITLE = re.compile(r"(20\d{2})年(1[0-2]|[1-9])月份规模以上工业增加值")
+TITLE = re.compile(r"(20\d{2})\s*年\s*(1[0-2]|[1-9])\s*月(?:份)?规模以上工业增加值")
 CELL_TARGETS = {
     "hi_tech": "高技术制造业",
     "electronics": "计算机、通信和其他电子设备制造业",
@@ -152,6 +152,18 @@ def main():
         print("NBS index unavailable; preserved existing history:", type(exc).__name__)
     added, failed = 0, 0
     checked = []
+    # Missing new-month data are not zeros or evidence of publication status.
+    today_cn = datetime.datetime.now(
+        datetime.timezone(datetime.timedelta(hours=8))).date()
+    last_month = max(sources) if sources else None
+    expected_month = None
+    if last_month:
+        yy, mm = (int(x) for x in last_month.split("-"))
+        expected_month = f"{yy + (mm == 12):04d}-{mm % 12 + 1:02d}"
+    release_state = (
+        "official_release_discovered" if expected_month in pages else
+        "official_release_not_verified"
+    ) if expected_month and expected_month <= today_cn.strftime("%Y-%m") else "not_due"
     for month, url in sorted(pages.items()):
         if month in sources:
             continue
@@ -197,12 +209,14 @@ def main():
     status_path.write_text(json.dumps({
         "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "index_state": index_state,
+        "next_expected_month": expected_month,
+        "release_state": release_state,
         "new_month_pages_found": len(pages),
         "new_points_added": added,
         "failed_pages": failed,
         "monthly_checks": checked,
         "latest_stored_month": max(sources) if sources else None,
-        "note": "无新数据不等于失败；页面解析失败不代表产业景气下降。"
+        "note": "未核实新月份官方公报时保留旧数据；不可断言尚未发布，也不得补造指标。"
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Industry history: appended", added, "new verified points; skipped sources", failed)
 
