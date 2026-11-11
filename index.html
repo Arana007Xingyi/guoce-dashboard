@@ -232,6 +232,16 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 景气 / 宽基指数PE / ETF 同屏对照 */
+.valuation-triptych {border:1px solid #455c78;border-radius:12px;background:#1c2d46;padding:15px;margin:15px 0;}
+.valuation-triptych h3 {margin:2px 0 12px;}
+.triptych-columns {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.triptych-panel {min-width:0;padding:11px;border-radius:9px;background:#273a56;border:1px solid #425b7a;}
+.triptych-panel h4 {margin:0 0 8px;font-size:14px;}
+.triptych-panel .climate-chart {padding:7px;}
+.triptych-panel .climate-chart-label {overflow-wrap:anywhere;}
+.triptych-hint {font-size:12px;color:#b8cbe2;line-height:1.8;margin:8px 0;}
+@media(max-width:950px){.triptych-columns{grid-template-columns:1fr;}}
 /* 指数与ETF历史走势及估值 */
 .market-research {margin:12px 0;padding:16px;background:#202f47;border:1px solid #465b78;border-radius:12px;}
 .market-research h3 {margin:0 0 8px;font-size:17px;}
@@ -623,8 +633,16 @@ select { flex: 1; min-width: 130px; }
       <p class="sectionintro">将12个行业的官方工业统计历史趋势与待建立的可比市场估值并排观察。目前没有经过校验的指数历史PE/PB数据，不能计算估值百分位或断言市场已透支。</p>
       <div class="toolbar">
         <select id="valuationSector"><option value="">全部产业</option></select>
+        <select id="valuationBenchmark">
+          <option value="csi300">沪深300 · 宽基估值对照</option>
+          <option value="sse50">上证50 · 宽基估值对照</option>
+          <option value="csi500">中证500 · 宽基估值对照</option>
+          <option value="csi1000">中证1000 · 宽基估值对照</option>
+          <option value="csi_all">中证全指 · 宽基估值对照</option>
+        </select>
       </div>
       <div class="strategy-proof">生产增长与利润增长不同；任何“基本面改善”结论至少还需行业利润、订单或收入验证。没有可比估值历史数据时，结论一律为“估值无法判定”，不是“低估”。</div>
+      <div id="valuationTriptych"></div>
       <div id="valuationLinkCards"></div>
     </div>
     <div class="panel" id="marketHistoryPanel">
@@ -1378,8 +1396,8 @@ function renderMarketHistory() {
     const ratio=Number.isFinite(x.pe_percentile)?x.pe_percentile:null;
     const chips=[
       ['最新收盘',formatMarketNumber(last.close,isIndex?2:3)],
-      ['滚动PE',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
-      ['历史PE分位',ratio!==null?formatMarketNumber(ratio,1)+'%':'样本不足'],
+      ['PE源字段 peg（待核口径）',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
+      ['样本内PE分位（待核）',ratio!==null?formatMarketNumber(ratio,1)+'%':'样本不足'],
       ['PB','未接入'],
     ];
     return '<article class="market-research"><h3>'+escapeHtml(x.name||x.code)+
@@ -1391,8 +1409,8 @@ function renderMarketHistory() {
         '<div class="market-kpi"><div class="sub">'+escapeHtml(k)+'</div><strong>'+escapeHtml(v)+'</strong></div>'
       ).join('')+'</div>'+
       '<div class="market-series">'+marketTrendSvg(pts,'close','历史收盘价')+'</div>'+
-      (isIndex?'<div class="market-series">'+marketTrendSvg(pts,'turnover','指数成交额（来源原始单位，尚未核实金额单位）')+'</div>':'')+
-      (isIndex ? '<div class="market-series">'+marketTrendSvg(pts,'pe_ttm','指数滚动市盈率')+'</div>':
+      (isIndex?'<div class="market-series">'+'<p class="sub">接口成交额单位尚未核实，暂不呈现金额趋势。</p>'+'</div>':'')+
+      (isIndex ? '<div class="market-series">'+marketTrendSvg(pts,'pe_ttm','指数PE源字段 peg（口径待核）')+'</div>':
         '<p class="sub">ETF收盘价不等于所跟踪指数的估值。ETF成交额如果未由来源提供，将保持空值。</p>')+
       '<p class="sub">已保留'+pts.length+'个交易日 · 官方/数据来源：'+
       '<a href="'+escapeHtml(isIndex?'https://www.csindex.com.cn/':
@@ -1424,6 +1442,42 @@ async function loadMarketHistory() {
 }
 $('marketInstrument').addEventListener('change',renderMarketHistory);
 $('marketKind').addEventListener('change',renderMarketHistory);
+function renderValuationTriptych() {
+  const target=$('valuationTriptych');
+  if(!target) return;
+  const selected=$('valuationSector').value;
+  const targetSectors=(industryClimate.sectors||[]).filter(s=>!selected||s.id===selected);
+  const benchmark=(marketHistory.instruments||[]).find(x=>x.kind==='index'&&x.id===$('valuationBenchmark').value);
+  const peRows=(benchmark?.points||[]).filter(p=>Number.isFinite(p.pe_ttm));
+  const peLast=peRows.length?peRows[peRows.length-1]:null;
+  const pct=Number.isFinite(benchmark?.pe_percentile)?benchmark.pe_percentile:null;
+  target.innerHTML=targetSectors.map(sector=>{
+    const prod=primaryHistory(sector.id);
+    const candidates=(marketHistory.instruments||[]).filter(x=>
+      x.kind==='etf'&&(x.sector_ids||[]).includes(sector.id));
+    const etf=candidates.find(x=>(x.points||[]).length>1)||candidates[0];
+    const etfLast=etf?.points?.at(-1);
+    return '<article class="valuation-triptych"><h3>'+escapeHtml(sector.name)+'</h3>'+
+      '<div class="triptych-columns">'+
+      '<div class="triptych-panel"><h4>① 产业工业生产同比</h4>'+
+        historicalChart(prod)+'<p class="triptych-hint">'+
+        (prod?escapeHtml(prod.relation==='direct'?'官方直接指标':'宽口径代理指标')+
+         ' · '+escapeHtml(prod.label):'无可比月度指标')+
+        '。生产增长不代表行业盈利增长。</p></div>'+
+      '<div class="triptych-panel"><h4>② 宽基指数PE · '+escapeHtml(benchmark?.name||'未选择')+'</h4>'+
+        marketTrendSvg(benchmark?.points||[],'pe_ttm','中证 peg 字段 · 历史变化')+
+        '<p class="triptych-hint">'+(peLast?'最近交易日 '+escapeHtml(peLast.date)+
+        ' · PE字段 '+escapeHtml(formatMarketNumber(peLast.pe_ttm)):'暂无有效PE')+
+        ' · 样本内分位：'+(pct===null?'暂无有效历史样本':escapeHtml(formatMarketNumber(pct,1)+'%（待核验）'))+
+        '。这是宽基指数，非行业专属估值；peg字段的PE-TTM定义仍待官方核实。</p></div>'+
+      '<div class="triptych-panel"><h4>③ 相关ETF收盘价</h4>'+
+        (etf?marketTrendSvg(etf.points||[],'close',etf.name):'<p class="empty">未映射相关ETF</p>')+
+        '<p class="triptych-hint">'+(etf?escapeHtml(etf.name)+
+        (etfLast?' · 最近交易日 '+escapeHtml(etfLast.date):' · 暂无价格'):'无相关ETF')+
+        '。ETF行情不是行业盈利或指数估值。</p></div>'+
+      '</div><p class="triptych-hint">研究性对照：三列统计期间与口径可能不同，不构成高估、低估或交易信号。行业专属PE和行业利润尚待接入。</p></article>';
+  }).join('')||'<div class="empty">行业或行情数据尚未加载</div>';
+}
 function renderValuationLinks() {
   const select=$('valuationSector');
   if(!select)return;
@@ -1481,8 +1535,13 @@ async function loadIndustryHistory() {
   monthControl.value=times.includes(oldPeriod)?oldPeriod:'';
   renderIndustryClimate();
   renderValuationLinks();
+  renderValuationTriptych();
 }
-$('valuationSector').addEventListener('change',renderValuationLinks);
+$('valuationSector').addEventListener('change',()=>{
+  renderValuationLinks();
+  renderValuationTriptych();
+});
+$('valuationBenchmark').addEventListener('change',renderValuationTriptych);
 
 function renderIndustryClimate() {
   const sectors=industryClimate.sectors||[];
@@ -2009,6 +2068,7 @@ async function load() {
     renderEvidenceBoard();
     renderMonitor();
     renderValuationLinks();
+    renderValuationTriptych();
     manualAiQueue = manualAiQueue.filter(id => policies.some(p => p.id === id && !aiAnalyses[id]?.analysis && p.content_status === 'success' && p.content?.length >= 300));
     manualAiSave();
     manualAiRefresh();
