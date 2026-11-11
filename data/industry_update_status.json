@@ -1,10 +1,10 @@
 {
-  "checked_at": null,
-  "index_state": "not_run",
+  "checked_at": "2026-11-11T07:30:00.212607+00:00",
+  "index_state": "no_matching_new_month",
   "new_month_pages_found": 0,
   "new_points_added": 0,
   "failed_pages": 0,
   "monthly_checks": [],
   "latest_stored_month": "2026-09",
-  "note": "月度采集自检尚未在GitHub Actions首次运行；历史图仍显示已核实的原始月份。"
+  "note": "无新数据不等于失败；页面解析失败不代表产业景气下降。"
 }

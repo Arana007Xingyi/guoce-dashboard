@@ -1,46 +1,195 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-11T06:48:53.739786+00:00",
+  "updated_at": "2026-11-11T07:29:51.615788+00:00",
   "methodology": "官方列表页标题级候选；未自动核验项目实际进度、资金金额或拨付。来源仅覆盖当前指定页面，不代表全量官方项目。",
   "sources": [
     {
       "source_id": "mof_construction",
       "name": "财政部·中央基建投资预算",
-      "status": "failed",
-      "error": "HTTPError",
-      "found": 0,
-      "checked_at": "2026-11-11T06:48:46.647805+00:00"
+      "status": "ok",
+      "found": 10,
+      "checked_at": "2026-11-11T07:29:34.581795+00:00"
     },
     {
       "source_id": "ndrc_notices",
       "name": "国家发改委·通知公告",
       "status": "ok",
       "found": 0,
-      "checked_at": "2026-11-11T06:48:47.143327+00:00"
+      "checked_at": "2026-11-11T07:29:34.991143+00:00"
     },
     {
       "source_id": "shanghai_projects",
       "name": "上海市发改委·重大工程清单",
       "status": "ok",
       "found": 2,
-      "checked_at": "2026-11-11T06:48:48.884285+00:00"
+      "checked_at": "2026-11-11T07:29:39.144736+00:00"
     },
     {
       "source_id": "jiangsu_fgw",
       "name": "江苏省发改委·官方信息",
       "status": "ok",
       "found": 0,
-      "checked_at": "2026-11-11T06:48:50.998683+00:00"
+      "checked_at": "2026-11-11T07:29:46.944561+00:00"
     },
     {
       "source_id": "guangdong_fgw",
       "name": "广东省发改委·官方信息",
       "status": "ok",
       "found": 3,
-      "checked_at": "2026-11-11T06:48:53.489662+00:00"
+      "checked_at": "2026-11-11T07:29:51.365602+00:00"
     }
   ],
   "items": [
+    {
+      "id": "d6addc3fa3b5efac558d",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992572.htm",
+      "title": "财政部关于下达乡村振兴专项（和美乡村建设方向）2026年中央基建投资预算的通知",
+      "published_at": "2026-06-30",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "3f24896f0f71d4f99235",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992571.htm",
+      "title": "财政部关于下达医疗卫生服务体系专项2026年第三批中央基建投资预算的通知",
+      "published_at": "2026-06-23",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "277de8d936786fd89381",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992570.htm",
+      "title": "财政部关于下达重庆市洪涝和地质灾害灾后应急恢复2026年中央基建投资预算的通知",
+      "published_at": "2026-06-12",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "b274c4e79895714f7907",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992569.htm",
+      "title": "财政部关于下达优质教育资源扩容工程2026年第三批中央基建投资预算的通知",
+      "published_at": "2026-06-11",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "1dd5324b45c35d959ba1",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992568.htm",
+      "title": "财政部关于下达灾后应急恢复2026年中央基建投资预算的通知",
+      "published_at": "2026-06-04",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "e8f73ac076d4efa98621",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990353.htm",
+      "title": "财政部关于下达社会服务设施建设支持工程专项2026年中央基建投资预算的通知",
+      "published_at": "2026-05-21",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "8c12cfb5315c97309180",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990352.htm",
+      "title": "财政部关于下达文化传承发展工程 2026年中央基建投资预算的通知",
+      "published_at": "2026-05-21",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "c719aab4ab084d972973",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990350.htm",
+      "title": "财政部关于下达医疗卫生服务体系专项 2026年第二批中央基建投资预算的通知",
+      "published_at": "2026-05-21",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "926153a20cab206b0ac9",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990349.htm",
+      "title": "财政部关于下达养老托育专项2026年中央基建投资预算的通知",
+      "published_at": "2026-05-06",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
+    {
+      "id": "438ebe55f049e9b448f7",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990347.htm",
+      "title": "财政部关于下达优质教育资源扩容工程 2026年第二批中央基建投资预算的通知",
+      "published_at": "2026-04-30",
+      "source_id": "mof_construction",
+      "source": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "category": "finance",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T07:29:24.828805+00:00",
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
+    },
     {
       "id": "ec29c44de970ad3963c9",
       "url": "https://tzxm.gd.gov.cn/",
@@ -54,7 +203,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
     },
     {
       "id": "94b5118ba9d79e3160a5",
@@ -69,7 +218,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
     },
     {
       "id": "4ffabbf58101c7c6619c",
@@ -84,7 +233,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
     },
     {
       "id": "1bac7672a3b7a83ab1f7",
@@ -99,7 +248,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
     },
     {
       "id": "e1fd96036c44a24a8c86",
@@ -114,7 +263,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+      "last_seen_at": "2026-11-11T07:29:24.828805+00:00"
     }
   ]
 }
