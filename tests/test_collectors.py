@@ -88,5 +88,32 @@ class TestMarket(unittest.TestCase):
         self.assertIsNotNone(market.percentile(valid))
 
 
+class TestSectorMapping(unittest.TestCase):
+    def test_four_sector_indices_have_unique_verified_codes(self):
+        import json
+        from pathlib import Path
+        config = json.loads(Path("data/market_config.json").read_text(encoding="utf-8"))
+        sector = {r["id"]: r for r in config["indices"] if r["id"].startswith("sector_")}
+        self.assertEqual({v["code"] for v in sector.values()},
+                         {"931865", "H30590", "930997", "000933"})
+        self.assertEqual(len(sector), 4)
+        self.assertTrue(all(v.get("factsheet_url", "").startswith("https://oss-ch.csindex.com.cn/")
+                            for v in sector.values()))
+
+    def test_profit_proxy_explains_scope_and_preserves_source(self):
+        import json
+        from pathlib import Path
+        data = json.loads(Path("data/industry_profit.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(data["records"]), 12)
+        self.assertTrue(all(
+            r["relation"] == "proxy" and r["source_url"].startswith("https://www.stats.gov.cn/")
+            and r.get("disclaimer") and r["period"] == "2026-01..09"
+            for r in data["records"]
+        ))
+        # Broad industrial-profit data must never be mislabelled as a dedicated
+        # listed-company profit series of semiconductor / robots / EV.
+        self.assertFalse(any(r["relation"] == "direct" for r in data["records"]))
+
+
 if __name__ == "__main__":
     unittest.main()
