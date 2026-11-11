@@ -1,4 +1,4 @@
-"""AI policy analysis via Zhipu GLM-5.3-Flash with account resource packages."""
+"""Manual-only AI analysis via Zhipu GLM-5.3-Flash."""
 import datetime
 import hashlib
 import json
@@ -125,7 +125,26 @@ def analyze(policy, key):
         raise ValueError("模型返回的数据未通过结构校验")
     return answer
 
+def selected_policy_ids():
+    """Only explicitly selected policies are eligible for AI analysis."""
+    raw = os.getenv("POLICY_IDS", "").strip()
+    if not raw:
+        print("未指定政策编号：本轮不调用AI、不消耗模型Tokens")
+        return []
+    # Policy IDs are the collector's 16-character hexadecimal identifiers.
+    import re
+    parts = [part.strip().lower() for part in re.split(r"[,\\s;，；]+", raw) if part.strip()]
+    if not parts or len(parts) > 5:
+        raise ValueError("每次请指定1至5条政策编号")
+    if any(not re.fullmatch(r"[0-9a-f]{16}", p) for p in parts):
+        raise ValueError("政策编号格式不正确：应为16位十六进制字符")
+    return list(dict.fromkeys(parts))
+
+
 def main():
+    selected = selected_policy_ids()
+    if not selected:
+        return
     key = os.getenv("ZHIPU_API_KEY", "").strip()
     if not key:
         print("ZHIPU_API_KEY 未配置：安全跳过分析，原有采集不受影响")
@@ -140,20 +159,29 @@ def main():
     if not isinstance(existing, dict):
         existing = {}
 
+    by_id = {p.get("id"): p for p in policies if isinstance(p, dict)}
     count = 0
     errors = 0
     attempted = 0
-    for p in policies:
-        if attempted >= MAX_PER_RUN:
-            break
+    skipped = 0
+    for pid in selected:
+        p = by_id.get(pid)
+        if not p:
+            print("跳过：政策编号不在当前数据中", pid)
+            skipped += 1
+            continue
         content = p.get("content", "")
         if p.get("content_status") != "success" or len(content) < 300:
+            print("跳过：未采集到足够的政策正文", pid)
+            skipped += 1
             continue
         pid = p.get("id")
         if not pid:
             continue
         content_hash = digest(p)
         if existing.get(pid, {}).get("content_hash") == content_hash:
+            print("跳过：该政策已有相同正文的AI分析", pid)
+            skipped += 1
             continue
         attempted += 1
         try:
@@ -177,7 +205,7 @@ def main():
                 break
             print("分析失败:", str(p.get("title", ""))[:50], type(exc).__name__)
         time.sleep(1)
-    print(f"本轮分析完成：尝试 {attempted} 条；新增 {count} 条；失败 {errors} 条；累计 {len(existing)} 条")
+    print(f"手动任务完成：指定 {len(selected)} 条；尝试 {attempted} 条；新增 {count} 条；跳过 {skipped} 条；失败 {errors} 条；累计 {len(existing)} 条")
 
 if __name__ == "__main__":
     main()
