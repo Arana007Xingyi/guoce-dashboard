@@ -32,7 +32,7 @@ jobs:
       - name: Analyze policies with AI (if configured)
         env:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          MAX_ANALYSES_PER_RUN: "5"
+          MAX_ANALYSES_PER_RUN: "2"
         run: python analyzer.py
 
       - name: Commit updated data
