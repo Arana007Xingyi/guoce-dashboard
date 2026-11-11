@@ -1185,6 +1185,7 @@ function renderProgress() {
   const goals = strategyCatalog.filter(g => !filter || g.id === filter);
   $('progressCards').innerHTML = goals.map(g => {
     const matched = strategicMatches(g);
+    const projectEvidence = projectFundingRecords.filter(r => (r.strategy_ids||[]).includes(g.id));
     const detailed = matched.filter(p => {
       const a = aiAnalyses[p.id] && aiAnalyses[p.id].analysis;
       return a && Array.isArray(a.implementation) && a.implementation.length;
@@ -1197,9 +1198,17 @@ function renderProgress() {
       '<div class="strategy-chain"><span class="strategy-node">纲要：已发布</span><span>→</span>' +
       '<span class="strategy-node">专项：' + (g.special_documents || []).length + '份已核验</span><span>→</span>' +
       '<span class="strategy-node">细则：尚无已核验关联</span><span>→</span>' +
-      '<span class="strategy-node">项目/资金：暂无完成证据</span></div>' +
-      '<div class="strategy-proof">状态：已建立规划与文件线索；尚无证据认定具体项目完成、资金拨付或目标实现。' +
-      '“待核实”不等于“未实施”。</div>' +
+      '<span class="strategy-node">项目/资金官方记录：'+projectEvidence.length+'条</span></div>' +
+      '<div class="strategy-proof">已核实的是项目开工、资金计划/下达等各自披露的阶段。尚不能据此认定项目竣工、资金实际支付或规划目标实现。全国汇总金额不等于单个项目拨款。</div>' +
+      '<div class="strategy-list"><b>该战略方向的官方项目/资金记录（研究归类）</b>' +
+      (projectEvidence.length ? '<ul>' + projectEvidence.map(r=>
+        '<li><strong>'+escapeHtml(r.name||'未命名')+'</strong> · '+escapeHtml(r.stage||'待核实')+
+        '<div class="meta">截至 '+escapeHtml(r.as_of||'未知')+
+        ' · 已下达：'+escapeHtml(amountText(r.allocated_100m))+
+        ' · 实际支付：'+escapeHtml(amountText(r.paid_100m))+'</div>'+
+        '<a target="_blank" rel="noopener noreferrer" href="'+escapeHtml(strategyUrl(r.source_url))+'">核对项目/资金官方证据 ↗</a></li>'
+      ).join('')+'</ul>' : '<div class="strategy-empty">尚未建立本方向的官方项目/资金记录</div>')+
+      '</div>' +
       '<div class="strategy-list"><b>文件列出的执行要求（AI提取，非完成进展）</b>' +
       (steps.length ? '<ul>' + steps.map(({p,x}) => {
         const name = typeof x === 'string' ? x : String(x.step || '');
