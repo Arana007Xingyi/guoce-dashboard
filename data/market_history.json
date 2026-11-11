@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-11T07:30:17.036952+00:00",
-  "methodology": "中证指数官网提供指数日线、成交金额和滚动市盈率；历史PB当前无可复核免费同口径来源，保留空值。ETF行情来源为DataBull第三方公开API（可能需API Key），ETF无独立行业PE/PB，不以ETF价格推算。研究赛道与指数/ETF是研究映射，非完全重合。",
+  "updated_at": "2026-11-11T07:59:45.962799+00:00",
+  "methodology": "指数历史收盘及接口字段来自中证指数官网。接口字段 peg 被第三方实现解释为PE，但未核实是否为滚动PE-TTM；pe_ttm为旧存储字段名，并不构成口径认证。pe_percentile仅表示同一接口历史样本分布位置且待核实，不是行业估值百分位。接口amount字段成交金额单位未由官方文档验证，禁止转换成元/亿元或绘制有金额单位的成交额图。PB暂无可靠同口径历史数据。ETF收盘来自第三方K线（无凭据时腾讯备用源），未核实成交金额字段。行业与ETF/宽基指数仅研究性映射，不能据此判断行业高低估。",
   "sources": {
     "index": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
     "etf": "https://api.databull.cn/cn/etf/history",
@@ -10138,6 +10138,13 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         },
         {
+          "date": "2026-10-31",
+          "close": 4016.92,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 13.16,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
           "date": "2026-11-02",
           "close": 4016.92,
           "turnover_unit": "source_units_unconfirmed",
@@ -10187,9 +10194,15 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 57.0,
+      "pe_percentile": 56.9,
       "provider": "CSI official",
-      "last_data_date": "2026-11-10"
+      "last_data_date": "2026-11-10",
+      "pe_source_field": "peg",
+      "pe_basis_verified": false,
+      "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
+      "turnover_unit_verified": false,
+      "turnover_basis_note": "CSI API amount units not independently verified; never scale to RMB or 100m RMB without official spec.",
+      "pe_percentile_verified": false
     },
     {
       "id": "sse50",
@@ -20321,6 +20334,13 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         },
         {
+          "date": "2026-10-31",
+          "close": 2762.54,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 11.89,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
           "date": "2026-11-02",
           "close": 2762.54,
           "turnover_unit": "source_units_unconfirmed",
@@ -20370,9 +20390,15 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 75.3,
+      "pe_percentile": 75.2,
       "provider": "CSI official",
-      "last_data_date": "2026-11-10"
+      "last_data_date": "2026-11-10",
+      "pe_source_field": "peg",
+      "pe_basis_verified": false,
+      "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
+      "turnover_unit_verified": false,
+      "turnover_basis_note": "CSI API amount units not independently verified; never scale to RMB or 100m RMB without official spec.",
+      "pe_percentile_verified": false
     },
     {
       "id": "csi500",
@@ -30504,6 +30530,13 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         },
         {
+          "date": "2026-10-31",
+          "close": 6420.23,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 21.65,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
           "date": "2026-11-02",
           "close": 6420.23,
           "turnover_unit": "source_units_unconfirmed",
@@ -30555,7 +30588,13 @@
       ],
       "pe_percentile": 66.6,
       "provider": "CSI official",
-      "last_data_date": "2026-11-10"
+      "last_data_date": "2026-11-10",
+      "pe_source_field": "peg",
+      "pe_basis_verified": false,
+      "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
+      "turnover_unit_verified": false,
+      "turnover_basis_note": "CSI API amount units not independently verified; never scale to RMB or 100m RMB without official spec.",
+      "pe_percentile_verified": false
     },
     {
       "id": "csi1000",
@@ -40687,6 +40726,13 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         },
         {
+          "date": "2026-10-31",
+          "close": 6329.34,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 25.34,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
           "date": "2026-11-02",
           "close": 6329.34,
           "turnover_unit": "source_units_unconfirmed",
@@ -40738,7 +40784,13 @@
       ],
       "pe_percentile": 55.3,
       "provider": "CSI official",
-      "last_data_date": "2026-11-10"
+      "last_data_date": "2026-11-10",
+      "pe_source_field": "peg",
+      "pe_basis_verified": false,
+      "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
+      "turnover_unit_verified": false,
+      "turnover_basis_note": "CSI API amount units not independently verified; never scale to RMB or 100m RMB without official spec.",
+      "pe_percentile_verified": false
     },
     {
       "id": "csi_all",
@@ -50870,6 +50922,13 @@
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         },
         {
+          "date": "2026-10-31",
+          "close": 5034.54,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 16.32,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
           "date": "2026-11-02",
           "close": 5034.54,
           "turnover_unit": "source_units_unconfirmed",
@@ -50921,7 +50980,13 @@
       ],
       "pe_percentile": 54.4,
       "provider": "CSI official",
-      "last_data_date": "2026-11-10"
+      "last_data_date": "2026-11-10",
+      "pe_source_field": "peg",
+      "pe_basis_verified": false,
+      "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
+      "turnover_unit_verified": false,
+      "turnover_basis_note": "CSI API amount units not independently verified; never scale to RMB or 100m RMB without official spec.",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_300",
@@ -54440,7 +54505,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_500",
@@ -57959,7 +58025,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_chip",
@@ -61480,7 +61547,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_robot",
@@ -65001,7 +65069,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_nev",
@@ -68522,7 +68591,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_health",
@@ -72044,7 +72114,8 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     },
     {
       "id": "etf_sci",
@@ -75566,103 +75637,104 @@
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-11"
+      "last_data_date": "2026-11-11",
+      "pe_percentile_verified": false
     }
   ],
   "status": [
     {
       "instrument_id": "csi300",
-      "checked_at": "2026-11-11T07:30:00.371119+00:00",
+      "checked_at": "2026-11-11T07:59:36.794131+00:00",
       "state": "ok",
-      "new_or_updated_rows": 1453,
-      "rows_total": 1453,
+      "new_or_updated_rows": 1,
+      "rows_total": 1454,
       "last_data_date": "2026-11-10"
     },
     {
       "instrument_id": "sse50",
-      "checked_at": "2026-11-11T07:30:02.973107+00:00",
+      "checked_at": "2026-11-11T07:59:39.230864+00:00",
       "state": "ok",
-      "new_or_updated_rows": 1453,
-      "rows_total": 1453,
+      "new_or_updated_rows": 1,
+      "rows_total": 1454,
       "last_data_date": "2026-11-10"
     },
     {
       "instrument_id": "csi500",
-      "checked_at": "2026-11-11T07:30:05.647918+00:00",
+      "checked_at": "2026-11-11T07:59:39.684009+00:00",
       "state": "ok",
-      "new_or_updated_rows": 1453,
-      "rows_total": 1453,
+      "new_or_updated_rows": 1,
+      "rows_total": 1454,
       "last_data_date": "2026-11-10"
     },
     {
       "instrument_id": "csi1000",
-      "checked_at": "2026-11-11T07:30:06.856001+00:00",
+      "checked_at": "2026-11-11T07:59:40.337750+00:00",
       "state": "ok",
-      "new_or_updated_rows": 1453,
-      "rows_total": 1453,
+      "new_or_updated_rows": 1,
+      "rows_total": 1454,
       "last_data_date": "2026-11-10"
     },
     {
       "instrument_id": "csi_all",
-      "checked_at": "2026-11-11T07:30:10.389323+00:00",
+      "checked_at": "2026-11-11T07:59:40.891515+00:00",
       "state": "ok",
-      "new_or_updated_rows": 1453,
-      "rows_total": 1453,
+      "new_or_updated_rows": 1,
+      "rows_total": 1454,
       "last_data_date": "2026-11-10"
     },
     {
       "instrument_id": "etf_300",
-      "checked_at": "2026-11-11T07:30:12.841557+00:00",
+      "checked_at": "2026-11-11T07:59:41.343900+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_500",
-      "checked_at": "2026-11-11T07:30:14.300407+00:00",
+      "checked_at": "2026-11-11T07:59:43.283551+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_chip",
-      "checked_at": "2026-11-11T07:30:14.768875+00:00",
+      "checked_at": "2026-11-11T07:59:43.730889+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_robot",
-      "checked_at": "2026-11-11T07:30:15.221817+00:00",
+      "checked_at": "2026-11-11T07:59:44.176389+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_nev",
-      "checked_at": "2026-11-11T07:30:15.677630+00:00",
+      "checked_at": "2026-11-11T07:59:44.623653+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_health",
-      "checked_at": "2026-11-11T07:30:16.129936+00:00",
+      "checked_at": "2026-11-11T07:59:45.071368+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     },
     {
       "instrument_id": "etf_sci",
-      "checked_at": "2026-11-11T07:30:16.583110+00:00",
+      "checked_at": "2026-11-11T07:59:45.517521+00:00",
       "state": "ok",
-      "new_or_updated_rows": 501,
+      "new_or_updated_rows": 0,
       "rows_total": 501,
       "last_data_date": "2026-11-11"
     }
