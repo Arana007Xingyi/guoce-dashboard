@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Validate monthly statistics and market parsers (offline)
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
       - name: Collect official policies
         run: python collector.py
 
@@ -43,6 +46,11 @@ jobs:
 
       - name: Update official industry monthly time series (no AI)
         run: python industry_history_update.py
+
+      - name: Update A-share index and ETF market history (no AI)
+        env:
+          DATABULL_API_KEY: ${{ secrets.DATABULL_API_KEY }}
+        run: python market_history_update.py
 
       - name: Analyze selected policies with AI (manual only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.policy_ids != '' }}
@@ -60,6 +68,8 @@ jobs:
           if [ -f data/project_monitor.json ]; then git add data/project_monitor.json; fi
           if [ -f data/project_discovery.json ]; then git add data/project_discovery.json; fi
           if [ -f data/industry_history.json ]; then git add data/industry_history.json; fi
+          if [ -f data/industry_update_status.json ]; then git add data/industry_update_status.json; fi
+          if [ -f data/market_history.json ]; then git add data/market_history.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update official policy data"
             git push
