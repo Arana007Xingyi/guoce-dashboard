@@ -858,12 +858,14 @@ function renderHomeInsights() {
     const a = record && record.analysis;
     const summary = a && typeof a.summary === 'string'
       ? escapeHtml(a.summary.slice(0, 155)) + (a.summary.length > 155 ? '…' : '')
-      : '尚无AI摘要；可阅读原文或等待自动分析。';
+      : '尚无AI摘要；请在工作台手动选择需要AI解读的政策。';
     return '<article class="home-policy">' +
       '<div class="meta">' + escapeHtml(p.date || '日期未知') + ' · ' + escapeHtml(p.source || '来源未知') + '</div>' +
       '<div class="home-policy-title"><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">' + escapeHtml(p.title || '未命名政策') + '</button></div>' +
       '<div class="home-ai-summary">' + summary + '</div>' +
-      '<div class="actions"><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">✨ 查看AI分析</button>' +
+      '<div class="actions"><button class="linkbutton" data-select-ai="' + escapeHtml(p.id || '') + '"' +
+      (getManualAiState(p).disabled ? ' disabled' : '') + '>' + escapeHtml(getManualAiState(p).label) + '</button>' +
+      '<button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">✨ 查看AI分析</button>' +
       '<button class="linkbutton" data-read="' + escapeHtml(p.url || '') + '">📖 阅读正文</button></div>' +
       '</article>';
   }).join('') : '<p class="empty">暂无政策记录</p>';
@@ -913,7 +915,9 @@ function strategyUrl(url) {
 function strategyPolicyLink(p) {
   return '<li><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">' +
     escapeHtml(p.title || '') + '</button>' +
-    '<span class="meta"> · ' + escapeHtml(p.date || '日期未知') + ' · 自动匹配（待核实）</span></li>';
+    '<span class="meta"> · ' + escapeHtml(p.date || '日期未知') + ' · 自动匹配（待核实）</span>' +
+    ' <button class="linkbutton" data-select-ai="' + escapeHtml(p.id || '') + '"' +
+    (getManualAiState(p).disabled ? ' disabled' : '') + '>' + escapeHtml(getManualAiState(p).label) + '</button></li>';
 }
 function renderStrategies() {
   const sel = $('strategySelect');
@@ -1268,8 +1272,8 @@ function openAiAnalysis(id) {
 
   if (!record || !record.analysis) {
     body.append(aiText('p',
-      '这份政策尚无AI分析。需要先配置GitHub Secrets中的ZHIPU_API_KEY，' +
-      '待工作流运行后生成结果。正文阅读和官方原文功能不受影响。', 'empty'));
+      '这份政策尚无AI分析。请到「政策情报」勾选需要解读的文件，复制政策编号，' +
+      '在 GitHub Actions 的 policy_ids 中粘贴并手动运行。未勾选的文件不会自动消耗AI Tokens。', 'empty'));
   } else {
     const a = record.analysis;
     aiSection(body, '① 政策核心摘要').append(aiText('p', a.summary || '无'));
