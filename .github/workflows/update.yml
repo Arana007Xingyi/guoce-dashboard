@@ -41,6 +41,9 @@ jobs:
       - name: Monitor project funding official sources and history (no AI)
         run: python project_monitor.py
 
+      - name: Update official industry monthly time series (no AI)
+        run: python industry_history_update.py
+
       - name: Analyze selected policies with AI (manual only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.policy_ids != '' }}
         env:
@@ -56,6 +59,7 @@ jobs:
           if [ -f data/analysis.json ]; then git add data/analysis.json; fi
           if [ -f data/project_monitor.json ]; then git add data/project_monitor.json; fi
           if [ -f data/project_discovery.json ]; then git add data/project_discovery.json; fi
+          if [ -f data/industry_history.json ]; then git add data/industry_history.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update official policy data"
             git push
