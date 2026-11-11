@@ -232,6 +232,14 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 实体工程及财政资金台账 */
+.funding-record { padding:17px 0; border-top:1px solid #3c506e; }
+.funding-record h3 { margin:6px 0; line-height:1.6; font-size:16px; }
+.funding-facts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:13px 0; }
+.funding-fact { border:1px solid #3f5575; background:#24334d; border-radius:8px; padding:10px; }
+.funding-fact b { display:block; color:#dceafe; font-size:14px; margin-top:4px; }
+.funding-status { display:inline-block; padding:4px 8px; border-radius:6px; background:#304765; color:#dceaff; font-size:12px; }
+@media(max-width:760px) { .funding-facts {grid-template-columns:repeat(2,minmax(0,1fr));} }
 /* 政策执行证据候选与个人核验标记 */
 .evidence-summary { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 16px; }
 .evidence-summary span { border:1px solid #425b7d; background:#253957; color:#d9e8ff; padding:7px 10px; border-radius:8px; font-size:12px; }
@@ -467,6 +475,26 @@ select { flex: 1; min-width: 130px; }
       </div>
       <div id="progressCards"></div>
     </div>
+    <div class="panel" id="projectFundingBoard">
+      <div class="home-panel-head">
+        <div><h2>重大项目与财政资金 · 官方执行台账</h2>
+          <p class="sub">首批政府官方证据，记录明确的项目状态、下达金额和投资进度。计划投资≠下达资金≠实际支付，口径和来源逐条注明。</p></div>
+        <span id="projectFundingCount" class="pill">正在加载</span>
+      </div>
+      <div class="toolbar">
+        <input id="projectFundingSearch" placeholder="查项目、资金用途、地区或主管部门">
+        <select id="projectFundingKind">
+          <option value="">全部类型</option>
+          <option value="project">具体工程项目</option>
+          <option value="funding_program">资金计划与下达</option>
+          <option value="regional_progress">地方项目进度</option>
+        </select>
+        <select id="projectFundingStrategy"><option value="">全部战略方向（含未关联）</option></select>
+      </div>
+      <div class="evidence-summary" id="projectFundingSummary"></div>
+      <div id="projectFundingList"></div>
+      <p class="sub">数据来源：政府部门原文；每条均可点击查看。未披露的金额用“未披露”，不按0元处理。台账目前为人工核验首批样本，不代表完整覆盖。</p>
+    </div>
     <div class="panel" id="evidenceBoard">
       <div class="home-panel-head">
         <div>
@@ -645,6 +673,7 @@ let policies = [];
 let data = {};
 let aiAnalyses = {};
 let strategyCatalog = [];
+let projectFundingRecords = [];
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1066,6 +1095,89 @@ document.addEventListener('click', e => {
   if(btn) evidenceToggle(btn.dataset.evidenceWatch);
 });
 
+
+/* 官方项目/资金事实台账——金额字段均为亿元，不跨项目口径相加。 */
+function amountText(value) {
+  return typeof value === 'number' && Number.isFinite(value)
+    ? value.toLocaleString('zh-CN',{maximumFractionDigits:2}) + ' 亿元'
+    : '未披露';
+}
+function fundingTypeName(kind) {
+  return ({project:'具体项目',funding_program:'资金安排与下达',regional_progress:'地方项目进度'})[kind] || '其他';
+}
+function fundingCard(record) {
+  const associated = (record.strategy_ids||[])
+    .map(id=>strategyCatalog.find(g=>g.id===id)).filter(Boolean);
+  const pct = record.annual_investment_completion_pct;
+  const metrics = record.kind === 'regional_progress'
+    ? [['统计项目数',record.project_count ? record.project_count + ' 个':'未披露'],
+       ['年度计划投资完成率',typeof pct==='number'?pct+'%':'未披露'],
+       ['资金下达',amountText(record.allocated_100m)],['实际支出',amountText(record.spent_100m)]]
+    : [['计划/安排',amountText(record.planned_100m)],
+       ['正式下达',amountText(record.allocated_100m)],
+       ['实际拨付/支付',amountText(record.paid_100m)],
+       ['已披露实际支出',amountText(record.spent_100m)]];
+  return '<article class="funding-record">' +
+    '<div class="meta">'+escapeHtml(record.as_of||'日期未知')+
+      ' · '+escapeHtml(record.region||'地域未知')+' · '+escapeHtml(fundingTypeName(record.kind))+'</div>'+
+    '<h3>'+escapeHtml(record.name||'未命名项目')+'</h3>' +
+    '<span class="funding-status">'+escapeHtml(record.stage||'待核实')+'</span>' +
+    '<p class="evidence-note">'+escapeHtml(record.summary||'')+'</p>' +
+    '<div class="funding-facts">'+metrics.map(([k,v])=>
+      '<div class="funding-fact"><span class="sub">'+escapeHtml(k)+'</span><b>'+escapeHtml(v)+'</b></div>'
+    ).join('')+'</div>'+
+    '<div class="evidence-note">发布单位：'+escapeHtml(record.agency||'未明确')+
+      ' · 战略归类：'+escapeHtml(associated.map(g=>g.title).join('、')||'未建立')+
+      '（研究归类，非项目资金对应关系）</div>'+
+    '<div class="evidence-note">关联说明：'+escapeHtml(record.relation||'暂无')+'</div>'+
+    '<div class="evidence-actions"><a target="_blank" rel="noopener noreferrer" href="'+
+      escapeHtml(strategyUrl(record.source_url))+'">核查官方证据 ↗</a>'+
+    '<span class="sub">'+escapeHtml(record.source_title||'')+'</span></div>'+
+    '</article>';
+}
+function renderProjectFunding() {
+  const container = $('projectFundingList');
+  if(!container) return;
+  const text = $('projectFundingSearch').value.trim().toLowerCase();
+  const kind = $('projectFundingKind').value;
+  const strategy = $('projectFundingStrategy').value;
+  const matches = projectFundingRecords.filter(r=>{
+    const searchable=[r.name,r.region,r.agency,r.summary,r.stage].join(' ').toLowerCase();
+    return (!text||searchable.includes(text)) && (!kind||r.kind===kind) &&
+      (!strategy||(r.strategy_ids||[]).includes(strategy));
+  });
+  $('projectFundingCount').textContent=projectFundingRecords.length+' 条官方证据';
+  $('projectFundingSummary').innerHTML=
+    '<span>具体工程：'+projectFundingRecords.filter(r=>r.kind==='project').length+'</span>'+
+    '<span>资金计划：'+projectFundingRecords.filter(r=>r.kind==='funding_program').length+'</span>'+
+    '<span>地方汇总进度：'+projectFundingRecords.filter(r=>r.kind==='regional_progress').length+'</span>'+
+    '<span>当前筛选：'+matches.length+'</span>';
+  container.innerHTML=matches.length ? matches.slice().sort((a,b)=>
+    String(b.as_of||'').localeCompare(String(a.as_of||''))
+  ).map(fundingCard).join('') : '<p class="empty">当前筛选下暂无经过核验的项目或资金记录。</p>';
+}
+async function loadProjectFunding() {
+  try {
+    const response=await fetch('./data/project_funding.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok) throw Error('数据尚未生成');
+    const data=await response.json();
+    projectFundingRecords=Array.isArray(data.records)?data.records.filter(r=>
+      r && r.source_url && strategyUrl(r.source_url)!=='#' && r.kind):[];
+  } catch(e) {
+    console.warn('项目资金台账不可用',e);
+    projectFundingRecords=[];
+  }
+  const selector=$('projectFundingStrategy');
+  const saved=selector.value;
+  selector.innerHTML='<option value="">全部战略方向（含未关联）</option>'+
+    strategyCatalog.map(g=>'<option value="'+escapeHtml(g.id)+'">'+escapeHtml(g.title)+'</option>').join('');
+  selector.value=strategyCatalog.some(g=>g.id===saved)?saved:'';
+  renderProjectFunding();
+}
+['projectFundingSearch','projectFundingKind','projectFundingStrategy'].forEach(id=>{
+  $(id).addEventListener(id==='projectFundingSearch'?'input':'change',renderProjectFunding);
+});
+
 function renderProgress() {
   const sel = $('progressSelect');
   if (!sel) return;
@@ -1309,6 +1421,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
+    await loadProjectFunding();
     renderAll();
     renderHomeInsights();
     renderStrategies();
