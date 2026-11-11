@@ -232,6 +232,14 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 同口径月度工业统计走势（原生SVG；缺值不插值） */
+.climate-chart {border:1px solid #405776;border-radius:10px;background:#182740;padding:12px;margin:12px 0;}
+.climate-chart svg {width:100%;height:auto;display:block;}
+.climate-chart-label {font-size:11px;color:#bacce5;line-height:1.7;margin-top:8px;}
+.valuation-link-card {border-bottom:1px solid #405776;padding:17px 0;}
+.valuation-tiles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0;}
+.valuation-tile {border:1px solid #415776;background:#253550;border-radius:9px;padding:10px;}
+@media(max-width:650px){.valuation-tiles{grid-template-columns:1fr;}}
 /* 多行业景气研究卡片 */
 .climate-card {margin:14px 0;padding:17px;border:1px solid #405673;border-radius:12px;background:#202e46;}
 .climate-card h3 {margin:0 0 7px;font-size:18px;}
@@ -591,6 +599,7 @@ select { flex: 1; min-width: 130px; }
         <select id="climatePeriod"><option value="">全部统计期</option></select>
       </div>
       <div class="evidence-summary" id="climateSummary"></div>
+      <div class="strategy-proof">月度历史图按国家统计局可核实的同口径数据绘制（目前回溯2026年6—9月）。显示的是“当月同比”，不是环比；同比上升也不一定等于利润改善。缺失月份不补齐。</div>
       <div id="climateSectors"></div>
       <p class="sub">数据来源：国家统计局、工业和信息化部等官方公开发布；只展示文件中有明确数值的指标。数据缺口不会以推测数值代替。后续逐步接入历史期，才能计算可比趋势。</p>
     </div>
@@ -599,15 +608,13 @@ select { flex: 1; min-width: 130px; }
   <!-- 市场估值 -->
   <section id="valuation" class="page hidden">
     <div class="panel">
-      <h2>市场估值与风险观察</h2>
-      <p class="sectionintro">
-        后续可接入行业市盈率、市净率、历史估值分位、
-        成交额与资金流向等数据，辅助识别估值压力。
-      </p>
-      <div class="empty">
-        暂无可靠的市场行情数据源，
-        因此不展示实时估值、拥挤度或买卖信号。
+      <h2>市场估值 × 产业景气联动</h2>
+      <p class="sectionintro">将12个行业的官方工业统计历史趋势与待建立的可比市场估值并排观察。目前没有经过校验的指数历史PE/PB数据，不能计算估值百分位或断言市场已透支。</p>
+      <div class="toolbar">
+        <select id="valuationSector"><option value="">全部产业</option></select>
       </div>
+      <div class="strategy-proof">生产增长与利润增长不同；任何“基本面改善”结论至少还需行业利润、订单或收入验证。没有可比估值历史数据时，结论一律为“估值无法判定”，不是“低估”。</div>
+      <div id="valuationLinkCards"></div>
     </div>
   </section>
 
@@ -740,6 +747,7 @@ let projectFundingRecords = [];
 let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
 let industryClimate = {sectors:[],as_of:null};
+let industryHistory = {series:[],sources:{}};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1212,6 +1220,102 @@ function fundingCard(record) {
     '</article>';
 }
 /* 产业景气：官方统计与行业研究分类是不同层级。 */
+/* 不以生产同比或政策数量代替行业利润、估值与投资收益。 */
+function historyForSector(id) {
+  return (industryHistory.series||[]).filter(x=>(x.sector_ids||[]).includes(id));
+}
+function primaryHistory(id) {
+  const candidates=historyForSector(id);
+  return candidates.find(x=>x.relation==='direct' && (x.points||[]).length>=2) ||
+    candidates.find(x=>(x.points||[]).length>=2) || candidates[0] || null;
+}
+function historicalChart(series) {
+  if(!series || !Array.isArray(series.points) || series.points.length < 2)
+    return '<div class="strategy-empty">当前缺少至少两个时期的同口径统计值，不能绘制趋势。</div>';
+  const pts=series.points.filter(p=>Number.isFinite(p.value))
+    .slice().sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  if(pts.length<2) return '<div class="strategy-empty">暂无可比历史序列</div>';
+  const years=[...new Set((industryHistory.series||[]).flatMap(s=>(s.points||[]).map(p=>p.period)))].sort();
+  const values=pts.map(p=>p.value);
+  const lower=Math.floor((Math.min(0,...values)-5)/5)*5;
+  const upper=Math.ceil((Math.max(0,...values)+5)/5)*5;
+  const width=600, height=190, left=45,right=18,top=16,bottom=32;
+  const xf=p=>left+years.indexOf(p.period)*(width-left-right)/Math.max(1,years.length-1);
+  const yf=v=>top+(upper-v)*(height-top-bottom)/(upper-lower);
+  const xy=pts.map(p=>({period:p.period,value:p.value,x:xf(p),y:yf(p)}));
+  const lines=xy.slice(1).filter((p,i)=>
+    years.indexOf(p.period)-years.indexOf(xy[i].period)===1
+  ).map((p,i)=>{const a=xy.find(q=>years.indexOf(q.period)===years.indexOf(p.period)-1);
+    return a?'<line x1="'+a.x+'" y1="'+a.y+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#86c3ef" stroke-width="3" stroke-linecap="round"/>':'';}).join('');
+  const dots=xy.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#9fd8ff"/>'+
+    '<text x="'+p.x+'" y="'+(p.y-10)+'" fill="#dbeaff" text-anchor="middle" font-size="12">'+p.value+'%</text>').join('');
+  const labels=years.map(t=>'<text x="'+xf({period:t})+'" y="'+(height-8)+'" text-anchor="middle" fill="#b6c9e4" font-size="11">'+t.slice(5)+'月</text>').join('');
+  const zero='<line x1="'+left+'" x2="'+(width-right)+'" y1="'+yf(0)+'" y2="'+yf(0)+'" stroke="#8b9ab2" stroke-width="1" stroke-dasharray="5 5"/>';
+  return '<div class="climate-chart"><div class="meta">'+escapeHtml(series.label)+
+    ' · '+escapeHtml(series.basis||'')+' · '+(series.relation==='direct'?'直接统计':'代理指标')+'</div>'+
+    '<svg role="img" aria-label="'+escapeHtml(series.label+'，'+xy.map(p=>p.period+' '+p.value+'%').join('、'))+
+    '" viewBox="0 0 600 190" preserveAspectRatio="xMidYMid meet">'+zero+lines+dots+labels+'</svg>'+
+    '<div class="climate-chart-label">数据点 '+xy.length+' 个。相邻缺月不连接；点位为当月同比，并非环比或股价变化。</div>'+
+    '<div class="climate-chart-label">官方月份来源：'+xy.map(p=>
+      '<a href="'+escapeHtml(strategyUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(p.period)+'</a>'
+    ).join(' · ')+'</div></div>';
+}
+function industryProductionSignal(id) {
+  const a=primaryHistory(id);
+  if(!a) return {label:'官方月度序列不足',extra:'无可比较的连续月份'};
+  const sorted=(a.points||[]).slice().sort((x,y)=>String(x.period).localeCompare(String(y.period)));
+  if(sorted.length<2)return {label:'无法判断',extra:'至少需要两个连续月份'};
+  const last=sorted[sorted.length-1],prior=sorted[sorted.length-2];
+  const date=new Date(last.period+'-01T00:00:00Z');
+  const prev=new Date(prior.period+'-01T00:00:00Z');
+  if(!Number.isFinite(date.getTime()) || !Number.isFinite(prev.getTime()) ||
+    (date.getUTCFullYear()-prev.getUTCFullYear())*12+date.getUTCMonth()-prev.getUTCMonth()!==1)
+    return {label:'数据有缺月',extra:'最近两次观测月份不连续'};
+  const delta=last.value-prior.value;
+  return {label:delta>0?'同比增速回升':delta<0?'同比增速放缓':'同比增速持平',
+    extra:a.label+' · '+prior.period+'→'+last.period+' · 变化 '+(delta>0?'+':'')+delta.toFixed(1)+'个百分点'};
+}
+function renderValuationLinks() {
+  const select=$('valuationSector');
+  if(!select)return;
+  const filter=select.value;
+  const sectors=(industryClimate.sectors||[]).filter(x=>!filter||x.id===filter);
+  $('valuationLinkCards').innerHTML=sectors.map(sector=>{
+    const stat=industryProductionSignal(sector.id);
+    const a=primaryHistory(sector.id);
+    const last=a?.points?.slice().sort((x,y)=>String(y.period).localeCompare(String(x.period)))[0];
+    return '<article class="valuation-link-card"><h3>'+escapeHtml(sector.name)+'</h3>'+
+      '<div class="valuation-tiles">'+
+      '<div class="valuation-tile"><div class="sub">工业生产信号（非利润）</div><b>'+escapeHtml(stat.label)+'</b>'+
+      '<p class="sub">'+escapeHtml(stat.extra)+'</p></div>'+
+      '<div class="valuation-tile"><div class="sub">最新官方同比</div><b>'+
+        (last?escapeHtml(last.value+'%'):'暂无数据')+'</b><p class="sub">'+escapeHtml(last?.period||'')+
+      ' · '+escapeHtml(a?.label||'')+'</p></div>'+
+      '<div class="valuation-tile"><div class="sub">PE / PB / 历史分位</div><b>暂无可比数据</b>'+
+      '<p class="sub">股价是否透支：无法判定</p></div></div>'+
+      '<p class="sub">需补齐：具有明确指数代码的估值时序、PE计算方法、行业利润与盈利预期。'+
+      '代理指标不能直接视为投资标的自身利润。</p></article>';
+  }).join('') || '<p class="empty">行业数据尚未加载</p>';
+}
+async function loadIndustryHistory() {
+  try {
+    const res=await fetch('./data/industry_history.json?t='+Date.now(),{cache:'no-store'});
+    if(!res.ok) throw Error('月度历史数据不可用');
+    const raw=await res.json();
+    industryHistory={series:Array.isArray(raw.series)?raw.series:[],sources:raw.sources||{}};
+  } catch(e) {
+    console.warn('月度历史数据读取异常',e);
+    industryHistory={series:[],sources:{}};
+  }
+  const s=$('valuationSector');
+  const old=s.value;
+  s.innerHTML='<option value="">全部产业</option>'+industryClimate.sectors.map(x=>
+    '<option value="'+escapeHtml(x.id)+'">'+escapeHtml(x.name)+'</option>').join('');
+  s.value=industryClimate.sectors.some(x=>x.id===old)?old:'';
+  renderValuationLinks();
+}
+$('valuationSector').addEventListener('change',renderValuationLinks);
+
 function renderIndustryClimate() {
   const sectors=industryClimate.sectors||[];
   const group=$('climateGroup').value;
@@ -1233,6 +1337,7 @@ function renderIndustryClimate() {
     return '<article class="climate-card"><div class="meta">'+escapeHtml(sector.group||'')+'</div>'+
       '<h3>'+escapeHtml(sector.name||'')+'</h3>'+
       '<p class="sub">'+escapeHtml(sector.description||'')+'</p>'+
+      historicalChart(primaryHistory(sector.id))+
       '<div class="climate-stats">'+(signals.length?signals.map(m=>
         '<div class="climate-metric">'+
         '<div class="meta">'+escapeHtml(m.name||'')+'</div>'+
@@ -1710,13 +1815,14 @@ async function load() {
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
     await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate()]);
-    await loadProjectFunding();
+    await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
     renderStrategies();
     renderProgress();
     renderEvidenceBoard();
     renderMonitor();
+    renderValuationLinks();
     manualAiQueue = manualAiQueue.filter(id => policies.some(p => p.id === id && !aiAnalyses[id]?.analysis && p.content_status === 'success' && p.content?.length >= 300));
     manualAiSave();
     manualAiRefresh();
