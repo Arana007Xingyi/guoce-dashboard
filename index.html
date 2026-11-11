@@ -1001,7 +1001,11 @@ function evidenceLinks(p) {
   return matches;
 }
 function evidenceCandidates() {
-  return policies.filter(p => evidenceType(p) && strategyUrl(p.url) !== '#');
+  // Avoid counting explanatory articles as implementation documents.
+  return policies.filter(p =>
+    evidenceType(p) && strategyUrl(p.url) !== '#' &&
+    !/答记者问|记者问答|一图读懂|政策解读|新闻发布会|从[“"「《]?.{0,15}规划看/.test(String(p.title||''))
+  );
 }
 function evidenceToggle(id) {
   const found = evidenceWatched.includes(id);
