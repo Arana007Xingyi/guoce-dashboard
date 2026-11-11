@@ -49,6 +49,18 @@ class TestMarket(unittest.TestCase):
         self.assertEqual(rows[0]["pe_ttm"], 13.13)
         self.assertIsNone(rows[0]["pb"])
 
+    def test_free_etf_fallback_never_invents_turnover(self):
+        sample = {"data": {"sh510300": {
+            "day": [["2026-11-10", "4.1", "4.12", "4.15", "4.09", "20000"]]
+        }}}
+        row = market.parse_tencent_etf(sample, "510300")[0]
+        self.assertEqual(row["date"], "2026-11-10")
+        self.assertEqual(row["close"], 4.12)
+        self.assertEqual(row["volume_unit"], "hands")
+        self.assertIsNone(row["turnover"])
+        self.assertIsNone(row["pe_ttm"])
+        self.assertIsNone(row["pb"])
+
     def test_etf_history_no_invented_turnover_or_pe(self):
         sample = [{"date": "2026-11-10", "close": 4.012, "volume": 10000.0}]
         row = market.parse_etf(sample)[0]
