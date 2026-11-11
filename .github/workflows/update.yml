@@ -31,8 +31,7 @@ jobs:
 
       - name: Analyze policies with AI (if configured)
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4.1-mini
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
           MAX_ANALYSES_PER_RUN: "5"
         run: python analyzer.py
 
