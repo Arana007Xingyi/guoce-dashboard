@@ -1,11 +1,133 @@
 {
   "schema_version": 1,
   "updated_at": null,
-  "methodology": "中证指数官网提供指数日线、成交金额和滚动市盈率；历史PB当前无可复核免费同口径来源，保留空值。ETF行情来源为DataBull第三方公开API（可能需API Key），ETF无独立行业PE/PB，不以ETF价格推算。研究赛道与指数/ETF是研究映射，非完全重合。",
+  "methodology": "中证指数官网提供指数日线、成交金额和滚动市盈率；历史PB当前无可复核免费同口径来源，保留空值。ETF行情来源为DataBull第三方公开API（可能需API Key），ETF无独立行业PE/PB，不以ETF价格推算。研究赛道与指数/ETF是研究映射，非完全重合。 未配置第三方API Key时尝试腾讯公开K线获取ETF收盘价和成交量；该非公开接口无可靠成交金额字段，无法显示ETF成交额。",
   "sources": {
     "index": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
-    "etf": "https://api.databull.cn/cn/etf/history"
+    "etf": "https://api.databull.cn/cn/etf/history",
+    "etf_free": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
   },
-  "instruments": [],
+  "instruments": [
+    {
+      "id": "csi300",
+      "code": "000300",
+      "name": "沪深300",
+      "sector_ids": [],
+      "kind": "index",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "sse50",
+      "code": "000016",
+      "name": "上证50",
+      "sector_ids": [],
+      "kind": "index",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "csi500",
+      "code": "000905",
+      "name": "中证500",
+      "sector_ids": [],
+      "kind": "index",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "csi1000",
+      "code": "000852",
+      "name": "中证1000",
+      "sector_ids": [],
+      "kind": "index",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "csi_all",
+      "code": "000985",
+      "name": "中证全指",
+      "sector_ids": [],
+      "kind": "index",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_300",
+      "code": "510300",
+      "name": "沪深300ETF（510300）",
+      "sector_ids": [],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_500",
+      "code": "510500",
+      "name": "中证500ETF（510500）",
+      "sector_ids": [],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_chip",
+      "code": "512480",
+      "name": "半导体ETF（512480）",
+      "sector_ids": [
+        "semiconductor"
+      ],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_robot",
+      "code": "562500",
+      "name": "机器人ETF（562500）",
+      "sector_ids": [
+        "robots"
+      ],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_nev",
+      "code": "515030",
+      "name": "新能源汽车ETF（515030）",
+      "sector_ids": [
+        "nev"
+      ],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_health",
+      "code": "512010",
+      "name": "医药ETF（512010）",
+      "sector_ids": [
+        "health",
+        "biotech"
+      ],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    },
+    {
+      "id": "etf_sci",
+      "code": "588000",
+      "name": "科创50ETF（588000）",
+      "sector_ids": [
+        "ai",
+        "semiconductor"
+      ],
+      "kind": "etf",
+      "points": [],
+      "pe_percentile": null
+    }
+  ],
   "status": []
 }
