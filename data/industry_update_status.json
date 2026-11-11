@@ -1,0 +1,10 @@
+{
+  "checked_at": null,
+  "index_state": "not_run",
+  "new_month_pages_found": 0,
+  "new_points_added": 0,
+  "failed_pages": 0,
+  "monthly_checks": [],
+  "latest_stored_month": "2026-09",
+  "note": "月度采集自检尚未在GitHub Actions首次运行；历史图仍显示已核实的原始月份。"
+}
