@@ -1312,6 +1312,17 @@ async function loadIndustryHistory() {
   s.innerHTML='<option value="">全部产业</option>'+industryClimate.sectors.map(x=>
     '<option value="'+escapeHtml(x.id)+'">'+escapeHtml(x.name)+'</option>').join('');
   s.value=industryClimate.sectors.some(x=>x.id===old)?old:'';
+  // Refresh month selections after history loads, including newly published months.
+  const monthControl=$('climatePeriod');
+  const oldPeriod=monthControl.value;
+  const times=[...new Set([
+    ...industryClimate.sectors.flatMap(x=>(x.indicators||[]).map(m=>m.period)),
+    ...(industryHistory.series||[]).flatMap(x=>(x.points||[]).map(p=>p.period))
+  ].filter(Boolean))].sort().reverse();
+  monthControl.innerHTML='<option value="">全部统计期</option>'+times.map(x=>
+    '<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+  monthControl.value=times.includes(oldPeriod)?oldPeriod:'';
+  renderIndustryClimate();
   renderValuationLinks();
 }
 $('valuationSector').addEventListener('change',renderValuationLinks);
@@ -1333,7 +1344,22 @@ function renderIndustryClimate() {
     '<span>相关代理指标：'+metrics.filter(x=>x.relation==='proxy').length+'</span>'+
     '<span>当前筛选：'+matched.length+'个行业</span>';
   $('climateSectors').innerHTML=matched.length?matched.map(sector=>{
-    const signals=(sector.indicators||[]).filter(m=>!period||m.period===period);
+    const officialHistory = historyForSector(sector.id).flatMap(series =>
+      (series.points||[]).map(p => ({
+        name:series.label, value:p.value, unit:series.unit,
+        period:p.period, basis:series.basis, relation:series.relation,
+        scope:'历史国家统计局月度统计；研究赛道归类不代表其专属利润',
+        source_url:p.source_url
+      })));
+    // Historical observations supplement the initial snapshot. Exact same
+    // name and month are deduplicated; never synthesize missing months.
+    const combined=(sector.indicators||[]).slice();
+    officialHistory.forEach(m=>{
+      if(!combined.some(x=>x.period===m.period&&x.name===m.name))combined.push(m);
+    });
+    const signals=combined.filter(m=>!period||m.period===period)
+      .sort((a,b)=>String(b.period||'').localeCompare(String(a.period||'')))
+      .slice(0,9);
     return '<article class="climate-card"><div class="meta">'+escapeHtml(sector.group||'')+'</div>'+
       '<h3>'+escapeHtml(sector.name||'')+'</h3>'+
       '<p class="sub">'+escapeHtml(sector.description||'')+'</p>'+
@@ -1364,7 +1390,10 @@ async function loadIndustryClimate() {
     industryClimate={sectors:[],as_of:null};
   }
   const groups=[...new Set(industryClimate.sectors.map(x=>x.group).filter(Boolean))].sort();
-  const periods=[...new Set(industryClimate.sectors.flatMap(x=>(x.indicators||[]).map(m=>m.period)).filter(Boolean))].sort().reverse();
+  const periods=[...new Set([
+    ...industryClimate.sectors.flatMap(x=>(x.indicators||[]).map(m=>m.period)),
+    ...(industryHistory.series||[]).flatMap(x=>(x.points||[]).map(p=>p.period))
+  ].filter(Boolean))].sort().reverse();
   $('climateGroup').innerHTML='<option value="">全部行业领域</option>'+groups.map(x=>
     '<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
   $('climatePeriod').innerHTML='<option value="">全部统计期</option>'+periods.map(x=>
