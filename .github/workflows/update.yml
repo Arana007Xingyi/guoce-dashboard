@@ -5,6 +5,12 @@ on:
   schedule:
     - cron: '15 0 * * *'
   workflow_dispatch:
+    inputs:
+      policy_ids:
+        description: '手动AI分析的政策编号（复制工作台生成的内容；每次最多5条；留空则仅采集）'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -29,10 +35,11 @@ jobs:
       - name: Collect official policies
         run: python collector.py
 
-      - name: Analyze policies with AI (if configured)
+      - name: Analyze selected policies with AI (manual only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.policy_ids != '' }}
         env:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          MAX_ANALYSES_PER_RUN: "5"
+          POLICY_IDS: ${{ inputs.policy_ids }}
         run: python analyzer.py
 
       - name: Commit updated data
