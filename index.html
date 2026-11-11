@@ -232,6 +232,13 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 项目资金自动监测和可追溯历史 */
+.monitor-entry {padding:13px 0;border-top:1px solid #394c69;line-height:1.8;}
+.monitor-entry h3 {margin:5px 0;font-size:15px;}
+.monitor-entry .meta {font-size:12px;}
+.monitor-caution {display:inline-block;padding:3px 8px;border:1px solid #a78a52;color:#f6d693;border-radius:7px;font-size:12px;}
+.monitor-verified {display:inline-block;padding:3px 8px;border:1px solid #578378;color:#bde9d8;border-radius:7px;font-size:12px;}
+.monitor-record-history {margin-top:8px;color:#a9c2e0;font-size:12px;line-height:1.8;}
 /* 实体工程及财政资金台账 */
 .funding-record { padding:17px 0; border-top:1px solid #3c506e; }
 .funding-record h3 { margin:6px 0; line-height:1.6; font-size:16px; }
@@ -493,6 +500,11 @@ select { flex: 1; min-width: 130px; }
       </div>
       <div class="evidence-summary" id="projectFundingSummary"></div>
       <div id="projectFundingList"></div>
+      <div class="strategy-list">
+        <h3>项目与资金历史变化</h3>
+        <p class="sub">首次证据基线与此后来源变化分开记录。来源文字变化只是待核查信号，不代表项目状态或已下达金额发生变化。</p>
+        <div id="monitorHistory"></div>
+      </div>
       <p class="sub">数据来源：政府部门原文；每条均可点击查看。未披露的金额用“未披露”，不按0元处理。台账目前为人工核验首批样本，不代表完整覆盖。</p>
     </div>
     <div class="panel" id="evidenceBoard">
@@ -587,6 +599,15 @@ select { flex: 1; min-width: 130px; }
   <!-- 智能提醒 -->
   <section id="alerts" class="page hidden">
     <div class="panel">
+      <div class="home-panel-head">
+        <h2>项目与资金 · 自动监测提醒</h2>
+        <span class="pill" id="monitorUpdated">尚未更新</span>
+      </div>
+      <p class="sectionintro">每天自动检查已跟踪的政府原文，并识别新采集的项目资金候选文件。黄色线索只提醒人工核实，不会自动更改正式台账，也不会自动使用AI。</p>
+      <div class="evidence-summary" id="monitorSummary"></div>
+      <div id="monitorAlerts"></div>
+    </div>
+    <div class="panel">
       <h2>采集异常提醒</h2>
       <div id="alertsList"></div>
     </div>
@@ -674,6 +695,7 @@ let data = {};
 let aiAnalyses = {};
 let strategyCatalog = [];
 let projectFundingRecords = [];
+let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1117,6 +1139,15 @@ function fundingCard(record) {
        ['正式下达',amountText(record.allocated_100m)],
        ['实际拨付/支付',amountText(record.paid_100m)],
        ['已披露实际支出',amountText(record.spent_100m)]];
+  const past = (projectMonitoring.history || []).filter(e=>e.record_id===record.id)
+    .sort((a,b)=>String(b.observed_at||'').localeCompare(String(a.observed_at||''))).slice(0,3);
+  const live = projectMonitoring.records?.[record.id] || {};
+  const historySnippet = '<div class="monitor-record-history">历史记录：'+past.length+' 条已展示 · 来源监测：'+
+    escapeHtml(live.check_status||'待首次检查')+
+    (live.last_checked_at?' · 最近检查 '+escapeHtml(live.last_checked_at.slice(0,16).replace('T',' '))+' UTC':'')+
+    '</div>' + past.map(e=>'<div class="monitor-record-history">• '+escapeHtml(e.as_of||'')+
+      ' · '+escapeHtml(e.kind==='verified_baseline'?'初始核验证据':'变化待复核')+
+      ' · '+escapeHtml(e.description||'')+'</div>').join('');
   return '<article class="funding-record">' +
     '<div class="meta">'+escapeHtml(record.as_of||'日期未知')+
       ' · '+escapeHtml(record.region||'地域未知')+' · '+escapeHtml(fundingTypeName(record.kind))+'</div>'+
@@ -1130,11 +1161,91 @@ function fundingCard(record) {
       ' · 战略归类：'+escapeHtml(associated.map(g=>g.title).join('、')||'未建立')+
       '（研究归类，非项目资金对应关系）</div>'+
     '<div class="evidence-note">关联说明：'+escapeHtml(record.relation||'暂无')+'</div>'+
+    historySnippet+
     '<div class="evidence-actions"><a target="_blank" rel="noopener noreferrer" href="'+
       escapeHtml(strategyUrl(record.source_url))+'">核查官方证据 ↗</a>'+
     '<span class="sub">'+escapeHtml(record.source_title||'')+'</span></div>'+
     '</article>';
 }
+/* 仅展示监测证据，不自动更改既有的资金和工程事实。 */
+function monitorEventLabel(row) {
+  return ({
+    verified_baseline:'初始已核验台账',
+    source_context_changed:'官方网页相关文字变化（待核查）',
+    ledger_revision:'台账字段修订（待复核）'
+  })[row.kind] || '待核查监测事件';
+}
+function monitorTimestamp(value) {
+  if (!value) return '未知时间';
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? String(value) : d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
+}
+function renderMonitor() {
+  const candidates = Array.isArray(projectMonitoring.candidates)?projectMonitoring.candidates:[];
+  const history = Array.isArray(projectMonitoring.history)?projectMonitoring.history:[];
+  const changes = history.filter(e=>e.kind!=='verified_baseline');
+  const checks = Object.values(projectMonitoring.records||{});
+  const failed = checks.filter(x=>!['ok','pending_first_check'].includes(x.check_status||'pending_first_check'));
+  const total = $('monitorSummary');
+  if (total) {
+    total.innerHTML = '<span>新官方文件候选：'+candidates.length+'</span>'+
+      '<span>历史变更待复核：'+changes.length+'</span>'+
+      '<span>已建初始证据基线：'+history.filter(e=>e.kind==='verified_baseline').length+'</span>'+
+      '<span>来源检查异常：'+failed.length+'</span>';
+  }
+  if ($('monitorUpdated')) {
+    $('monitorUpdated').textContent = projectMonitoring.updated_at?
+      '监测更新：'+monitorTimestamp(projectMonitoring.updated_at):
+      '监测数据尚未生成';
+  }
+  const alerts = $('monitorAlerts');
+  if(alerts) {
+    const notices = changes.slice().reverse().slice(0,12).map(e=>
+      '<article class="monitor-entry"><span class="monitor-caution">待核查变化</span>'+
+      '<h3>'+escapeHtml(e.title||'未知项目')+'</h3>'+
+      '<div class="meta">'+escapeHtml(monitorEventLabel(e))+' · '+escapeHtml(monitorTimestamp(e.observed_at))+'</div>'+
+      '<p>'+escapeHtml(e.description||'')+'</p>'+
+      '<a href="'+escapeHtml(strategyUrl(e.source_url))+'" target="_blank" rel="noopener noreferrer">核查政府原文 ↗</a></article>');
+    const leads = candidates.slice().reverse().slice(0,15).map(c=>
+      '<article class="monitor-entry"><span class="monitor-caution">新文件线索 · 未核实</span>'+
+      '<h3>'+escapeHtml(c.title||'未命名文件')+'</h3>'+
+      '<div class="meta">'+escapeHtml(c.date||'日期未知')+' · '+escapeHtml(c.source||'来源未知')+
+      ' · 发现时间：'+escapeHtml(monitorTimestamp(c.detected_at))+'</div>'+
+      '<p class="sub">'+escapeHtml(c.reason||'')+'</p>'+
+      '<a href="'+escapeHtml(strategyUrl(c.url))+'" target="_blank" rel="noopener noreferrer">打开官方文件 ↗</a></article>');
+    const errors = failed.slice(0,6).map(state=>
+      '<article class="monitor-entry"><span class="monitor-caution">来源检查未完成</span>'+
+      '<p>'+escapeHtml(state.last_error||state.check_status||'未说明')+
+      '：不代表项目停止或资金异常</p></article>');
+    alerts.innerHTML=[...notices,...leads,...errors].join('')||
+      '<p class="empty">暂无待核查的新变化。已收录的初始证据仍可在「落地进度」中查看。</p>';
+  }
+  const timeline=$('monitorHistory');
+  if(timeline) {
+    timeline.innerHTML=history.length ? history.slice().reverse().slice(0,50).map(e=>
+      '<article class="monitor-entry"><span class="'+(e.kind==='verified_baseline'?'monitor-verified':'monitor-caution')+'">'+
+      escapeHtml(monitorEventLabel(e))+'</span><h3>'+escapeHtml(e.title||'')+'</h3>'+
+      '<div class="meta">官方信息截至：'+escapeHtml(e.as_of||'未披露')+
+      ' · 监测记录：'+escapeHtml(monitorTimestamp(e.observed_at))+'</div>'+
+      '<p>'+escapeHtml(e.description||'')+'</p>'+
+      '<a href="'+escapeHtml(strategyUrl(e.source_url))+'" target="_blank" rel="noopener noreferrer">政府原始证据 ↗</a></article>'
+    ).join('') : '<p class="empty">暂无历史事件。初始基线将在监测台账生成后显示。</p>';
+  }
+}
+async function loadProjectMonitor() {
+  try {
+    const response = await fetch('./data/project_monitor.json?t='+Date.now(),{cache:'no-store'});
+    if (!response.ok) throw Error('尚未生成监测数据');
+    const json=await response.json();
+    if (!json || !Array.isArray(json.history) || !Array.isArray(json.candidates))
+      throw Error('监测数据结构不正确');
+    projectMonitoring=json;
+  } catch (error) {
+    console.warn('项目历史数据暂不可用',error);
+    projectMonitoring={records:{},history:[],candidates:[],updated_at:null};
+  }
+}
+
 function renderProjectFunding() {
   const container = $('projectFundingList');
   if(!container) return;
@@ -1430,12 +1541,14 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
+    await loadProjectMonitor();
     await loadProjectFunding();
     renderAll();
     renderHomeInsights();
     renderStrategies();
     renderProgress();
     renderEvidenceBoard();
+    renderMonitor();
     manualAiQueue = manualAiQueue.filter(id => policies.some(p => p.id === id && !aiAnalyses[id]?.analysis && p.content_status === 'success' && p.content?.length >= 300));
     manualAiSave();
     manualAiRefresh();
