@@ -630,7 +630,7 @@ select { flex: 1; min-width: 130px; }
   <section id="valuation" class="page hidden">
     <div class="panel">
       <h2>市场估值 × 产业景气联动</h2>
-      <p class="sectionintro">将12个行业的官方工业统计历史趋势与待建立的可比市场估值并排观察。目前没有经过校验的指数历史PE/PB数据，不能计算估值百分位或断言市场已透支。</p>
+      <p class="sectionintro">将12个行业的官方工业统计历史趋势与待建立的可比市场估值并排观察。已采集指数PE相关字段，但其统计口径仍待核实；样本分位只作探索性参考，不能由此断言某一行业被高估或低估。</p>
       <div class="toolbar">
         <select id="valuationSector"><option value="">全部产业</option></select>
         <select id="valuationBenchmark">
@@ -648,7 +648,7 @@ select { flex: 1; min-width: 130px; }
     <div class="panel" id="marketHistoryPanel">
       <div class="home-panel-head">
         <div><h2>A股指数与ETF · 历史行情及估值</h2>
-          <p class="sub">指数来自中证指数官方日线接口；ETF行情另行标注第三方提供方。PE仅展示中证指数滚动市盈率，ETF本身没有独立的行业PE；PB未验证时不显示。</p>
+          <p class="sub">指数来自中证指数官方日线接口；ETF行情另行标注第三方提供方。中证指数接口peg暂作PE研究数据，具体是否为PE-TTM仍待核实；ETF没有独立的行业PE，PB及成交金额单位未验证时不展示。</p>
         </div>
         <span class="pill" id="marketHistoryCount">数据未读取</span>
       </div>
@@ -662,7 +662,7 @@ select { flex: 1; min-width: 130px; }
       </div>
       <div id="marketSourceHealth" class="evidence-summary"></div>
       <div id="marketHistoryCards"></div>
-      <p class="sub">历史PE分位只在同一指数、同口径且具备至少750个有效样本及3年覆盖时显示。成交额尚未确认单位时只做原始数据保存；ETF数据若没有授权或接口不支持，将显示缺失，而不是推算。</p>
+      <p class="sub">样本PE分位只在同一指数至少750个有效样本及3年覆盖时计算，且在PE具体口径核实前始终标注待核。成交额尚未确认单位时只做原始数据保存；ETF数据若没有授权或接口不支持，将显示缺失，而不是推算。</p>
     </div>
   </section>
 
@@ -1285,8 +1285,13 @@ async function loadIndustryCollectorHealth() {
     no_matching_new_month:'未发现新月份（不等于失败）',
     unknown:'来源状态未知'
   };
+  const nextMonth=state.next_expected_month||'2026-10';
+  const releaseLabel=state.release_state==='official_release_discovered'?'已发现公告，待验证入库':
+    state.release_state==='official_release_not_verified'?'尚未核实官方公告':
+    '待下一轮核查';
   $('industryCollectorHealth').innerHTML=
     '<span>月度采集：'+escapeHtml(labels[state.index_state]||state.index_state||'未知')+'</span>'+
+    '<span>'+escapeHtml(nextMonth)+'：'+escapeHtml(releaseLabel)+'</span>'+
     '<span>本轮新增：'+escapeHtml(String(state.new_points_added||0))+'个数据点</span>'+
     '<span>最近检查：'+escapeHtml(state.checked_at?monitorTimestamp(state.checked_at):'尚未执行')+'</span>'+
     '<span>官方来源异常页：'+escapeHtml(String(state.failed_pages||0))+'</span>';
@@ -1353,7 +1358,15 @@ function formatMarketNumber(v,d=2) {
     v.toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}):'暂无数据';
 }
 function marketTrendSvg(points,key,label) {
-  const valid=(points||[]).filter(p=>Number.isFinite(p[key])).slice(-72);
+  const full=(points||[]).filter(p=>Number.isFinite(p[key])&&p.date)
+    .slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  // Show up to three calendar years. Retain underlying complete data;
+  // downsample only the on-screen SVG to avoid enormous page markup.
+  const lastDate=full.length?Date.parse(full[full.length-1].date+'T00:00:00Z'):NaN;
+  const recent=Number.isFinite(lastDate)?full.filter(p=>
+    Date.parse(p.date+'T00:00:00Z')>=lastDate-1095*86400000):full;
+  const step=Math.max(1,Math.ceil(recent.length/180));
+  const valid=recent.filter((p,i)=>i%step===0||i===recent.length-1);
   if(valid.length<2)return '<p class="empty">目前没有足够的同口径历史数据</p>';
   const values=valid.map(p=>p[key]);
   const low=Math.min(...values),high=Math.max(...values);
@@ -1365,7 +1378,7 @@ function marketTrendSvg(points,key,label) {
   const poly=valid.map((p,i)=>xx(i).toFixed(1)+','+yy(p[key]).toFixed(1)).join(' ');
   return '<div class="climate-chart"><div class="meta">'+escapeHtml(label)+
     ' · '+escapeHtml(valid[0].date)+' 至 '+escapeHtml(valid[valid.length-1].date)+
-    ' · '+valid.length+' 个交易日</div>'+
+    ' · 采样显示 '+valid.length+' 点（有效历史 '+recent.length+' 个交易日）</div>'+
     '<svg viewBox="0 0 600 160" role="img" aria-label="'+escapeHtml(label)+'历史趋势">'+
     '<polyline points="'+poly+'" fill="none" stroke="#8ecbff" stroke-width="2.5" stroke-linejoin="round"/>'+
     '</svg></div>';
