@@ -1616,6 +1616,14 @@ function renderIndustryClimate() {
     '<span>相关代理指标：'+metrics.filter(x=>x.relation==='proxy').length+'</span>'+
     '<span>当前筛选：'+matched.length+'个行业</span>';
   $('climateSectors').innerHTML=matched.length?matched.map(sector=>{
+    const profit=(industryProfits.records||[]).find(x=>x.sector_id===sector.id);
+    const profitHtml=profit?'<div class="strategy-proof">2026年1—9月累计利润同比：<b>'+
+      escapeHtml((profit.profit_yoy_pct>0?'+':'')+profit.profit_yoy_pct+'%')+
+      '</b> · 对应官方统计行业：'+escapeHtml(profit.industry)+
+      ' · <a href="'+escapeHtml(strategyUrl(profit.source_url))+
+      '" target="_blank" rel="noopener noreferrer">国家统计局原文 ↗</a>'+
+      '<div class="climate-stat-note">'+escapeHtml(profit.disclaimer)+'</div></div>':
+      '<div class="strategy-empty">尚无经过来源核实的行业利润数据</div>';
     const officialHistory = historyForSector(sector.id).flatMap(series =>
       (series.points||[]).map(p => ({
         name:series.label, value:p.value, unit:series.unit,
@@ -1635,6 +1643,7 @@ function renderIndustryClimate() {
     return '<article class="climate-card"><div class="meta">'+escapeHtml(sector.group||'')+'</div>'+
       '<h3>'+escapeHtml(sector.name||'')+'</h3>'+
       '<p class="sub">'+escapeHtml(sector.description||'')+'</p>'+
+      profitHtml+
       historicalChart(primaryHistory(sector.id))+
       '<div class="climate-stats">'+(signals.length?signals.map(m=>
         '<div class="climate-metric">'+
