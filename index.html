@@ -232,6 +232,23 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 首页五区域布局：独立样式，不影响正文阅读窗口 */
+.home-eyebrow { color:#a8bddb; font-size:12px; margin:-5px 0 15px; letter-spacing:.04em; }
+.home-section-head { display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; justify-content:space-between; margin:9px 0 14px; }
+.home-section-head h2 { font-size:19px; margin:0; }
+.home-panel-head { display:flex; gap:10px; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
+.home-panel-head h2 { margin:0; }
+.home-panel-head button { flex-shrink:0; }
+.home-policy { border-top:1px solid #34445e; padding:15px 0; }
+.home-policy-title { font-size:15px; font-weight:650; margin:7px 0; line-height:1.6; }
+.home-policy-title button { text-align:left; font-weight:inherit; font-size:inherit; }
+.home-ai-summary { margin:9px 0; color:#b9cce5; font-size:13px; line-height:1.8; }
+.home-execution { border-top:1px solid #34445e; padding:15px 0; font-size:13px; line-height:1.8; }
+.home-execution strong { display:block; margin-bottom:5px; color:#d8e8ff; }
+.home-risk-note { padding:14px; background:#263248; border-left:3px solid #dbb66a; font-size:13px; line-height:1.9; }
+.home-subhead { font-size:14px; margin:20px 0 10px; }
+@media(max-width:650px) { .home-panel-head { flex-wrap:wrap; } }
+
 /* 政策正文阅读窗口 */
 .reader-overlay {
   position: fixed;
@@ -304,41 +321,55 @@ select { flex: 1; min-width: 130px; }
     请以官方原文为准；未接入的数据将明确标注。
   </div>
 
-  <!-- 首页总览 -->
+  <!-- 首页总览：五大信息区，严格区分真实数据与待接入指标 -->
   <section id="home" class="page">
+    <div class="home-eyebrow">政策研究驾驶舱 · 数据均来自当前已采集的官方文件</div>
     <div class="stats">
-      <div class="stat">
-        <strong id="total">—</strong>
-        <span>累计收录政策</span>
-      </div>
-      <div class="stat">
-        <strong id="recent">—</strong>
-        <span>近30天政策</span>
-      </div>
-      <div class="stat">
-        <strong id="ok">—</strong>
-        <span>成功数据源</span>
-      </div>
-      <div class="stat">
-        <strong id="failed">—</strong>
-        <span>异常数据源</span>
-      </div>
+      <div class="stat"><strong id="total">—</strong><span>累计收录政策</span></div>
+      <div class="stat"><strong id="recent">—</strong><span>近30天政策</span></div>
+      <div class="stat"><strong id="homeAiCount">—</strong><span>已完成AI分析</span></div>
+      <div class="stat"><strong id="failed">—</strong><span>异常采集来源</span></div>
     </div>
-
+    <div class="home-section-head">
+      <h2>官方政策与执行线索</h2>
+      <span class="sub">点击政策查看AI分析；执行线索尚不等于项目已落地</span>
+    </div>
     <div class="grid2">
       <div class="panel">
-        <h2>最新官方政策</h2>
+        <div class="home-panel-head"><h2>最新官方政策及AI摘要</h2>
+          <button class="linkbutton" data-page="policies">查看全部政策 ↗</button>
+        </div>
         <div id="homePolicies"></div>
       </div>
-      <div>
-        <div class="panel">
-          <h2>重点产业 · 政策数量</h2>
-          <div id="topicBars"></div>
+      <div class="panel">
+        <div class="home-panel-head"><h2>政策落地观察</h2>
+          <button class="linkbutton" data-page="progress">查看落地进度 ↗</button>
         </div>
-        <div class="panel">
-          <h2>数据源健康状态</h2>
-          <div id="sourceStatus"></div>
+        <p class="sub">提取已分析政策中的执行主体、时间与措施；进度均需官方后续公告核实。</p>
+        <div id="homeImplementation"></div>
+      </div>
+    </div>
+    <div class="home-section-head">
+      <h2>产业信号与市场风险</h2>
+      <span class="sub">政策关注度不等于产业景气，更不等于投资收益</span>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="home-panel-head"><h2>重点产业 · 政策关注度</h2>
+          <button class="linkbutton" data-page="industry">产业景气 ↗</button>
         </div>
+        <p class="sub">按当前采集政策的产业标签计数，仅反映本站已覆盖的政策分布。</p>
+        <div id="topicBars"></div>
+        <p class="sub">工业增加值、利润与投资同比等真实景气数据尚未接入。</p>
+      </div>
+      <div class="panel">
+        <div class="home-panel-head"><h2>估值与风险观察</h2>
+          <button class="linkbutton" data-page="valuation">市场估值 ↗</button>
+        </div>
+        <div class="home-risk-note">估值分位、成交拥挤度和资金流向：<b>尚未接入行情数据</b>。不生成未经验证的市场风险等级。</div>
+        <h3 class="home-subhead">数据覆盖与异常</h3>
+        <div class="sub" id="homeSourceSummary"></div>
+        <div id="sourceStatus"></div>
       </div>
     </div>
   </section>
@@ -707,6 +738,51 @@ function bars(container, countsObj) {
     : '<div class="empty">暂无产业分类数据</div>';
 }
 
+/* 首页聚合来自政策JSON与AI分析JSON的既有字段，不构造行情或虚假进度 */
+function renderHomeInsights() {
+  const entries = Object.values(aiAnalyses || {}).filter(r => r && r.analysis);
+  $('homeAiCount').textContent = entries.length;
+  const latest = policies.slice(0, 6);
+  $('homePolicies').innerHTML = latest.length ? latest.map(p => {
+    const record = aiAnalyses[p.id];
+    const a = record && record.analysis;
+    const summary = a && typeof a.summary === 'string'
+      ? escapeHtml(a.summary.slice(0, 155)) + (a.summary.length > 155 ? '…' : '')
+      : '尚无AI摘要；可阅读原文或等待自动分析。';
+    return '<article class="home-policy">' +
+      '<div class="meta">' + escapeHtml(p.date || '日期未知') + ' · ' + escapeHtml(p.source || '来源未知') + '</div>' +
+      '<div class="home-policy-title"><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">' + escapeHtml(p.title || '未命名政策') + '</button></div>' +
+      '<div class="home-ai-summary">' + summary + '</div>' +
+      '<div class="actions"><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">✨ 查看AI分析</button>' +
+      '<button class="linkbutton" data-read="' + escapeHtml(p.url || '') + '">📖 阅读正文</button></div>' +
+      '</article>';
+  }).join('') : '<p class="empty">暂无政策记录</p>';
+
+  const implementation = [];
+  policies.forEach(p => {
+    const record = aiAnalyses[p.id];
+    const rows = record && record.analysis && record.analysis.implementation;
+    if (!Array.isArray(rows)) return;
+    rows.slice(0, 2).forEach(r => {
+      if (implementation.length < 5) implementation.push({p:p, r:r});
+    });
+  });
+  $('homeImplementation').innerHTML = implementation.length ? implementation.map(({p,r}) => {
+    const step = typeof r === 'string' ? r : (r.step || '未列明具体措施');
+    const dept = typeof r === 'object' && r ? (r.department || '部门未明确') : '部门未明确';
+    const when = typeof r === 'object' && r ? (r.time || '时间未明确') : '时间未明确';
+    return '<div class="home-execution"><div class="meta">' + escapeHtml(p.title || '政策') + '</div>' +
+      '<strong>' + escapeHtml(step) + '</strong>' +
+      '<div class="sub">责任部门：' + escapeHtml(dept) + ' · 时间：' + escapeHtml(when) + '</div>' +
+      '<div class="sub">阶段：文件要求已提取，实际落实待官方核实</div>' +
+      '<button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">查看政策依据 ↗</button></div>';
+  }).join('') : '<p class="empty">等待AI提取执行安排；暂不推断政策落地进度。</p>';
+
+  $('homeSourceSummary').textContent =
+    '成功采集来源 ' + (data.sources_ok || []).length + ' 个 · 采集异常来源 ' +
+    (data.sources_failed || []).length + ' 个';
+}
+
 function renderAll() {
   const now = Date.now();
   const month = 30 * 86400000;
@@ -722,13 +798,8 @@ function renderAll() {
 
   $('total').textContent = policies.length;
   $('recent').textContent = recent.length;
-  $('ok').textContent = (data.sources_ok || []).length;
   $('failed').textContent =
     (data.sources_failed || []).length;
-
-  $('homePolicies').innerHTML = policies.length
-    ? policies.slice(0, 6).map(policyHtml).join('')
-    : '<div class="empty">暂无政策数据，请检查采集结果。</div>';
 
   const c = counts();
 
@@ -898,8 +969,9 @@ async function load() {
         ? ' · 部分数据源异常'
         : ' · 数据读取成功');
 
-    renderAll();
     await loadAiAnalyses();
+    renderAll();
+    renderHomeInsights();
 
   } catch (error) {
     $('updated').textContent =
