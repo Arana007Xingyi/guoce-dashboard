@@ -133,7 +133,7 @@ def selected_policy_ids():
         return []
     # Policy IDs are the collector's 16-character hexadecimal identifiers.
     import re
-    parts = [part.strip().lower() for part in re.split(r"[,\\s;，；]+", raw) if part.strip()]
+    parts = [part.strip().lower() for part in re.split(r"[,\s;，；]+", raw) if part.strip()]
     if not parts or len(parts) > 5:
         raise ValueError("每次请指定1至5条政策编号")
     if any(not re.fullmatch(r"[0-9a-f]{16}", p) for p in parts):
