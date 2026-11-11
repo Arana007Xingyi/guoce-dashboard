@@ -243,6 +243,13 @@ select { flex: 1; min-width: 130px; }
 .strategy-empty { color:#9eafca; font-size:13px; padding:8px 0; }
 .strategy-proof { border-left:3px solid #dbb66a; background:#263248; padding:10px 12px; margin:12px 0; font-size:13px; line-height:1.8; }
 .strategy-link { font-size:13px; }
+/* 手动AI解读选择区域 */
+.ai-queue-panel { background:#26364f; border:1px solid #58749d; border-radius:12px; padding:18px; margin-bottom:18px; }
+.ai-queue-panel h3 { margin:0 0 5px; }
+.ai-queue-panel p { margin:6px 0 12px; }
+.ai-queue-panel textarea { display:block; width:100%; min-height:65px; resize:vertical; margin:7px 0; padding:10px; color:#e4efff; background:#16253d; border:1px solid #567399; border-radius:7px; font:13px/1.6 ui-monospace,monospace; }
+.ai-selected-item { display:flex; align-items:center; justify-content:space-between; gap:14px; border-top:1px solid #465e7b; padding:9px 0; }
+.linkbutton:disabled { opacity:.5; cursor:not-allowed; }
 /* 首页五区域布局：独立样式，不影响正文阅读窗口 */
 .home-eyebrow { color:#a8bddb; font-size:12px; margin:-5px 0 15px; letter-spacing:.04em; }
 .home-section-head { display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; justify-content:space-between; margin:9px 0 14px; }
@@ -404,6 +411,23 @@ select { flex: 1; min-width: 130px; }
           <option>国务院</option>
           <option>部委</option>
         </select>
+      </div>
+
+      <div class="ai-queue-panel" id="manualAiQueue">
+        <div class="home-panel-head">
+          <div><h3>自主选择AI解读</h3>
+          <p class="sub">每天只采集政策，不会自动消耗AI Tokens。勾选需要解读的文件（每次最多5份）。</p></div>
+          <span class="pill" id="manualAiCount">0 / 5 已选</span>
+        </div>
+        <div id="manualAiSelected" class="sub">尚未选择政策</div>
+        <label class="sub" for="manualAiIds">将这些编号复制到 GitHub Actions 的 policy_ids 输入框：</label>
+        <textarea id="manualAiIds" rows="2" readonly placeholder="请选择政策文件"></textarea>
+        <div class="actions" style="margin-top:12px">
+          <button class="button" id="manualAiCopy" type="button">复制所选政策编号</button>
+          <a class="button secondary" href="https://github.com/Arana007Xingyi/guoce-dashboard/actions/workflows/update.yml" target="_blank" rel="noopener noreferrer">打开 GitHub Actions ↗</a>
+          <button class="button secondary" type="button" id="manualAiClear">清空选择</button>
+        </div>
+        <p class="sub" id="manualAiNotice" aria-live="polite">GitHub Actions → Run workflow → policy_ids 粘贴编号 → Run workflow。整个流程不会把API密钥放到网页中。</p>
       </div>
       <div id="filterCount" class="sub"></div>
       <div id="policyList"></div>
@@ -591,6 +615,12 @@ let policies = [];
 let data = {};
 let aiAnalyses = {};
 let strategyCatalog = [];
+const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
+let manualAiQueue = [];
+try {
+  const stored = JSON.parse(localStorage.getItem(AI_QUEUE_KEY) || '[]');
+  if (Array.isArray(stored)) manualAiQueue = stored.filter(x => /^[0-9a-f]{16}$/.test(x)).slice(0,5);
+} catch { manualAiQueue = []; }
 let activePage = 'home';
 
 const STORE = 'guoce3_bookmarks';
@@ -621,7 +651,77 @@ function validUrl(url) {
   }
 }
 
+/* 自主AI解读：纯本地勾选，不发起付费请求。 */
+function getManualAiState(p) {
+  if (aiAnalyses[p.id]?.analysis) return { label: '✓ 已有AI解读', disabled: true };
+  if (p.content_status !== 'success' || !p.content || p.content.length < 300)
+    return { label: '正文不足，暂不可选', disabled: true };
+  return { label: manualAiQueue.includes(p.id) ? '☑ 已选中 · 取消选择' : '☐ 选择AI解读', disabled: false };
+}
+function manualAiSave() {
+  try { localStorage.setItem(AI_QUEUE_KEY, JSON.stringify(manualAiQueue)); }
+  catch { $('manualAiNotice').textContent = '浏览器未能保存选择，请复制编号留存。'; }
+}
+function manualAiRefresh() {
+  const selection = $('manualAiSelected');
+  if (!selection) return;
+  const selected = manualAiQueue.map(id => policies.find(p => p.id === id)).filter(Boolean);
+  $('manualAiCount').textContent = selected.length + ' / 5 已选';
+  $('manualAiIds').value = selected.map(p => p.id).join(',');
+  selection.replaceChildren();
+  if (!selected.length) {
+    selection.append(aiText('p', '尚未选择政策'));
+  } else {
+    selected.forEach(p => {
+      const row = document.createElement('div'); row.className = 'ai-selected-item';
+      row.append(aiText('span', p.title || p.id));
+      const b = aiText('button', '移除', 'linkbutton');
+      b.type = 'button';
+      b.dataset.selectAi = p.id;
+      row.append(b); selection.append(row);
+    });
+  }
+  $('manualAiCopy').disabled = !selected.length;
+}
+function manualAiToggle(id) {
+  const p = policies.find(item => item.id === id);
+  if (!p || aiAnalyses[id]?.analysis || p.content_status !== 'success' || !p.content || p.content.length < 300) return;
+  if (manualAiQueue.includes(id)) manualAiQueue = manualAiQueue.filter(x => x !== id);
+  else {
+    if (manualAiQueue.length >= 5) { $('manualAiNotice').textContent = '每次最多选择5份文件。请先提交或移除已选文件。'; return; }
+    manualAiQueue.push(id);
+  }
+  manualAiSave();
+  renderAll();
+  renderHomeInsights();
+  renderFiltered();
+  renderSaved();
+  renderStrategies();
+  renderProgress();
+  manualAiRefresh();
+}
+document.addEventListener('click', e => {
+  const button = e.target.closest('[data-select-ai]');
+  if (button && !button.disabled) manualAiToggle(button.dataset.selectAi);
+});
+$('manualAiCopy').addEventListener('click', async () => {
+  const content = $('manualAiIds').value;
+  if (!content) return;
+  try {
+    await navigator.clipboard.writeText(content);
+    $('manualAiNotice').textContent = '已复制！打开 GitHub Actions → Run workflow → 在 policy_ids 中粘贴 → Run workflow。';
+  } catch {
+    $('manualAiIds').focus(); $('manualAiIds').select();
+    $('manualAiNotice').textContent = '无法自动复制：编号已选中，请按 Command+C（Windows: Ctrl+C）复制。';
+  }
+});
+$('manualAiClear').addEventListener('click', () => {
+  manualAiQueue = []; manualAiSave(); manualAiRefresh(); renderFiltered(); renderAll(); renderHomeInsights();
+  $('manualAiNotice').textContent = '选择已清空。';
+});
+
 function policyHtml(p) {
+  const aiStatus = getManualAiState(p);
   const saved = bookmarks().includes(p.url);
   const tags = Array.isArray(p.topics) ? p.topics : [];
 
@@ -639,6 +739,9 @@ function policyHtml(p) {
         ).join('')}
       </div>
       <div class="actions">
+      <button class="linkbutton" data-select-ai="${escapeHtml(p.id || '')}" ${aiStatus.disabled ? 'disabled' : ''}>
+        ${escapeHtml(aiStatus.label)}
+      </button>
       <button class="linkbutton" data-ai="${escapeHtml(p.id || '')}">
         ✨ AI政策分析
       </button>
@@ -1085,6 +1188,9 @@ async function load() {
     renderHomeInsights();
     renderStrategies();
     renderProgress();
+    manualAiQueue = manualAiQueue.filter(id => policies.some(p => p.id === id && !aiAnalyses[id]?.analysis && p.content_status === 'success' && p.content?.length >= 300));
+    manualAiSave();
+    manualAiRefresh();
 
   } catch (error) {
     $('updated').textContent =
