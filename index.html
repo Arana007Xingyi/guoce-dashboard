@@ -232,6 +232,16 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 指数与ETF历史走势及估值 */
+.market-research {margin:12px 0;padding:16px;background:#202f47;border:1px solid #465b78;border-radius:12px;}
+.market-research h3 {margin:0 0 8px;font-size:17px;}
+.market-meta {font-size:12px;color:#b8cbe3;line-height:1.7;}
+.market-series {margin:13px 0;}
+.market-series .climate-chart {margin:8px 0 4px;}
+.market-kpis {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.market-kpi {background:#2a3c58;border:1px solid #3b5477;border-radius:8px;padding:10px;}
+.market-kpi strong {display:block;margin:5px 0;}
+@media(max-width:720px) {.market-kpis{grid-template-columns:repeat(2,minmax(0,1fr));}}
 /* 同口径月度工业统计走势（原生SVG；缺值不插值） */
 .climate-chart {border:1px solid #405776;border-radius:10px;background:#182740;padding:12px;margin:12px 0;}
 .climate-chart svg {width:100%;height:auto;display:block;}
@@ -616,6 +626,25 @@ select { flex: 1; min-width: 130px; }
       <div class="strategy-proof">生产增长与利润增长不同；任何“基本面改善”结论至少还需行业利润、订单或收入验证。没有可比估值历史数据时，结论一律为“估值无法判定”，不是“低估”。</div>
       <div id="valuationLinkCards"></div>
     </div>
+    <div class="panel" id="marketHistoryPanel">
+      <div class="home-panel-head">
+        <div><h2>A股指数与ETF · 历史行情及估值</h2>
+          <p class="sub">指数来自中证指数官方日线接口；ETF行情另行标注第三方提供方。PE仅展示中证指数滚动市盈率，ETF本身没有独立的行业PE；PB未验证时不显示。</p>
+        </div>
+        <span class="pill" id="marketHistoryCount">数据未读取</span>
+      </div>
+      <div class="toolbar">
+        <select id="marketInstrument"><option value="">全部指数与ETF</option></select>
+        <select id="marketKind">
+          <option value="">全部工具</option>
+          <option value="index">指数</option>
+          <option value="etf">ETF</option>
+        </select>
+      </div>
+      <div id="marketSourceHealth" class="evidence-summary"></div>
+      <div id="marketHistoryCards"></div>
+      <p class="sub">历史PE分位只在同一指数、同口径且具备至少750个有效样本及3年覆盖时显示。成交额尚未确认单位时只做原始数据保存；ETF数据若没有授权或接口不支持，将显示缺失，而不是推算。</p>
+    </div>
   </section>
 
   <!-- 我的研究 -->
@@ -748,6 +777,7 @@ let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
 let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
+let marketHistory = {instruments:[],status:[],updated_at:null};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1275,6 +1305,101 @@ function industryProductionSignal(id) {
   return {label:delta>0?'同比增速回升':delta<0?'同比增速放缓':'同比增速持平',
     extra:a.label+' · '+prior.period+'→'+last.period+' · 变化 '+(delta>0?'+':'')+delta.toFixed(1)+'个百分点'};
 }
+/* 指数和ETF市场数据保持代码、时间、口径和来源隔离。
+   PB 不存在时展示缺失，不根据价格或指数PE猜测。 */
+function formatMarketNumber(v,d=2) {
+  return typeof v==='number'&&Number.isFinite(v)?
+    v.toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}):'暂无数据';
+}
+function marketTrendSvg(points,key,label) {
+  const valid=(points||[]).filter(p=>Number.isFinite(p[key])).slice(-72);
+  if(valid.length<2)return '<p class="empty">目前没有足够的同口径历史数据</p>';
+  const values=valid.map(p=>p[key]);
+  const low=Math.min(...values),high=Math.max(...values);
+  const min=low===high?low-1:low-(high-low)*.12;
+  const max=low===high?high+1:high+(high-low)*.12;
+  const w=600,h=160,pad=20;
+  const xx=i=>pad+(w-pad*2)*i/(valid.length-1);
+  const yy=v=>pad+(h-pad*2)*(max-v)/(max-min);
+  const poly=valid.map((p,i)=>xx(i).toFixed(1)+','+yy(p[key]).toFixed(1)).join(' ');
+  return '<div class="climate-chart"><div class="meta">'+escapeHtml(label)+
+    ' · '+escapeHtml(valid[0].date)+' 至 '+escapeHtml(valid[valid.length-1].date)+
+    ' · '+valid.length+' 个交易日</div>'+
+    '<svg viewBox="0 0 600 160" role="img" aria-label="'+escapeHtml(label)+'历史趋势">'+
+    '<polyline points="'+poly+'" fill="none" stroke="#8ecbff" stroke-width="2.5" stroke-linejoin="round"/>'+
+    '</svg></div>';
+}
+function marketStatusMessage(id) {
+  const status=(marketHistory.status||[]).find(x=>x.instrument_id===id);
+  if(!status)return '尚未执行采集';
+  return ({ok:'正常',failed:'来源检查失败',requires_data_key:'ETF来源尚未授权'})[status.state]||'状态未知';
+}
+function renderMarketHistory() {
+  const all=marketHistory.instruments||[];
+  const type=$('marketKind').value;
+  const selection=$('marketInstrument').value;
+  const filtered=all.filter(r=>(!type||r.kind===type)&&(!selection||r.id===selection));
+  const validCount=all.filter(r=>(r.points||[]).length).length;
+  $('marketHistoryCount').textContent=validCount+'/'+all.length+' 项有行情';
+  const state=marketHistory.status||[];
+  $('marketSourceHealth').innerHTML=
+    '<span>采集成功：'+state.filter(x=>x.state==='ok').length+'</span>'+
+    '<span>来源失败：'+state.filter(x=>x.state==='failed').length+'</span>'+
+    '<span>ETF需授权：'+state.filter(x=>x.state==='requires_data_key').length+'</span>'+
+    '<span>上次运行：'+escapeHtml(marketHistory.updated_at?
+      monitorTimestamp(marketHistory.updated_at):'未执行')+'</span>';
+  $('marketHistoryCards').innerHTML=filtered.length ? filtered.map(x=>{
+    const pts=x.points||[],last=pts[pts.length-1]||{};
+    const isIndex=x.kind==='index';
+    const hasPE=isIndex&&Number.isFinite(last.pe_ttm);
+    const ratio=Number.isFinite(x.pe_percentile)?x.pe_percentile:null;
+    const chips=[
+      ['最新收盘',formatMarketNumber(last.close,isIndex?2:3)],
+      ['滚动PE',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
+      ['历史PE分位',ratio!==null?formatMarketNumber(ratio,1)+'%':'样本不足'],
+      ['PB','未接入'],
+    ];
+    return '<article class="market-research"><h3>'+escapeHtml(x.name||x.code)+
+      ' <span class="sub">'+escapeHtml(x.code)+'</span></h3>'+
+      '<p class="market-meta">'+(isIndex?'中证官方指数':'第三方ETF行情')+
+      ' · 最近交易日：'+escapeHtml(last.date||'未获得')+
+      ' · '+escapeHtml(marketStatusMessage(x.id))+'</p>'+
+      '<div class="market-kpis">'+chips.map(([k,v])=>
+        '<div class="market-kpi"><div class="sub">'+escapeHtml(k)+'</div><strong>'+escapeHtml(v)+'</strong></div>'
+      ).join('')+'</div>'+
+      '<div class="market-series">'+marketTrendSvg(pts,'close','历史收盘价')+'</div>'+
+      (isIndex ? '<div class="market-series">'+marketTrendSvg(pts,'pe_ttm','指数滚动市盈率')+'</div>':
+        '<p class="sub">ETF收盘价不等于所跟踪指数的估值。ETF成交额如果未由来源提供，将保持空值。</p>')+
+      '<p class="sub">已保留'+pts.length+'个交易日 · 官方/数据来源：'+
+      '<a href="'+escapeHtml(isIndex?'https://www.csindex.com.cn/':
+      'https://www.databull.cn/docs/etf-daily')+'" target="_blank" rel="noopener noreferrer">'+
+      (isIndex?'中证指数':'ETF数据接口说明')+' ↗</a></p></article>';
+  }).join('') : '<div class="empty">尚未取得符合条件的行情。请检查采集状态；没有数据时不展示虚假估值。</div>';
+}
+async function loadMarketHistory() {
+  try {
+    const res=await fetch('./data/market_history.json?t='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw Error('市场历史数据读取失败');
+    const json=await res.json();
+    marketHistory={
+      instruments:Array.isArray(json.instruments)?json.instruments:[],
+      status:Array.isArray(json.status)?json.status:[],
+      updated_at:json.updated_at||null
+    };
+  } catch(e) {
+    console.warn('市场行情数据未就绪',e);
+    marketHistory={instruments:[],status:[],updated_at:null};
+  }
+  const selector=$('marketInstrument');
+  const old=selector.value;
+  selector.innerHTML='<option value="">全部指数与ETF</option>'+
+    marketHistory.instruments.map(x=>
+      '<option value="'+escapeHtml(x.id)+'">'+escapeHtml(x.name||x.id)+'</option>').join('');
+  selector.value=marketHistory.instruments.some(x=>x.id===old)?old:'';
+  renderMarketHistory();
+}
+$('marketInstrument').addEventListener('change',renderMarketHistory);
+$('marketKind').addEventListener('change',renderMarketHistory);
 function renderValuationLinks() {
   const select=$('valuationSector');
   if(!select)return;
@@ -1843,7 +1968,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate(), loadMarketHistory()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
