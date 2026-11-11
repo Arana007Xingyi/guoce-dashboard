@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "methodology": "纲要与专项规划的来源人工核验；政策关联使用标题/标签规则，仅作为候选线索；实施进展只在存在明确官方公告时标记，不将政策发布或AI推断视为落地完成。",
+  "strategies": [
+    {
+      "id": "industry",
+      "title": "现代化产业体系与先进制造",
+      "period": "2026—2030",
+      "chapter": "十五五规划纲要：第二篇第四、五章",
+      "goal": "优化提升传统产业、培育壮大新兴产业和未来产业",
+      "source_url": "https://www.locpg.gov.cn/20260314/4cab36f71ce14e90957ccd9cebbaf60c/c.html",
+      "terms": [
+        "先进制造",
+        "机器人",
+        "智能制造",
+        "工业母机",
+        "集成电路",
+        "装备制造",
+        "产业基础"
+      ],
+      "topics": [
+        "先进制造"
+      ],
+      "special_documents": []
+    },
+    {
+      "id": "digital",
+      "title": "数字中国与人工智能",
+      "period": "2026—2030",
+      "chapter": "十五五规划纲要：第四篇第十二至十四章",
+      "goal": "强化算力、算法、数据供给，推进数智技术赋能",
+      "source_url": "https://www.locpg.gov.cn/20260314/4cab36f71ce14e90957ccd9cebbaf60c/c.html",
+      "terms": [
+        "人工智能",
+        "算力",
+        "数据要素",
+        "大模型",
+        "数字经济",
+        "智能体"
+      ],
+      "topics": [
+        "人工智能",
+        "科技创新"
+      ],
+      "special_documents": []
+    },
+    {
+      "id": "consumption",
+      "title": "扩大内需与提振消费",
+      "period": "2026—2030",
+      "chapter": "十五五规划纲要：第五篇第十五至十七章",
+      "goal": "大力提振消费、扩大有效投资、纵深推进全国统一大市场建设",
+      "source_url": "https://www.locpg.gov.cn/20260314/4cab36f71ce14e90957ccd9cebbaf60c/c.html",
+      "terms": [
+        "提振消费",
+        "扩大内需",
+        "消费",
+        "统一大市场",
+        "有效投资"
+      ],
+      "topics": [
+        "消费民生"
+      ],
+      "special_documents": []
+    },
+    {
+      "id": "ecology",
+      "title": "绿色转型与美丽中国",
+      "period": "2026—2030",
+      "chapter": "十五五规划纲要：绿色发展相关部署；专项规划《美丽中国建设“十五五”规划》",
+      "goal": "推进降碳、减污、扩绿、增长，促进经济社会全面绿色转型",
+      "source_url": "https://www.locpg.gov.cn/20260314/4cab36f71ce14e90957ccd9cebbaf60c/c.html",
+      "terms": [
+        "生态环境",
+        "污染治理",
+        "绿色低碳",
+        "碳排放",
+        "节能",
+        "新能源",
+        "环境保护",
+        "自然保护区"
+      ],
+      "topics": [
+        "绿色能源"
+      ],
+      "special_documents": [
+        {
+          "title": "美丽中国建设“十五五”规划",
+          "url": "https://www.ndrc.gov.cn/fggz/fzzlgh/gjjzxgh/202609/t20260928_1407867.html",
+          "date": "2026-09-28",
+          "type": "专项规划",
+          "relationship": "文件正文明确根据十五五规划纲要制定",
+          "status": "已发布"
+        }
+      ]
+    }
+  ]
+}
