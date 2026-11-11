@@ -232,6 +232,13 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 政策执行证据候选与个人核验标记 */
+.evidence-summary { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 16px; }
+.evidence-summary span { border:1px solid #425b7d; background:#253957; color:#d9e8ff; padding:7px 10px; border-radius:8px; font-size:12px; }
+.evidence-row { padding:16px 0; border-top:1px solid #3b4e69; }
+.evidence-title { font-size:15px; line-height:1.65; font-weight:650; margin:7px 0; }
+.evidence-actions { display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:13px; }
+.evidence-note { color:#b3c5dd; font-size:12px; line-height:1.75; margin:6px 0; }
 /* 十五五战略与落地追踪卡片 */
 .strategy-card { margin: 15px 0; padding: 19px; background:#202d44; border:1px solid #3b506e; border-radius:12px; }
 .strategy-card h3 { margin:0 0 9px; font-size:18px; }
@@ -459,6 +466,29 @@ select { flex: 1; min-width: 130px; }
         <select id="progressSelect"><option value="">全部战略方向</option></select>
       </div>
       <div id="progressCards"></div>
+    </div>
+    <div class="panel" id="evidenceBoard">
+      <div class="home-panel-head">
+        <div>
+          <h2>官方实施文件 · 核验线索库</h2>
+          <p class="sub">从现有官方政策标题中识别细则、项目、资金、成果等可能的执行证据。分类是自动识别，不代表与某项战略已证实关联，也不代表执行完成。</p>
+        </div>
+        <span class="pill" id="evidenceCount">— 条线索</span>
+      </div>
+      <div class="toolbar">
+        <input id="evidenceSearch" placeholder="筛选文件名称、发布来源、产业关键字">
+        <select id="evidenceStage">
+          <option value="">全部文件类型</option>
+          <option value="细则与方案">细则与方案</option>
+          <option value="项目与清单">项目与清单</option>
+          <option value="资金与预算">资金与预算</option>
+          <option value="进度与结果">进度与结果</option>
+        </select>
+        <select id="evidenceStrategy"><option value="">全部战略方向（含未匹配）</option></select>
+      </div>
+      <div class="evidence-summary" id="evidenceSummary"></div>
+      <div class="strategy-proof">“已收录政府文件”仅证明该文件存在。需要官方项目进度、预算执行或验收公告，才能认定具体实施节点；当前仍未建立完成率或A/B/C评级。</div>
+      <div id="evidenceList"></div>
     </div>
   </section>
 
@@ -945,6 +975,93 @@ function renderStrategies() {
         '<div class="strategy-empty">当前采集范围内尚无匹配政策</div>') + '</div></article>';
   }).join('') : '<div class="empty">暂无已核实的战略档案</div>';
 }
+/* 基于官方文档标题的候选执行证据，绝不视为已完成的政策成果。 */
+const EVIDENCE_RULES = [
+  {label:'进度与结果', pattern:/进展|成效|实施效果|绩效评价|验收|完成情况|年度执行报告|执行情况|工作总结/},
+  {label:'资金与预算', pattern:/资金下达|拨付|资金安排|专项资金|投资计划|预算执行|补助资金|资金管理|中央预算内投资|财政贴息|资金使用/},
+  {label:'项目与清单', pattern:/开工|项目启动|建设项目|项目清单|重点项目|项目核准|项目批复|示范区名单|试点名单|示范名单|基础清单|保护名录/},
+  {label:'细则与方案', pattern:/实施细则|实施方案|实施办法|行动方案|行动计划|管理办法|实施条例|具体措施|实施意见|工作方案|落实措施|工作指引|规划/}
+];
+const EVIDENCE_STORE = 'guoce_evidence_watch_v1';
+let evidenceWatched = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(EVIDENCE_STORE)||'[]');
+  if(Array.isArray(saved)) evidenceWatched = saved.filter(id => /^[0-9a-f]{16}$/.test(id));
+} catch { evidenceWatched = []; }
+function evidenceType(p) {
+  const title = String(p.title||'');
+  return EVIDENCE_RULES.find(rule => rule.pattern.test(title))?.label || '';
+}
+function evidenceLinks(p) {
+  const matches = strategyCatalog.filter(g => {
+    const title = String(p.title||'');
+    return (g.terms||[]).some(t => title.includes(t)) ||
+      (g.topics||[]).some(t => (p.topics||[]).includes(t));
+  });
+  return matches;
+}
+function evidenceCandidates() {
+  return policies.filter(p => evidenceType(p) && strategyUrl(p.url) !== '#');
+}
+function evidenceToggle(id) {
+  const found = evidenceWatched.includes(id);
+  evidenceWatched = found ? evidenceWatched.filter(x=>x!==id) : [...evidenceWatched,id];
+  try { localStorage.setItem(EVIDENCE_STORE,JSON.stringify(evidenceWatched)); }
+  catch { alert('当前浏览器无法保存关注状态'); }
+  renderEvidenceBoard();
+}
+function renderEvidenceBoard() {
+  const listEl = $('evidenceList');
+  if(!listEl) return;
+  const candidates = evidenceCandidates();
+  const term = $('evidenceSearch').value.trim().toLowerCase();
+  const kind = $('evidenceStage').value;
+  const direction = $('evidenceStrategy').value;
+  const matched = candidates.filter(p => {
+    const tags = evidenceLinks(p).map(x => x.id);
+    const searchText = [p.title,p.source,...(p.topics||[])].join(' ').toLowerCase();
+    return (!term || searchText.includes(term)) && (!kind || evidenceType(p) === kind) &&
+      (!direction || tags.includes(direction));
+  });
+  $('evidenceCount').textContent = candidates.length + ' 条候选文件';
+  const perType = EVIDENCE_RULES.map(rule => {
+    const n = candidates.filter(p => evidenceType(p) === rule.label).length;
+    return '<span>' + escapeHtml(rule.label) + '：' + n + '</span>';
+  }).join('');
+  $('evidenceSummary').innerHTML = perType +
+    '<span>我关注的文件：' + candidates.filter(p=>evidenceWatched.includes(p.id)).length + '</span>';
+  // 优先显示用户关注的文件，其次按发布时间排列。
+  matched.sort((a,b)=>
+    Number(evidenceWatched.includes(b.id)) - Number(evidenceWatched.includes(a.id)) ||
+    String(b.date||'').localeCompare(String(a.date||'')));
+  listEl.innerHTML = matched.length ? matched.slice(0,60).map(p => {
+    const matches = evidenceLinks(p);
+    const watched = evidenceWatched.includes(p.id);
+    const official = strategyUrl(p.url);
+    return '<article class="evidence-row">' +
+      '<div class="meta">' + escapeHtml(p.date||'日期未知') + ' · ' +
+      escapeHtml(p.source||'来源未知') + ' · 自动分类：' + escapeHtml(evidenceType(p)) + '</div>' +
+      '<div class="evidence-title">' + escapeHtml(p.title||'') + '</div>' +
+      '<div class="evidence-note">战略关系：' +
+      (matches.length ? matches.map(g=>escapeHtml(g.title)).join('、')+'（自动匹配，待核对）' : '暂无自动匹配的战略方向') +
+      ' · 执行情况：尚未通过后续公告核实</div>' +
+      '<div class="evidence-actions">' +
+      '<a href="' + escapeHtml(official) + '" target="_blank" rel="noopener noreferrer">核对官方文件 ↗</a>' +
+      '<button class="linkbutton" data-evidence-watch="' + escapeHtml(p.id||'') + '">' +
+      (watched?'★ 已关注 · 取消':'☆ 加入跟踪清单') + '</button>' +
+      '<button class="linkbutton" data-read="' + escapeHtml(p.url||'') + '">阅读已采集正文</button>' +
+      '</div></article>';
+  }).join('') : '<p class="empty">目前没有符合筛选条件的执行文件线索。可清除筛选条件查看全部候选文件。</p>';
+}
+['evidenceSearch','evidenceStage','evidenceStrategy'].forEach(id => {
+  const item = $(id);
+  item.addEventListener(id === 'evidenceSearch'?'input':'change', renderEvidenceBoard);
+});
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-evidence-watch]');
+  if(btn) evidenceToggle(btn.dataset.evidenceWatch);
+});
+
 function renderProgress() {
   const sel = $('progressSelect');
   if (!sel) return;
@@ -981,7 +1098,7 @@ function renderProgress() {
   }).join('') || '<div class="empty">暂无追踪档案</div>';
 }
 function strategyFilters() {
-  ['strategySelect','progressSelect'].forEach(id => {
+  ['strategySelect','progressSelect','evidenceStrategy'].forEach(id => {
     const el = $(id);
     if (!el) return;
     const value = el.value;
@@ -1192,6 +1309,7 @@ async function load() {
     renderHomeInsights();
     renderStrategies();
     renderProgress();
+    renderEvidenceBoard();
     manualAiQueue = manualAiQueue.filter(id => policies.some(p => p.id === id && !aiAnalyses[id]?.analysis && p.content_status === 'success' && p.content?.length >= 300));
     manualAiSave();
     manualAiRefresh();
