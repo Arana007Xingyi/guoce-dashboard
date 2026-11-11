@@ -232,6 +232,17 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 十五五战略与落地追踪卡片 */
+.strategy-card { margin: 15px 0; padding: 19px; background:#202d44; border:1px solid #3b506e; border-radius:12px; }
+.strategy-card h3 { margin:0 0 9px; font-size:18px; }
+.strategy-meta { color:#a9bfdd; font-size:12px; margin:7px 0 12px; }
+.strategy-chain { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:12px 0; font-size:12px; }
+.strategy-node { border:1px solid #485d7c; background:#2a3d59; padding:7px 10px; border-radius:8px; }
+.strategy-list { margin:10px 0; border-top:1px solid #3b506e; padding-top:12px; line-height:1.8; }
+.strategy-list li { margin:6px 0; }
+.strategy-empty { color:#9eafca; font-size:13px; padding:8px 0; }
+.strategy-proof { border-left:3px solid #dbb66a; background:#263248; padding:10px 12px; margin:12px 0; font-size:13px; line-height:1.8; }
+.strategy-link { font-size:13px; }
 /* 首页五区域布局：独立样式，不影响正文阅读窗口 */
 .home-eyebrow { color:#a8bddb; font-size:12px; margin:-5px 0 15px; letter-spacing:.04em; }
 .home-section-head { display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; justify-content:space-between; margin:9px 0 14px; }
@@ -399,36 +410,31 @@ select { flex: 1; min-width: 130px; }
     </div>
   </section>
 
-  <!-- 国家战略 -->
+  <!-- 国家战略：十五五纲要 → 专项规划 → 政策线索 → 执行证据 -->
   <section id="strategy" class="page hidden">
     <div class="panel">
-      <h2>国家战略与十五五规划</h2>
-      <p class="sectionintro">
-        当前数据源仅提供政策标题与基础分类，
-        尚未建立国家规划目标、战略任务和产业地图的结构化数据库。
-      </p>
-      <div id="strategyTopics"></div>
-      <div class="divider"></div>
-      <a href="https://www.gov.cn/zhengce/"
-         target="_blank" rel="noopener noreferrer">
-        中国政府网政策栏目 · 官方入口
-      </a>
+      <h2>十五五国家战略 · 政策关联图谱</h2>
+      <p class="sectionintro">依据已公布的十五五规划纲要与官方专项规划建立战略档案。
+        下方政策推荐为自动匹配的候选线索，不代表官方已认定为该战略配套文件。</p>
+      <div class="toolbar">
+        <select id="strategySelect"><option value="">全部战略方向</option></select>
+        <button class="button secondary" id="strategyToProgress">查看执行追踪</button>
+      </div>
+      <div id="strategyCards"></div>
     </div>
   </section>
 
-  <!-- 落地进度 -->
+  <!-- 落地追踪：没有官方完成证据绝不显示完成 -->
   <section id="progress" class="page hidden">
     <div class="panel">
-      <h2>政策落地进度</h2>
-      <p class="sectionintro">
-        计划按政策发布、实施细则、项目启动、资金拨付、
-        效果评估等阶段跟踪。
-        现有采集器没有项目与资金数据，
-        暂不提供未经核实的进度百分比或 A/B/C 等级。
-      </p>
-      <div class="empty">
-        状态：待接入官方项目公告、财政预算执行及实施进展数据。
+      <h2>政策落地追踪 · 证据链</h2>
+      <p class="sectionintro">规划目标 → 专项政策 → 实施细则 → 执行进展。
+        将“已发布文件”“候选关联政策”“AI提取的执行要求”与“经过核实的落地证据”分开显示；
+        不用政策数量计算完成百分比。</p>
+      <div class="toolbar">
+        <select id="progressSelect"><option value="">全部战略方向</option></select>
       </div>
+      <div id="progressCards"></div>
     </div>
   </section>
 
@@ -584,6 +590,7 @@ const escapeHtml = value =>
 let policies = [];
 let data = {};
 let aiAnalyses = {};
+let strategyCatalog = [];
 let activePage = 'home';
 
 const STORE = 'guoce3_bookmarks';
@@ -783,6 +790,118 @@ function renderHomeInsights() {
     (data.sources_failed || []).length + ' 个';
 }
 
+
+/* 国家战略档案只读政府来源；标题/标签匹配仅是线索，不是官方关联。 */
+function strategicMatches(goal) {
+  const terms = goal.terms || [];
+  const topics = goal.topics || [];
+  return policies.filter(p => {
+    const title = String(p.title || '');
+    const tags = Array.isArray(p.topics) ? p.topics : [];
+    return terms.some(t => title.includes(t)) || topics.some(t => tags.includes(t));
+  }).slice(0, 12);
+}
+function strategyUrl(url) {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' && (u.hostname.endsWith('.gov.cn') || u.hostname === 'gov.cn') ? u.href : '#';
+  } catch { return '#'; }
+}
+function strategyPolicyLink(p) {
+  return '<li><button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">' +
+    escapeHtml(p.title || '') + '</button>' +
+    '<span class="meta"> · ' + escapeHtml(p.date || '日期未知') + ' · 自动匹配（待核实）</span></li>';
+}
+function renderStrategies() {
+  const sel = $('strategySelect');
+  if (!sel) return;
+  const filter = sel.value;
+  const goals = strategyCatalog.filter(g => !filter || g.id === filter);
+  $('strategyCards').innerHTML = goals.length ? goals.map(g => {
+    const found = strategicMatches(g);
+    const confirmed = g.special_documents || [];
+    return '<article class="strategy-card"><h3>' + escapeHtml(g.title) + '</h3>' +
+      '<div class="strategy-meta">' + escapeHtml(g.period || '') + ' · ' + escapeHtml(g.chapter || '') + '</div>' +
+      '<p><b>纲要目标：</b>' + escapeHtml(g.goal || '') + '</p>' +
+      '<p class="strategy-link"><a target="_blank" rel="noopener noreferrer" href="' + escapeHtml(strategyUrl(g.source_url)) + '">十五五规划纲要 · 官方全文 ↗</a></p>' +
+      '<div class="strategy-chain"><span class="strategy-node">纲要目标 ✓</span><span>→</span>' +
+      '<span class="strategy-node">专项规划 ' + confirmed.length + '</span><span>→</span>' +
+      '<span class="strategy-node">相关政策线索 ' + found.length + '</span><span>→</span>' +
+      '<span class="strategy-node">执行证据待核实</span></div>' +
+      '<div class="strategy-list"><b>已核验的专项规划</b>' +
+      (confirmed.length ? '<ul>' + confirmed.map(d => '<li><a target="_blank" rel="noopener noreferrer" href="' +
+        escapeHtml(strategyUrl(d.url)) + '">' + escapeHtml(d.title) + '</a><span class="meta"> · ' +
+        escapeHtml(d.relationship || '') + '</span></li>').join('') + '</ul>' :
+        '<div class="strategy-empty">尚未收录经确认的专项规划关联</div>') + '</div>' +
+      '<div class="strategy-list"><b>候选配套政策 · 自动匹配，非官方认定</b>' +
+      (found.length ? '<ul>' + found.map(strategyPolicyLink).join('') + '</ul>' :
+        '<div class="strategy-empty">当前采集范围内尚无匹配政策</div>') + '</div></article>';
+  }).join('') : '<div class="empty">暂无已核实的战略档案</div>';
+}
+function renderProgress() {
+  const sel = $('progressSelect');
+  if (!sel) return;
+  const filter = sel.value;
+  const goals = strategyCatalog.filter(g => !filter || g.id === filter);
+  $('progressCards').innerHTML = goals.map(g => {
+    const matched = strategicMatches(g);
+    const detailed = matched.filter(p => {
+      const a = aiAnalyses[p.id] && aiAnalyses[p.id].analysis;
+      return a && Array.isArray(a.implementation) && a.implementation.length;
+    });
+    const steps = detailed.slice(0, 4).flatMap(p => {
+      const a = aiAnalyses[p.id].analysis;
+      return a.implementation.slice(0,2).map(x => ({p, x}));
+    });
+    return '<article class="strategy-card"><h3>' + escapeHtml(g.title) + '</h3>' +
+      '<div class="strategy-chain"><span class="strategy-node">纲要：已发布</span><span>→</span>' +
+      '<span class="strategy-node">专项：' + (g.special_documents || []).length + '份已核验</span><span>→</span>' +
+      '<span class="strategy-node">细则：尚无已核验关联</span><span>→</span>' +
+      '<span class="strategy-node">项目/资金：暂无完成证据</span></div>' +
+      '<div class="strategy-proof">状态：已建立规划与文件线索；尚无证据认定具体项目完成、资金拨付或目标实现。' +
+      '“待核实”不等于“未实施”。</div>' +
+      '<div class="strategy-list"><b>文件列出的执行要求（AI提取，非完成进展）</b>' +
+      (steps.length ? '<ul>' + steps.map(({p,x}) => {
+        const name = typeof x === 'string' ? x : String(x.step || '');
+        const dept = typeof x === 'object' && x ? String(x.department || '未明确') : '未明确';
+        const time = typeof x === 'object' && x ? String(x.time || '未明确') : '未明确';
+        return '<li>' + escapeHtml(name) + '<div class="meta">责任部门：' + escapeHtml(dept) +
+          ' · 时间：' + escapeHtml(time) + '</div>' +
+          '<button class="linkbutton" data-ai="' + escapeHtml(p.id || '') + '">核对政策分析 ↗</button></li>';
+      }).join('') + '</ul>' : '<div class="strategy-empty">尚无符合条件的AI执行要点</div>') +
+      '</div><p class="strategy-link"><a target="_blank" rel="noopener noreferrer" href="' +
+      escapeHtml(strategyUrl(g.source_url)) + '">纲要官方依据 ↗</a></p></article>';
+  }).join('') || '<div class="empty">暂无追踪档案</div>';
+}
+function strategyFilters() {
+  ['strategySelect','progressSelect'].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    const value = el.value;
+    el.innerHTML = '<option value="">全部战略方向</option>' +
+      strategyCatalog.map(g => '<option value="' + escapeHtml(g.id) + '">' +
+        escapeHtml(g.title) + '</option>').join('');
+    el.value = strategyCatalog.some(g => g.id === value) ? value : '';
+  });
+}
+async function loadStrategies() {
+  try {
+    const response = await fetch('./data/strategy_catalog.json?t=' + Date.now(), {cache:'no-store'});
+    if (!response.ok) throw Error('无法读取战略档案');
+    const data = await response.json();
+    strategyCatalog = Array.isArray(data.strategies) ? data.strategies : [];
+  } catch (e) {
+    console.warn('战略目录暂不可用', e);
+    strategyCatalog = [];
+  }
+  strategyFilters();
+  renderStrategies();
+  renderProgress();
+}
+$('strategySelect').addEventListener('change', renderStrategies);
+$('progressSelect').addEventListener('change', renderProgress);
+$('strategyToProgress').addEventListener('click', () => showPage('progress'));
+
 function renderAll() {
   const now = Date.now();
   const month = 30 * 86400000;
@@ -828,14 +947,6 @@ function renderAll() {
   $('sourceStatus').innerHTML =
     [...successes, ...failures].join('') ||
     '<p class="empty">暂无采集状态记录</p>';
-
-  $('strategyTopics').innerHTML =
-    Object.keys(c).map(t => `
-      <span class="pill">
-        ${escapeHtml(t)} · ${c[t]}条政策
-      </span>
-    `).join('') ||
-    '<div class="empty">暂无可用的产业标签</div>';
 
   $('alertsList').innerHTML =
     (data.sources_failed || []).length
@@ -969,9 +1080,11 @@ async function load() {
         ? ' · 部分数据源异常'
         : ' · 数据读取成功');
 
-    await loadAiAnalyses();
+    await Promise.all([loadAiAnalyses(), loadStrategies()]);
     renderAll();
     renderHomeInsights();
+    renderStrategies();
+    renderProgress();
 
   } catch (error) {
     $('updated').textContent =
