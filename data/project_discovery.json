@@ -1,7 +1,120 @@
 {
   "schema_version": 1,
-  "updated_at": null,
-  "methodology": "官方列表页标题级候选；尚未运行首次采集；不代表已核实的拨款或项目开工",
-  "sources": [],
-  "items": []
+  "updated_at": "2026-11-11T06:48:53.739786+00:00",
+  "methodology": "官方列表页标题级候选；未自动核验项目实际进度、资金金额或拨付。来源仅覆盖当前指定页面，不代表全量官方项目。",
+  "sources": [
+    {
+      "source_id": "mof_construction",
+      "name": "财政部·中央基建投资预算",
+      "status": "failed",
+      "error": "HTTPError",
+      "found": 0,
+      "checked_at": "2026-11-11T06:48:46.647805+00:00"
+    },
+    {
+      "source_id": "ndrc_notices",
+      "name": "国家发改委·通知公告",
+      "status": "ok",
+      "found": 0,
+      "checked_at": "2026-11-11T06:48:47.143327+00:00"
+    },
+    {
+      "source_id": "shanghai_projects",
+      "name": "上海市发改委·重大工程清单",
+      "status": "ok",
+      "found": 2,
+      "checked_at": "2026-11-11T06:48:48.884285+00:00"
+    },
+    {
+      "source_id": "jiangsu_fgw",
+      "name": "江苏省发改委·官方信息",
+      "status": "ok",
+      "found": 0,
+      "checked_at": "2026-11-11T06:48:50.998683+00:00"
+    },
+    {
+      "source_id": "guangdong_fgw",
+      "name": "广东省发改委·官方信息",
+      "status": "ok",
+      "found": 3,
+      "checked_at": "2026-11-11T06:48:53.489662+00:00"
+    }
+  ],
+  "items": [
+    {
+      "id": "ec29c44de970ad3963c9",
+      "url": "https://tzxm.gd.gov.cn/",
+      "title": "广东省投资项目在线审批监管平台",
+      "published_at": null,
+      "source_id": "guangdong_fgw",
+      "source": "广东省发改委·官方信息",
+      "region": "广东",
+      "agency": "广东省发展改革委",
+      "category": "province",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
+      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+    },
+    {
+      "id": "94b5118ba9d79e3160a5",
+      "url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20260212/859c412000014653b2d34146c1f55f6b.html",
+      "title": "2026年上海市重大工程项目清单",
+      "published_at": "2026-02-12",
+      "source_id": "shanghai_projects",
+      "source": "上海市发改委·重大工程清单",
+      "region": "上海",
+      "agency": "上海市发展改革委",
+      "category": "province",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
+      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+    },
+    {
+      "id": "4ffabbf58101c7c6619c",
+      "url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20250123/b663aaa57f704bcd8b2f1b13784b8210.html",
+      "title": "2025年上海市重大工程清单",
+      "published_at": "2025-01-23",
+      "source_id": "shanghai_projects",
+      "source": "上海市发改委·重大工程清单",
+      "region": "上海",
+      "agency": "上海市发展改革委",
+      "category": "province",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
+      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+    },
+    {
+      "id": "1bac7672a3b7a83ab1f7",
+      "url": "https://drc.gd.gov.cn/ywtz/content/post_4965235.html",
+      "title": "广东省发展改革委关于开展2027年重大项目前期工作经费申报工作的通知",
+      "published_at": null,
+      "source_id": "guangdong_fgw",
+      "source": "广东省发改委·官方信息",
+      "region": "广东",
+      "agency": "广东省发展改革委",
+      "category": "province",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
+      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+    },
+    {
+      "id": "e1fd96036c44a24a8c86",
+      "url": "https://drc.gd.gov.cn/gfxwj5633/content/post_4965314.html",
+      "title": "广东省发展改革委 广东省能源局关于印发《广东省固定资产投资项目节能审查和碳排放评价实施办法》的通知",
+      "published_at": null,
+      "source_id": "guangdong_fgw",
+      "source": "广东省发改委·官方信息",
+      "region": "广东",
+      "agency": "广东省发展改革委",
+      "category": "province",
+      "review_status": "unverified_candidate",
+      "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
+      "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
+      "last_seen_at": "2026-11-11T06:48:43.871675+00:00"
+    }
+  ]
 }
