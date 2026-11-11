@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "methodology": "指数历史收盘及接口字段来自中证指数官网。接口字段 peg 被第三方实现解释为PE，但未核实是否为滚动PE-TTM；pe_ttm为旧存储字段名，并不构成口径认证。pe_percentile仅表示同一接口历史样本分布位置且待核实，不是行业估值百分位。接口amount字段成交金额单位未由官方文档验证，禁止转换成元/亿元或绘制有金额单位的成交额图。PB暂无可靠同口径历史数据。ETF收盘来自第三方K线（无凭据时腾讯备用源），未核实成交金额字段。行业与ETF/宽基指数仅研究性映射，不能据此判断行业高低估。",
+  "methodology": "指数历史收盘及接口字段来自中证指数官网。接口字段 peg 被第三方实现解释为PE，但未核实是否为滚动PE-TTM；pe_ttm为旧存储字段名，并不构成口径认证。pe_percentile仅表示同一接口历史样本分布位置且待核实，不是行业估值百分位。接口amount字段成交金额单位未由官方文档验证，禁止转换成元/亿元或绘制有金额单位的成交额图。PB暂无可靠同口径历史数据。ETF收盘来自第三方K线（无凭据时腾讯备用源），未核实成交金额字段。行业与ETF/宽基指数仅研究性映射，不能据此判断行业高低估。 细分指数包括中证半导体931865、中证机器人H30590、中证新能源汽车产业930997、中证医药卫生000933（代码来自各自官方编制或事实清单）；某些指数PE可能缺失，缺失不解释为低估或零。",
   "indices": [
     {
       "id": "csi300",
@@ -31,6 +31,47 @@
       "code": "000985",
       "name": "中证全指",
       "sector_ids": []
+    },
+    {
+      "id": "sector_semiconductor",
+      "code": "931865",
+      "name": "中证半导体产业指数",
+      "sector_ids": [
+        "semiconductor"
+      ],
+      "factsheet_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/931865factsheet.pdf",
+      "scope_note": "半导体材料、设备和应用公司，不等于全部电子设备制造业"
+    },
+    {
+      "id": "sector_robot",
+      "code": "H30590",
+      "name": "中证机器人指数",
+      "sector_ids": [
+        "robots"
+      ],
+      "factsheet_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/H30590factsheet.pdf",
+      "scope_note": "机器人及工业自动化产业链，利润统计以专用/通用设备为宽口径代理"
+    },
+    {
+      "id": "sector_nev",
+      "code": "930997",
+      "name": "中证新能源汽车产业指数",
+      "sector_ids": [
+        "nev"
+      ],
+      "factsheet_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/930997factsheet.pdf",
+      "scope_note": "新能源汽车整车、电池与产业链，汽车制造业利润不含全部上游"
+    },
+    {
+      "id": "sector_health",
+      "code": "000933",
+      "name": "中证医药卫生指数",
+      "sector_ids": [
+        "health",
+        "biotech"
+      ],
+      "factsheet_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000933factsheet.pdf",
+      "scope_note": "中证800医药卫生公司，医药制造业利润不包含医疗服务"
     }
   ],
   "etfs": [
