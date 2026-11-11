@@ -254,7 +254,12 @@ select { flex: 1; min-width: 130px; }
 @media(max-width:720px) {.market-kpis{grid-template-columns:repeat(2,minmax(0,1fr));}}
 /* 同口径月度工业统计走势（原生SVG；缺值不插值） */
 .climate-chart {border:1px solid #405776;border-radius:10px;background:#182740;padding:12px;margin:12px 0;}
-.climate-chart svg {width:100%;height:auto;display:block;}
+.climate-chart svg {width:100%;height:auto;display:block;max-height:310px;overflow:visible;}
+.climate-chart {overflow:hidden;max-width:100%;}
+.climate-chart .chart-kpis {display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px;}
+.climate-chart .chart-kpis span {background:#263d5b;border:1px solid #3e5b7d;border-radius:7px;padding:6px 9px;color:#bfd0e4;font-size:12px;line-height:1.5;}
+.climate-chart .chart-kpis strong {color:#f0f8ff;font-weight:750;font-size:16px;}
+@media(max-width:650px){.climate-chart {padding:8px;}.climate-chart .chart-kpis span {font-size:11px;padding:5px 7px;}}
 .climate-chart-label {font-size:11px;color:#bacce5;line-height:1.7;margin-top:8px;}
 .valuation-link-card {border-bottom:1px solid #405776;padding:17px 0;}
 .valuation-tiles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0;}
@@ -1309,36 +1314,63 @@ function primaryHistory(id) {
     candidates.find(x=>(x.points||[]).length>=2) || candidates[0] || null;
 }
 function historicalChart(series) {
-  if(!series || !Array.isArray(series.points) || series.points.length < 2)
-    return '<div class="strategy-empty">当前缺少至少两个时期的同口径统计值，不能绘制趋势。</div>';
-  const pts=series.points.filter(p=>Number.isFinite(p.value))
-    .slice().sort((a,b)=>String(a.period).localeCompare(String(b.period)));
-  if(pts.length<2) return '<div class="strategy-empty">暂无可比历史序列</div>';
-  const years=[...new Set((industryHistory.series||[]).flatMap(s=>(s.points||[]).map(p=>p.period)))].sort();
-  const values=pts.map(p=>p.value);
-  const lower=Math.floor((Math.min(0,...values)-5)/5)*5;
-  const upper=Math.ceil((Math.max(0,...values)+5)/5)*5;
-  const width=600, height=190, left=45,right=18,top=16,bottom=32;
-  const xf=p=>left+years.indexOf(p.period)*(width-left-right)/Math.max(1,years.length-1);
-  const yf=v=>top+(upper-v)*(height-top-bottom)/(upper-lower);
-  const xy=pts.map(p=>({period:p.period,value:p.value,x:xf(p),y:yf(p)}));
-  const lines=xy.slice(1).filter((p,i)=>
-    years.indexOf(p.period)-years.indexOf(xy[i].period)===1
-  ).map((p,i)=>{const a=xy.find(q=>years.indexOf(q.period)===years.indexOf(p.period)-1);
-    return a?'<line x1="'+a.x+'" y1="'+a.y+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#86c3ef" stroke-width="3" stroke-linecap="round"/>':'';}).join('');
-  const dots=xy.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#9fd8ff"/>'+
-    '<text x="'+p.x+'" y="'+(p.y-10)+'" fill="#dbeaff" text-anchor="middle" font-size="12">'+p.value+'%</text>').join('');
-  const labels=years.map(t=>'<text x="'+xf({period:t})+'" y="'+(height-8)+'" text-anchor="middle" fill="#b6c9e4" font-size="11">'+t.slice(5)+'月</text>').join('');
-  const zero='<line x1="'+left+'" x2="'+(width-right)+'" y1="'+yf(0)+'" y2="'+yf(0)+'" stroke="#8b9ab2" stroke-width="1" stroke-dasharray="5 5"/>';
-  return '<div class="climate-chart"><div class="meta">'+escapeHtml(series.label)+
-    ' · '+escapeHtml(series.basis||'')+' · '+(series.relation==='direct'?'直接统计':'代理指标')+'</div>'+
-    '<svg role="img" aria-label="'+escapeHtml(series.label+'，'+xy.map(p=>p.period+' '+p.value+'%').join('、'))+
-    '" viewBox="0 0 600 190" preserveAspectRatio="xMidYMid meet">'+zero+lines+dots+labels+'</svg>'+
-    '<div class="climate-chart-label">数据点 '+xy.length+' 个。相邻缺月不连接；点位为当月同比，并非环比或股价变化。</div>'+
-    '<div class="climate-chart-label">官方月份来源：'+xy.map(p=>
-      '<a href="'+escapeHtml(strategyUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(p.period)+'</a>'
-    ).join(' · ')+'</div></div>';
+  if (!series || !Array.isArray(series.points))
+    return '<div class="strategy-empty">当前没有可核实的月度数据。</div>';
+  const pts=series.points.filter(p=>Number.isFinite(p.value)&&/^\d{4}-\d{2}$/.test(p.period||''))
+    .slice().sort((a,b)=>a.period.localeCompare(b.period));
+  if(pts.length<2)return '<div class="strategy-empty">至少需要两个真实月份才能绘制趋势；不会补造缺失数据。</div>';
+  const monthIndex=p=>Number(p.slice(0,4))*12+Number(p.slice(5,7))-1;
+  const start=monthIndex(pts[0].period),end=monthIndex(pts[pts.length-1].period);
+  const width=620,height=230,L=66,R=36,T=36,B=45;
+  const v=pts.map(x=>x.value),lo=Math.min(...v),hi=Math.max(...v);
+  const spread=Math.max(1,hi-lo),padding=Math.max(0.7,spread*.35);
+  const lower=lo-padding,upper=hi+padding;
+  const X=p=>L+(monthIndex(p)-start)/Math.max(1,end-start)*(width-L-R);
+  const Y=n=>T+(upper-n)/(upper-lower)*(height-T-B);
+  const format=n=>Number(n.toFixed(1)).toLocaleString('zh-CN',{maximumFractionDigits:1});
+  const axis=[0,1,2,3,4].map(i=>{
+    const y=T+i*(height-T-B)/4;
+    return '<line x1="'+L+'" x2="'+(width-R)+'" y1="'+y+'" y2="'+y+'" stroke="#38516d" stroke-width="1"/>'+
+      '<text x="'+(L-12)+'" y="'+(y+4)+'" text-anchor="end" fill="#b6cbe5" font-size="13">'+
+      format(upper-(upper-lower)*i/4)+'%</text>';
+  }).join('');
+  const rows=pts.map(p=>({period:p.period,value:p.value,x:X(p.period),y:Y(p.value)}));
+  const paths=rows.slice(1).map((p,i)=>{
+    const prev=rows[i];
+    return monthIndex(p.period)-monthIndex(prev.period)===1?
+      '<line x1="'+prev.x+'" y1="'+prev.y+'" x2="'+p.x+'" y2="'+p.y+
+      '" stroke="#79cbff" stroke-width="3.6" stroke-linecap="round"/>':'';
+  }).join('');
+  const dots=rows.map(p=>{
+    const topLabel=p.y<T+24;
+    const labelY=topLabel?p.y+24:p.y-13;
+    return '<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#8ed9ff" stroke="#15324e" stroke-width="2"/>'+
+      '<text x="'+p.x+'" y="'+labelY+'" text-anchor="middle" font-size="14" font-weight="700" fill="#ecf6ff">'+
+      format(p.value)+'%</text>'+
+      '<text x="'+p.x+'" y="'+(height-15)+'" text-anchor="middle" font-size="13" fill="#b6cbe5">'+
+      escapeHtml(p.period.slice(5))+'月</text>';
+  }).join('');
+  const last=pts[pts.length-1],previous=pts[pts.length-2];
+  const adjacent=monthIndex(last.period)-monthIndex(previous.period)===1;
+  const change=last.value-previous.value;
+  const summary=adjacent?
+    '最近两月同比增速变化 '+(change>0?'+':'')+format(change)+' 个百分点':
+    '最近观测月份不连续，不能直接计算月度趋势变化';
+  return '<div class="climate-chart"><div class="chart-kpis">'+
+    '<span>最新 <strong>'+format(last.value)+'%</strong></span>'+
+    '<span>'+escapeHtml(summary)+'</span>'+
+    '<span>范围 '+format(lo)+'% 至 '+format(hi)+'%</span></div>'+
+    '<div class="meta">'+escapeHtml(series.label)+' · '+escapeHtml(series.basis||'当月同比')+
+    ' · '+(series.relation==='direct'?'直接统计':'相关代理')+'</div>'+
+    '<svg viewBox="0 0 620 230" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+
+    escapeHtml(series.label+'：'+pts.map(p=>p.period+' '+format(p.value)+'%').join('，'))+'">'+
+    axis+paths+dots+'</svg>'+
+    '<div class="climate-chart-label">纵轴为当月同比百分比，按本序列自动缩放，<b>不以0%为起点</b>；缺失月份断线，不推测数据。</div>'+
+    '<div class="climate-chart-label">官方数据：'+pts.map(p=>
+    '<a href="'+escapeHtml(strategyUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">'+
+    escapeHtml(p.period)+'</a>').join(' · ')+'</div></div>';
 }
+
 function industryProductionSignal(id) {
   const a=primaryHistory(id);
   if(!a) return {label:'官方月度序列不足',extra:'无可比较的连续月份'};
@@ -1363,29 +1395,50 @@ function formatMarketNumber(v,d=2) {
 function marketTrendSvg(points,key,label) {
   const full=(points||[]).filter(p=>Number.isFinite(p[key])&&p.date)
     .slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-  // Show up to three calendar years. Retain underlying complete data;
-  // downsample only the on-screen SVG to avoid enormous page markup.
-  const lastDate=full.length?Date.parse(full[full.length-1].date+'T00:00:00Z'):NaN;
+  if(full.length<2)return '<p class="empty">尚无至少两个交易日的有效数据。</p>';
+  const lastDate=Date.parse(full[full.length-1].date+'T00:00:00Z');
   const recent=Number.isFinite(lastDate)?full.filter(p=>
     Date.parse(p.date+'T00:00:00Z')>=lastDate-1095*86400000):full;
-  const step=Math.max(1,Math.ceil(recent.length/180));
+  const step=Math.max(1,Math.ceil(recent.length/130));
   const valid=recent.filter((p,i)=>i%step===0||i===recent.length-1);
-  if(valid.length<2)return '<p class="empty">目前没有足够的同口径历史数据</p>';
-  const values=valid.map(p=>p[key]);
-  const low=Math.min(...values),high=Math.max(...values);
-  const min=low===high?low-1:low-(high-low)*.12;
-  const max=low===high?high+1:high+(high-low)*.12;
-  const w=600,h=160,pad=20;
-  const xx=i=>pad+(w-pad*2)*i/(valid.length-1);
-  const yy=v=>pad+(h-pad*2)*(max-v)/(max-min);
-  const poly=valid.map((p,i)=>xx(i).toFixed(1)+','+yy(p[key]).toFixed(1)).join(' ');
-  return '<div class="climate-chart"><div class="meta">'+escapeHtml(label)+
-    ' · '+escapeHtml(valid[0].date)+' 至 '+escapeHtml(valid[valid.length-1].date)+
-    ' · 采样显示 '+valid.length+' 点（有效历史 '+recent.length+' 个交易日）</div>'+
-    '<svg viewBox="0 0 600 160" role="img" aria-label="'+escapeHtml(label)+'历史趋势">'+
-    '<polyline points="'+poly+'" fill="none" stroke="#8ecbff" stroke-width="2.5" stroke-linejoin="round"/>'+
-    '</svg></div>';
+  if(valid.length<2)return '<p class="empty">有效历史样本不足。</p>';
+  const width=620,height=230,L=70,R=26,T=28,B=44;
+  const values=valid.map(p=>p[key]),lo=Math.min(...values),hi=Math.max(...values);
+  const span=Math.max(.01,hi-lo),padding=span*.13;
+  const lower=lo-padding,upper=hi+padding;
+  const X=i=>L+(width-L-R)*i/(valid.length-1);
+  const Y=n=>T+(upper-n)/(upper-lower)*(height-T-B);
+  const fmt=n=>n.toLocaleString('zh-CN',{maximumFractionDigits:2});
+  const grid=[0,1,2,3,4].map(i=>{
+    const y=T+i*(height-T-B)/4;
+    return '<line x1="'+L+'" x2="'+(width-R)+'" y1="'+y+'" y2="'+y+'" stroke="#38516d"/>'+
+      '<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" fill="#b8c9e2" font-size="13">'+
+      fmt(upper-(upper-lower)*i/4)+'</text>';
+  }).join('');
+  const coords=valid.map((p,i)=>X(i).toFixed(1)+','+Y(p[key]).toFixed(1)).join(' ');
+  const n=valid.length-1;
+  const labels=[0,Math.floor(n/2),n].map(i=>
+    '<text x="'+X(i)+'" y="'+(height-12)+'" text-anchor="middle" fill="#bdcfe7" font-size="13">'+
+    escapeHtml(valid[i].date.slice(2,7))+'</text>').join('');
+  const first=recent[0],last=recent[recent.length-1];
+  const delta=last[key]-first[key];
+  const pct=first[key]!==0?(delta/Math.abs(first[key]))*100:null;
+  const summary=key==='close'&&pct!==null?
+    '区间价格变化 '+(pct>=0?'+':'')+pct.toFixed(1)+'%':
+    '区间数值变化 '+(delta>=0?'+':'')+delta.toFixed(2);
+  return '<div class="climate-chart market-chart"><div class="meta">'+escapeHtml(label)+
+    ' · '+escapeHtml(first.date)+' 至 '+escapeHtml(last.date)+'</div>'+
+    '<div class="chart-kpis"><span>最新 <strong>'+fmt(last[key])+'</strong></span>'+
+    '<span>'+escapeHtml(summary)+'</span>'+
+    '<span>'+recent.length+'个交易日</span></div>'+
+    '<svg role="img" aria-label="'+escapeHtml(label+'走势，最近数值'+fmt(last[key]))+
+    '" viewBox="0 0 620 230" preserveAspectRatio="xMidYMid meet">'+grid+
+    '<polyline points="'+coords+'" fill="none" stroke="#7cd2ff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'+
+    '<circle cx="'+X(n)+'" cy="'+Y(valid[n][key])+'" r="5" fill="#9ae0ff"/>'+labels+'</svg>'+
+    '<div class="climate-chart-label">纵轴按当前时间区间缩放，不保证从0开始。走势图只反映'+
+    (key==='close'?'价格':'所标示数值')+'，不等于收益预测。</div></div>';
 }
+
 function marketStatusMessage(id) {
   const status=(marketHistory.status||[]).find(x=>x.instrument_id===id);
   if(!status)return '尚未执行采集';
