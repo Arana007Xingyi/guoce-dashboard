@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-11",
+  "explanation": "国家统计局规模以上工业生产月度同比历史数据。不同指标和行业的统计范围不同，研究赛道与官方统计类别并非一一对应，代理指标不代表该赛道利润或股市表现。缺失月不插值；月度同比不能当成环比，不能与累计同比混用。",
+  "sources": {
+    "2026-06": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+    "2026-07": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+    "2026-08": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+    "2026-09": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+  },
+  "series": [
+    {
+      "id": "hi_tech",
+      "label": "高技术制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "ai"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 14.1,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 16.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 16.7,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 15.3,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "electronics",
+      "label": "计算机通信和其他电子设备制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "semiconductor",
+        "ai"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 15.7,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 19.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 17.2,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 16.4,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "ic_output",
+      "label": "集成电路产量同比",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "direct",
+      "sector_ids": [
+        "semiconductor"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 18.8,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 20.6,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 18.4,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "robot_output",
+      "label": "工业机器人产量同比",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "direct",
+      "sector_ids": [
+        "robots"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 28.1,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 30.2,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 34.6,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 18.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "nev_output",
+      "label": "新能源汽车产量同比",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "direct",
+      "sector_ids": [
+        "nev"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 29.4,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 29.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 21.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 16.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "pharma",
+      "label": "医药制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "health",
+        "biotech"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 6.7,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 2.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 4.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "special_machinery",
+      "label": "专用设备制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "advanced"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 10,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 12.6,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 11.4,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 12.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "electrical",
+      "label": "电气机械和器材制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "newenergy"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 7,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 8.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 9.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 8.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "aerospace",
+      "label": "铁路船舶航空航天等运输设备制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "aerospace"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 18.2,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 13.6,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 13.4,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 11.7,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "食品制造业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "consumer"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 8.9,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 8.8,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 7.3,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "metal",
+      "label": "有色金属冶炼和压延业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "materials"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": -3.8,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": -2.5,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": -4.1,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": -5.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "agri",
+      "label": "农副食品加工业增加值",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "proxy",
+      "sector_ids": [
+        "agri"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": 3.1,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "value": 3.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": 4.3,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": 4.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "solar",
+      "label": "太阳能电池产量同比",
+      "unit": "%",
+      "basis": "当月同比",
+      "relation": "direct",
+      "sector_ids": [
+        "newenergy"
+      ],
+      "points": [
+        {
+          "period": "2026-06",
+          "value": -8.4,
+          "source_url": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "value": -12.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-09",
+          "value": -5.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        }
+      ]
+    }
+  ]
+}
