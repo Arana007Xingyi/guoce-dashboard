@@ -17,6 +17,7 @@ CONFIG = Path("data/market_config.json")
 OUT = Path("data/market_history.json")
 CSI_API = "https://www.csindex.com.cn/csindex-home/perf/index-perf"
 ETF_API = "https://api.databull.cn/cn/etf/history"
+TENCENT_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
 MAX_ROWS = 1800   # about seven years of trading days
 SESSION = requests.Session()
 SESSION.headers.update({
@@ -92,6 +93,35 @@ def parse_csi(raw, code):
     return points
 
 
+def parse_tencent_etf(raw, code):
+    """Tencent unofficial daily candles: [date, open, close, high, low, lots].
+
+    It does not publish cash turnover in this endpoint. Lots are not shares.
+    """
+    group = raw.get("data", {}).get("sh" + code, {}) if isinstance(raw, dict) else {}
+    rows = group.get("day", [])
+    if not isinstance(rows, list):
+        raise ValueError("腾讯ETF接口日线结构异常")
+    result = []
+    for row in rows:
+        if not isinstance(row, list) or len(row) < 6:
+            continue
+        day = datefmt(row[0])
+        close = numeric(row[2], positive=True)
+        if day is None or close is None:
+            continue
+        result.append({
+            "date": day, "close": close,
+            "volume": numeric(row[5]), "volume_unit": "hands",
+            "turnover": None, "turnover_unit": None,
+            "pe_ttm": None, "pb": None,
+            "source_url": TENCENT_API,
+        })
+    if not result:
+        raise ValueError("腾讯ETF接口未返回有效日线")
+    return result
+
+
 def parse_etf(raw):
     if not isinstance(raw, list):
         raise ValueError("ETF接口未返回日线数组")
@@ -135,6 +165,16 @@ def fetch_csi(code, start, end):
                     timeout=22, allow_redirects=False)
     r.raise_for_status()
     return parse_csi(r.json(), code)
+
+
+def fetch_tencent_etf(code):
+    response = SESSION.get(
+        TENCENT_API,
+        params={"param": "sh" + code + ",day,,,500,"},
+        timeout=22, allow_redirects=False
+    )
+    response.raise_for_status()
+    return parse_tencent_etf(response.json(), code)
 
 
 def fetch_etf(code, start, end, api_key):
@@ -181,14 +221,16 @@ def main():
             start = ((today - dt.timedelta(days=2190)) if not old else
                      dt.date.fromisoformat(old[-1]["date"]) - dt.timedelta(days=10)).strftime("%Y%m%d")
             status = {"instrument_id": id_, "checked_at": now()}
-            if kind == "etf" and not key:
-                status.update({"state": "requires_data_key", "message": "未配置DATABULL_API_KEY；ETF日线保留已有数据"})
-                statuses.append(status)
-                recorded[id_] = record
-                continue
             try:
-                fresh = fetch_csi(info["code"], start, end) if kind == "index" else \
-                        fetch_etf(info["code"], start, end, key)
+                if kind == "index":
+                    fresh = fetch_csi(info["code"], start, end)
+                    record["provider"] = "CSI official"
+                elif key:
+                    fresh = fetch_etf(info["code"], start, end, key)
+                    record["provider"] = "DataBull third-party"
+                else:
+                    fresh = fetch_tencent_etf(info["code"])
+                    record["provider"] = "Tencent unofficial free API"
                 merged, changed = merge(old, fresh)
                 record["points"] = merged
                 record["last_data_date"] = merged[-1]["date"]
@@ -205,7 +247,7 @@ def main():
     out = {
         "schema_version": 1, "updated_at": now(),
         "methodology": cfg["methodology"],
-        "sources": {"index": CSI_API, "etf": ETF_API},
+        "sources": {"index": CSI_API, "etf": ETF_API, "etf_free": TENCENT_API},
         "instruments": list(recorded.values()), "status": statuses,
     }
     temp = OUT.with_suffix(".json.tmp")
