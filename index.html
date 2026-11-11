@@ -977,7 +977,7 @@ function openAiAnalysis(id) {
 
   if (!record || !record.analysis) {
     body.append(aiText('p',
-      '这份政策尚无AI分析。需要先配置GitHub Secrets中的OPENAI_API_KEY，' +
+      '这份政策尚无AI分析。需要先配置GitHub Secrets中的ZHIPU_API_KEY，' +
       '待工作流运行后生成结果。正文阅读和官方原文功能不受影响。', 'empty'));
   } else {
     const a = record.analysis;
