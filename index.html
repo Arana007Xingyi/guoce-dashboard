@@ -232,6 +232,14 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 多行业景气研究卡片 */
+.climate-card {margin:14px 0;padding:17px;border:1px solid #405673;border-radius:12px;background:#202e46;}
+.climate-card h3 {margin:0 0 7px;font-size:18px;}
+.climate-stats {display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;margin:12px 0;}
+.climate-metric {background:#293b56;border:1px solid #465f81;border-radius:9px;padding:12px;}
+.climate-metric strong {display:block;font-size:22px;margin:8px 0 4px;}
+.climate-metric small {display:block;color:#b8c8df;line-height:1.6;}
+.climate-stat-note {font-size:12px;color:#b5c7dd;line-height:1.75;margin-top:7px;}
 /* 新增省部级公告采集与来源状态 */
 .discovery-item {padding:13px 0;border-top:1px solid #40536e;line-height:1.75;}
 .discovery-item h3 {font-size:15px;margin:6px 0;}
@@ -571,13 +579,20 @@ select { flex: 1; min-width: 130px; }
       <h2>产业政策分布（非产业景气指数）</h2>
       <div id="industryBars"></div>
     </div>
-    <div class="panel">
-      <h2>产业景气指标</h2>
-      <p class="empty">
-        工业增加值、固定资产投资、产能利用率、
-        利润增速及同比趋势尚未接入。
-        政策数量不能代替产业景气度。
-      </p>
+    <div class="panel" id="industryClimatePanel">
+      <div class="home-panel-head">
+        <div><h2>多行业产业景气 · 官方统计看板</h2>
+        <p class="sub">覆盖AI、半导体、机器人、新能源汽车、医疗等12个研究赛道。区分直接统计指标与相关代理指标；不可直接把不同期间或不同口径的同比增速排名当成投资回报。</p></div>
+        <span class="pill" id="climateSectorCount">正在读取</span>
+      </div>
+      <div class="toolbar">
+        <input id="climateSearch" placeholder="搜索行业或监测指标">
+        <select id="climateGroup"><option value="">全部行业领域</option></select>
+        <select id="climatePeriod"><option value="">全部统计期</option></select>
+      </div>
+      <div class="evidence-summary" id="climateSummary"></div>
+      <div id="climateSectors"></div>
+      <p class="sub">数据来源：国家统计局、工业和信息化部等官方公开发布；只展示文件中有明确数值的指标。数据缺口不会以推测数值代替。后续逐步接入历史期，才能计算可比趋势。</p>
     </div>
   </section>
 
@@ -724,6 +739,7 @@ let strategyCatalog = [];
 let projectFundingRecords = [];
 let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
+let industryClimate = {sectors:[],as_of:null};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
 try {
@@ -1195,6 +1211,64 @@ function fundingCard(record) {
     '<span class="sub">'+escapeHtml(record.source_title||'')+'</span></div>'+
     '</article>';
 }
+/* 产业景气：官方统计与行业研究分类是不同层级。 */
+function renderIndustryClimate() {
+  const sectors=industryClimate.sectors||[];
+  const group=$('climateGroup').value;
+  const period=$('climatePeriod').value;
+  const q=$('climateSearch').value.trim().toLowerCase();
+  const matched=sectors.filter(s=>
+    (!group||s.group===group) &&
+    (!q||[s.name,s.description,...(s.terms||[]),...(s.track||[])].join(' ').toLowerCase().includes(q)) &&
+    (!period||(s.indicators||[]).some(m=>m.period===period)));
+  const metrics=sectors.flatMap(x=>x.indicators||[]);
+  $('climateSectorCount').textContent=sectors.length+' 个行业';
+  $('climateSummary').innerHTML='<span>覆盖行业：'+sectors.length+'</span>'+
+    '<span>已收录官方指标：'+metrics.length+'</span>'+
+    '<span>直接指标：'+metrics.filter(x=>x.relation==='direct').length+'</span>'+
+    '<span>相关代理指标：'+metrics.filter(x=>x.relation==='proxy').length+'</span>'+
+    '<span>当前筛选：'+matched.length+'个行业</span>';
+  $('climateSectors').innerHTML=matched.length?matched.map(sector=>{
+    const signals=(sector.indicators||[]).filter(m=>!period||m.period===period);
+    return '<article class="climate-card"><div class="meta">'+escapeHtml(sector.group||'')+'</div>'+
+      '<h3>'+escapeHtml(sector.name||'')+'</h3>'+
+      '<p class="sub">'+escapeHtml(sector.description||'')+'</p>'+
+      '<div class="climate-stats">'+(signals.length?signals.map(m=>
+        '<div class="climate-metric">'+
+        '<div class="meta">'+escapeHtml(m.name||'')+'</div>'+
+        '<strong>'+escapeHtml(String(m.value??'未披露'))+escapeHtml(m.unit||'')+'</strong>'+
+        '<small>'+escapeHtml(m.period||'')+' · '+escapeHtml(m.basis||'')+'</small>'+
+        '<div class="climate-stat-note">'+
+          '<span class="'+(m.relation==='direct'?'monitor-verified':'monitor-caution')+'">'+
+            (m.relation==='direct'?'直接统计':'相关代理')+'</span> '+
+          escapeHtml(m.scope||'')+'</div>'+
+        '<a href="'+escapeHtml(strategyUrl(m.source_url))+'" target="_blank" rel="noopener noreferrer">核对官方统计 ↗</a>'+
+        '</div>').join(''):'<div class="strategy-empty">此期间没有可核实的统计数据</div>')+'</div>'+
+      '<div class="strategy-list"><b>后续重点追踪</b><p class="sub">'+
+        escapeHtml((sector.track||[]).join(' · '))+'</p></div></article>';
+  }).join(''):'<p class="empty">当前筛选没有对应行业，请调整条件。</p>';
+}
+async function loadIndustryClimate() {
+  try {
+    const response=await fetch('./data/industry_indicators.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok) throw Error('行业统计数据未读取');
+    const catalog=await response.json();
+    industryClimate={sectors:Array.isArray(catalog.sectors)?catalog.sectors:[],as_of:catalog.as_of||null};
+  } catch(e) {
+    console.warn('行业统计看板数据不可用',e);
+    industryClimate={sectors:[],as_of:null};
+  }
+  const groups=[...new Set(industryClimate.sectors.map(x=>x.group).filter(Boolean))].sort();
+  const periods=[...new Set(industryClimate.sectors.flatMap(x=>(x.indicators||[]).map(m=>m.period)).filter(Boolean))].sort().reverse();
+  $('climateGroup').innerHTML='<option value="">全部行业领域</option>'+groups.map(x=>
+    '<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+  $('climatePeriod').innerHTML='<option value="">全部统计期</option>'+periods.map(x=>
+    '<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+  renderIndustryClimate();
+}
+['climateSearch','climateGroup','climatePeriod'].forEach(id=>
+  $(id).addEventListener(id==='climateSearch'?'input':'change',renderIndustryClimate));
+
 /* 新采集的部委和省级公告仅作待核验线索，不改变正式台账。 */
 function discoveryTime(s) {
   if (!s) return '尚未运行';
@@ -1635,7 +1709,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate()]);
     await loadProjectFunding();
     renderAll();
     renderHomeInsights();
