@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "methodology": "只发现官方项目、预算、实施相关公告。结果为待核验线索，不自动填写资金金额、项目开工或完成结论；各站点以公开列表第一页为覆盖范围。",
+  "sources": [
+    {
+      "id": "mof_construction",
+      "name": "财政部·中央基建投资预算",
+      "region": "全国",
+      "agency": "财政部",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/",
+      "category": "finance"
+    },
+    {
+      "id": "ndrc_notices",
+      "name": "国家发改委·通知公告",
+      "region": "全国",
+      "agency": "国家发展改革委",
+      "url": "https://www.ndrc.gov.cn/xwdt/tzgg/",
+      "category": "national"
+    },
+    {
+      "id": "shanghai_projects",
+      "name": "上海市发改委·重大工程清单",
+      "region": "上海",
+      "agency": "上海市发展改革委",
+      "url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/",
+      "category": "province"
+    },
+    {
+      "id": "jiangsu_fgw",
+      "name": "江苏省发改委·官方信息",
+      "region": "江苏",
+      "agency": "江苏省发展改革委",
+      "url": "https://fzggw.jiangsu.gov.cn/",
+      "category": "province"
+    },
+    {
+      "id": "guangdong_fgw",
+      "name": "广东省发改委·官方信息",
+      "region": "广东",
+      "agency": "广东省发展改革委",
+      "url": "https://drc.gd.gov.cn/",
+      "category": "province"
+    }
+  ]
+}
