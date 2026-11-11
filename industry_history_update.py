@@ -80,15 +80,21 @@ def month_from_title(title):
 
 def discover():
     """Look for pages explicitly titled as NBS monthly industrial production."""
-    soup = fetch(INDEX)
     pages = {}
-    for a in soup.select("a[href]"):
-        period = month_from_title(a.get_text(" ", strip=True))
-        if not period:
+    # The official index is paginated and sometimes cached; bounded discovery
+    # avoids silently missing a month when it slips beyond the first page.
+    for listing in [INDEX, INDEX + "index_1.html", INDEX + "index_2.html"]:
+        try:
+            soup = fetch(listing)
+        except (requests.RequestException, ValueError):
             continue
-        target = urldefrag(urljoin(INDEX, a.get("href", "")))[0]
-        if official(target) and target.endswith(".html"):
-            pages.setdefault(period, target)
+        for a in soup.select("a[href]"):
+            period = month_from_title(a.get_text(" ", strip=True))
+            if not period:
+                continue
+            target = urldefrag(urljoin(listing, a.get("href", "")))[0]
+            if official(target) and target.endswith(".html"):
+                pages.setdefault(period, target)
     return pages
 
 
@@ -117,7 +123,9 @@ def industry_table(soup):
 
 def select_exact(rows, key):
     target = norm(CELL_TARGETS[key])
-    for label, value in rows.items():
+    for original_label, value in rows.items():
+        # NBS rows often prefix sub-items with “其中：” or “其中”.
+        label = re.sub(r"^(其中:|其中：|其中)+", "", original_label).strip()
         # A product row may contain a parenthetical unit, while an industry row
         # must match exactly to avoid confusing a group or subtype with the target.
         if key in COUNT_METRICS:
@@ -137,10 +145,13 @@ def main():
         raise ValueError("Invalid series data")
     try:
         pages = discover()
+        index_state = "ok" if pages else "no_matching_new_month"
     except (requests.RequestException, ValueError) as exc:
+        pages = {}
+        index_state = "failed_" + type(exc).__name__
         print("NBS index unavailable; preserved existing history:", type(exc).__name__)
-        return
     added, failed = 0, 0
+    checked = []
     for month, url in sorted(pages.items()):
         if month in sources:
             continue
@@ -149,6 +160,7 @@ def main():
             rows = industry_table(soup)
             if len(rows) < 20:
                 print("Skip", month, "insufficient official table rows:", len(rows))
+                checked.append({"period": month, "status": "parse_failed", "rows": len(rows), "source_url": url})
                 failed += 1
                 continue
             for entry in series:
@@ -167,9 +179,11 @@ def main():
                 entry["points"].sort(key=lambda x: x.get("period", ""))
                 added += 1
             sources[month] = url
+            checked.append({"period": month, "status": "ok", "rows": len(rows), "source_url": url})
             print("Official NBS month parsed:", month, "table rows", len(rows))
         except (requests.RequestException, ValueError) as exc:
             failed += 1
+            checked.append({"period": month, "status": "fetch_failed", "error": type(exc).__name__, "source_url": url})
             print("Skip", month, type(exc).__name__)
         time.sleep(0.3)
     if added:
@@ -177,6 +191,19 @@ def main():
         tmp = PATH.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
         tmp.replace(PATH)
+    # Save a status heartbeat even when there is no newly published month.
+    # This distinguishes healthy no-new-data runs from blocked or broken scrapers.
+    status_path = Path("data/industry_update_status.json")
+    status_path.write_text(json.dumps({
+        "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "index_state": index_state,
+        "new_month_pages_found": len(pages),
+        "new_points_added": added,
+        "failed_pages": failed,
+        "monthly_checks": checked,
+        "latest_stored_month": max(sources) if sources else None,
+        "note": "无新数据不等于失败；页面解析失败不代表产业景气下降。"
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Industry history: appended", added, "new verified points; skipped sources", failed)
 
 
