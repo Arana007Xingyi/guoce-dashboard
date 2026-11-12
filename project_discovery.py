@@ -17,10 +17,13 @@ SIGNAL = re.compile(
     r"项目审批|项目核准|项目批复|立项|开工|竣工|工程进展|建设进展|"
     r"中央基建投资|预算下达|投资预算|资金下达|专项资金|资金分配|"
     r"投资计划|预算执行|财政资金|以工代赈|超长期特别国债|"
-    r"项目推介|民间投资项目|投资完成"
+    r"项目推介|民间投资项目|投资完成|投资建设|资金到位|开工率|建设项目|"
+    r"批复|项目进度|重点工程|工程建设|资金使用|绩效目标|项目投资"
 )
 NON_SIGNAL = re.compile(
-    r"政策解读|答记者问|一图读懂|招聘|考试|人事任免|成品油价格调整"
+    r"政策解读|答记者问|一图读懂|招聘|考试|人事任免|成品油价格调整|"
+    r"审批监管平台|投资项目在线审批监管平台|市场监管平台|登录入口|"
+    r"网上办事大厅|首页|服务平台"
 )
 DATE = re.compile(r"(20\d{2})\s*[-年./]\s*(\d{1,2})\s*[-月./]\s*(\d{1,2})")
 MAX_LINKS_PER_SOURCE = 100
@@ -85,6 +88,10 @@ def list_source(source):
         target = urldefrag(urljoin(response.url, a.get("href", "")))[0]
         if not official(target) or target == url or target in seen:
             continue
+        # Skip navigation hubs: only collect public notices or project detail
+        # pages, not links to generic service platforms.
+        if urlparse(target).path in ("", "/") or re.search(r"/index(?:_\d+)?\.(?:html?|shtml)$",urlparse(target).path):
+            continue
         path = urlparse(target).path.lower()
         if path.endswith((".xls", ".xlsx", ".doc", ".docx", ".pdf", ".zip", ".rar", ".png", ".jpg")):
             continue
@@ -145,7 +152,8 @@ def main():
                     indexed[url] = entry
                     added += 1
             reports.append({"source_id": source["id"], "name": source["name"],
-                            "status": "ok", "found": len(found), "checked_at": utcnow()})
+                            "status": "ok" if found else "no_matching_articles",
+                            "found": len(found), "checked_at": utcnow()})
             print(f"发现来源：{source['name']}，符合条件 {len(found)} 条")
         except (requests.RequestException, ValueError, KeyError) as e:
             reports.append({"source_id": source["id"], "name": source["name"],
