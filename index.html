@@ -1455,6 +1455,13 @@ function renderMarketHistory() {
   const validCount=all.filter(r=>(r.points||[]).length).length;
   $('marketHistoryCount').textContent=validCount+'/'+all.length+' 项有行情';
   const state=marketHistory.status||[];
+  const audits=marketPeAudit.instruments||[];
+  const audited=audits.filter(x=>peScopeVerified(x));
+  $('peAuditStatus').innerHTML=
+    '<span>官方估值对照通过：'+audited.length+'/'+audits.filter(x=>x.kind==='index').length+'</span>'+
+    '<span>本次审计：'+escapeHtml(marketPeAudit.checked_at?
+      monitorTimestamp(marketPeAudit.checked_at):'尚未执行')+'</span>'+
+    '<span>PE字段已核 ≠ PE-TTM已核</span>';
   $('marketSourceHealth').innerHTML=
     '<span>采集成功：'+state.filter(x=>x.state==='ok').length+'</span>'+
     '<span>来源失败：'+state.filter(x=>x.state==='failed').length+'</span>'+
@@ -1465,11 +1472,13 @@ function renderMarketHistory() {
     const pts=x.points||[],last=pts[pts.length-1]||{};
     const isIndex=x.kind==='index';
     const hasPE=isIndex&&Number.isFinite(last.pe_ttm);
-    const ratio=Number.isFinite(x.pe_percentile)?x.pe_percentile:null;
+    const audit=peAuditFor(x.id);
+    const validAudit=peScopeVerified(audit);
+    const ratio=validAudit&&Number.isFinite(x.pe_percentile)?x.pe_percentile:null;
     const chips=[
       ['最新收盘',formatMarketNumber(last.close,isIndex?2:3)],
-      ['PE源字段 peg（待核口径）',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
-      ['样本内PE分位（待核）',ratio!==null?formatMarketNumber(ratio,1)+'%':'样本不足'],
+      ['PE源字段 peg',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
+      ['样本内PE分位',ratio!==null?formatMarketNumber(ratio,1)+'%':'暂不展示'],
       ['PB','未接入'],
     ];
     return '<article class="market-research"><h3>'+escapeHtml(x.name||x.code)+
@@ -1477,6 +1486,11 @@ function renderMarketHistory() {
       '<p class="market-meta">'+(isIndex?'中证官方指数':'第三方ETF行情')+
       ' · 最近交易日：'+escapeHtml(last.date||'未获得')+
       ' · '+escapeHtml(marketStatusMessage(x.id))+'</p>'+
+      (isIndex?'<div class="climate-stat-note">PE核验：'+
+        escapeHtml(validAudit?audit.identified_field:'未完成官方P/E1/P/E2交叉核验')+
+        ' · 有效PE记录：'+escapeHtml(audit?.valid_pe_rows??'尚未审计')+
+        ' · 覆盖率：'+escapeHtml(audit?.pe_coverage_pct!=null?audit.pe_coverage_pct+'%':'待计算')+
+        ' · TTM定义仍待独立确认</div>':'')+
       '<div class="market-kpis">'+chips.map(([k,v])=>
         '<div class="market-kpi"><div class="sub">'+escapeHtml(k)+'</div><strong>'+escapeHtml(v)+'</strong></div>'
       ).join('')+'</div>'+
@@ -1656,8 +1670,11 @@ function renderValuationLinks() {
       '<div class="valuation-tile"><div class="sub">最新官方同比</div><b>'+
         (last?escapeHtml(last.value+'%'):'暂无数据')+'</b><p class="sub">'+escapeHtml(last?.period||'')+
       ' · '+escapeHtml(a?.label||'')+'</p></div>'+
-      '<div class="valuation-tile"><div class="sub">PE / PB / 历史分位</div><b>暂无可比数据</b>'+
-      '<p class="sub">股价是否透支：无法判定</p></div></div>'+
+      '<div class="valuation-tile"><div class="sub">行业PE口径核验</div><b>'+
+      escapeHtml(peScopeVerified(peAuditFor((marketConfig.indices||[])
+        .find(x=>(x.sector_ids||[]).includes(sector.id))?.id))?
+        '已核对应股本口径':'尚待核验')+'</b>'+
+      '<p class="sub">行业股价是否透支：仍无法判定</p></div></div>'+
       '<p class="sub">研究相关ETF（非行业估值）：'+(etfSummary||'尚未映射代表性ETF')+'</p>'+
       '<p class="sub">需补齐：具有明确指数代码的估值时序、PE计算方法、行业利润与盈利预期。'+
       '代理指标不能直接视为投资标的自身利润。</p></article>';
@@ -1716,6 +1733,7 @@ function renderIndustryClimate() {
     '<span>当前筛选：'+matched.length+'个行业</span>';
   $('climateSectors').innerHTML=matched.length?matched.map(sector=>{
     const profit=(industryProfits.records||[]).find(x=>x.sector_id===sector.id);
+    const profitSeries=profitHistoryFor(sector.id);
     const profitHtml=profit?'<div class="strategy-proof">2026年1—9月累计利润同比：<b>'+
       escapeHtml((profit.profit_yoy_pct>0?'+':'')+profit.profit_yoy_pct+'%')+
       '</b> · 对应官方统计行业：'+escapeHtml(profit.industry)+
@@ -1743,6 +1761,9 @@ function renderIndustryClimate() {
       '<h3>'+escapeHtml(sector.name||'')+'</h3>'+
       '<p class="sub">'+escapeHtml(sector.description||'')+'</p>'+
       profitHtml+
+      '<div class="climate-stat-note">累计利润同比变化：'+
+      escapeHtml(profitTrendDescription(profitSeries))+'</div>'+
+      historicalChart(profitSeries)+
       historicalChart(primaryHistory(sector.id))+
       '<div class="climate-stats">'+(signals.length?signals.map(m=>
         '<div class="climate-metric">'+
