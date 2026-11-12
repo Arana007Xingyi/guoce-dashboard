@@ -232,6 +232,14 @@ select { flex: 1; min-width: 130px; }
   .barrow { grid-template-columns: 80px 1fr 32px; }
 }
 
+/* 研究结论只展示事实的方向、观察窗口和局限，不构成交易评分 */
+.market-method-note {margin:12px 0;padding:13px 15px;border:1px solid #435c7e;border-radius:9px;background:#22344f;font-size:13px;color:#c5d8ef;line-height:1.85;}
+.research-signal-row {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0;}
+.research-signal {border-radius:8px;border:1px solid #47617e;background:#273d5a;padding:10px;min-width:0;}
+.research-signal .heading {font-size:12px;color:#b9cce3;display:block;margin-bottom:6px;}
+.research-signal strong {font-size:15px;line-height:1.55;display:block;overflow-wrap:anywhere;}
+.research-signal small {color:#bdd0e7;line-height:1.6;display:block;margin-top:5px;}
+@media(max-width:800px){.research-signal-row{grid-template-columns:1fr;}}
 /* 景气 / 宽基指数PE / ETF 同屏对照 */
 .valuation-triptych {border:1px solid #455c78;border-radius:12px;background:#1c2d46;padding:15px;margin:15px 0;}
 .valuation-triptych h3 {margin:2px 0 12px;}
@@ -647,7 +655,10 @@ select { flex: 1; min-width: 130px; }
           <option value="csi_all">中证全指 · 宽基估值对照</option>
         </select>
       </div>
-      <div class="strategy-proof">生产增长与利润增长不同；任何“基本面改善”结论至少还需行业利润、订单或收入验证。没有可比估值历史数据时，结论一律为“估值无法判定”，不是“低估”。</div>
+      <div class="strategy-proof">本页建立“盈利趋势—同期指数价格—官方估值口径”的证据对照。盈利使用国家统计局1—N月累计同比，指数回报在同样月份附近取收盘价，不把累计利润增速当作单月利润。中证P/E1（总股本）与P/E2（计算用股本）是两种独立官方口径；当前尚无同口径多年P/E1/P/E2历史分位，因此不输出高估、低估或买卖评分。</div>
+      <div class="market-method-note">
+        <b>估值定义：</b>P/E1 = 按总股本计算的总市值／相应盈利；P/E2 = 按指数计算用股本及权重因子计算的市值／相应盈利。历史接口的 peg 字段暂作独立滚动PE研究序列，不与P/E1/P/E2等同。<a href="https://www.csindex.com.cn/" target="_blank" rel="noopener noreferrer">中证指数官方来源 ↗</a>
+      </div>
       <div id="valuationTriptych"></div>
       <div id="valuationLinkCards"></div>
     </div>
@@ -1580,6 +1591,64 @@ function profitTrendDescription(series) {
   return a.period+'至'+b.period+'：累计利润同比增速'+(delta>0?'提高 ':delta<0?'回落 ':'持平 ')+
     Math.abs(delta).toFixed(1)+'个百分点；此为累计增速变化，非期间单月利润增长率。';
 }
+/* Rule-based interpretation, transparent thresholds, not model-generated investing advice. */
+function cumulativeProfitSignal(series) {
+  const points=(series?.points||[]).slice().sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  if(points.length<3)return {label:'数据不足',note:'至少三个累计同比观察月份才能判断方向',level:'unknown'};
+  const recent=points.slice(-3);
+  const ym=x=>Number(x.slice(0,4))*12+Number(x.slice(5,7));
+  if(recent.some((p,i)=>i>0&&ym(p.period)-ym(recent[i-1].period)!==1))
+    return {label:'存在月份缺口',note:'数据不连续，不能判断最近趋势',level:'unknown'};
+  const a=recent[0].value,b=recent[1].value,c=recent[2].value;
+  const d1=b-a,d2=c-b;
+  const fmt=x=>Math.abs(x).toFixed(1);
+  const summary='最近累计同比 '+a.toFixed(1)+'% → '+b.toFixed(1)+'% → '+c.toFixed(1)+'%';
+  if(d1>=1&&d2>=1)return {label:'累计利润增速连续回升',note:summary,level:'improving'};
+  if(d1<=-1&&d2<=-1)return {label:'累计利润增速连续回落',note:summary,level:'weakening'};
+  if(c<0)return {label:'累计利润仍同比下降',note:summary+'；最近变化方向不稳定',level:'negative'};
+  return {label:'累计利润同比为正，方向分化',note:summary+'；尚无连续回升信号',level:'mixed'};
+}
+function monthEndPrice(points,month) {
+  const rows=(points||[]).filter(p=>p.date&&Number.isFinite(p.close)&&p.date.slice(0,7)===month)
+    .slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  return rows.length?rows[rows.length-1]:null;
+}
+function periodAlignedPriceSignal(index,profitSeries) {
+  const months=(profitSeries?.points||[]).map(p=>p.period).sort();
+  if(!index||months.length<2)return {label:'缺少同期比较',note:'指数或连续利润区间不足',level:'unknown'};
+  const first=monthEndPrice(index.points,months[0]);
+  const last=monthEndPrice(index.points,months[months.length-1]);
+  if(!first||!last||first.close<=0)
+    return {label:'无同期行情',note:'没有匹配到起止月份的交易日收盘价',level:'unknown'};
+  const pct=(last.close/first.close-1)*100;
+  return {label:(pct>=0?'+':'')+pct.toFixed(1)+'%',
+    note:'指数 '+(index.code||'')+' 收盘价：'+first.date+' → '+last.date+
+      '；未经分红调整的价格变动，不是总收益率',level:pct>=0?'up':'down'};
+}
+function peEvidenceSignal(index,audit) {
+  if(!index)return {label:'尚无对应指数',note:'不能用宽基PE代替行业PE'};
+  if(!audit?.latest_official_indicator_date)return {
+    label:'官方估值未取到',note:'暂不展示指数是否高估或低估'};
+  const official1=audit.latest_official_pe1,official2=audit.latest_official_pe2;
+  return {label:'P/E2 '+(Number.isFinite(official2)?official2.toFixed(2):'未提供'),
+    note:'截至 '+audit.latest_official_indicator_date+
+      '；P/E1 '+(Number.isFinite(official1)?official1.toFixed(2):'未提供')+
+      '，P/E2为计算用股本口径。无P/E2同口径多年分位，不判断贵或便宜'};
+}
+function researchSignalSummary(profitSeries,index,audit) {
+  const profit=cumulativeProfitSignal(profitSeries);
+  const price=periodAlignedPriceSignal(index,profitSeries);
+  const pe=peEvidenceSignal(index,audit);
+  const values=[
+    {heading:'盈利变化 · 官方工业行业代理',...profit},
+    {heading:'同期指数价格 · 不含分红',...price},
+    {heading:'指数估值 · 官方时点快照',...pe}
+  ];
+  return '<div class="research-signal-row">'+values.map(v=>
+    '<div class="research-signal"><span class="heading">'+escapeHtml(v.heading)+'</span>'+
+    '<strong>'+escapeHtml(v.label)+'</strong><small>'+escapeHtml(v.note||'')+'</small></div>'
+  ).join('')+'</div>';
+}
 function renderValuationTriptych() {
   const target=$('valuationTriptych');
   if(!target)return;
@@ -1658,7 +1727,8 @@ function renderValuationTriptych() {
       '<p class="triptych-hint">'+(etf?escapeHtml(etf.name)+
         (etfLast?' · '+escapeHtml(etfLast.date):' · 暂无行情'):'尚未建立ETF对应')+
       '。ETF价格不代表行业盈利或指数PE。</p></div>'+
-      '</div><p class="triptych-hint">产业统计、指数成份和ETF持仓范围不同，不可据此直接判断买卖时机。资料均保留来源。</p></article>';
+      '</div>'+researchSignalSummary(cumulative,benchmark,audit)+
+      '<p class="triptych-hint">行业工业统计与指数成份并不一致。上方观察结论只描述已验证的累计利润趋势、对应区间价格以及官方估值快照，不是投资吸引力评分；需要更多同口径估值历史才能比较是否透支。</p></article>';
   }).join('')||'<p class="empty">暂无对应行业</p>';
 }
 function renderValuationLinks() {
