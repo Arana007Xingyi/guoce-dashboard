@@ -1,6 +1,32 @@
 {
-  "updated_at": null,
-  "new_points": 0,
-  "reports": [],
-  "note": "6和9月已核实，7与8月尚待自动抽取。"
+  "updated_at": "2026-11-12T01:47:23.935758+00:00",
+  "new_points": 16,
+  "future_official_reports_discovered": [],
+  "reports": [
+    {
+      "period": "2026-06",
+      "status": "ok",
+      "matched_industries": 8,
+      "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html"
+    },
+    {
+      "period": "2026-07",
+      "status": "ok",
+      "matched_industries": 8,
+      "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html"
+    },
+    {
+      "period": "2026-08",
+      "status": "ok",
+      "matched_industries": 8,
+      "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html"
+    },
+    {
+      "period": "2026-09",
+      "status": "ok",
+      "matched_industries": 8,
+      "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261027_1965697.html"
+    }
+  ],
+  "note": "月份是1—N月累计同比，不是当月同比；未匹配到的数据保留缺口。"
 }

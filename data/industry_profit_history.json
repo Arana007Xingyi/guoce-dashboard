@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12",
+  "updated_at": "2026-11-12T01:47:23.935758+00:00",
   "methodology": "国家统计局规模以上工业企业分行业利润（利润总额，亿元；2026年1—N月累计可比口径同比）。同一行业每个月可比较的是累计同比的变化，不能称为该月单月增长。2026年6月和9月由官方表3直接核实，7、8月等待采集，绝不插值。",
   "industries": [
     {
@@ -11,6 +11,20 @@
           "cumulative_profit_100m": 5777.1,
           "cumulative_yoy_pct": 96.9,
           "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "cumulative_profit_100m": 7057.0,
+          "cumulative_yoy_pct": 105.0,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 8474.7,
+          "cumulative_yoy_pct": 109.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
           "status": "verified"
         },
         {
@@ -33,6 +47,20 @@
           "status": "verified"
         },
         {
+          "period": "2026-07",
+          "cumulative_profit_100m": 1430.4,
+          "cumulative_yoy_pct": 0.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 1645.8,
+          "cumulative_yoy_pct": -2.1,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
+          "status": "verified"
+        },
+        {
           "period": "2026-09",
           "cumulative_profit_100m": 1950.2,
           "cumulative_yoy_pct": -1.3,
@@ -49,6 +77,20 @@
           "cumulative_profit_100m": 1953.5,
           "cumulative_yoy_pct": -19.5,
           "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "cumulative_profit_100m": 2162.4,
+          "cumulative_yoy_pct": -20.4,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 2533.8,
+          "cumulative_yoy_pct": -16.0,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
           "status": "verified"
         },
         {
@@ -71,6 +113,20 @@
           "status": "verified"
         },
         {
+          "period": "2026-07",
+          "cumulative_profit_100m": 1942.0,
+          "cumulative_yoy_pct": 3.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 2119.6,
+          "cumulative_yoy_pct": 3.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
+          "status": "verified"
+        },
+        {
           "period": "2026-09",
           "cumulative_profit_100m": 2546.5,
           "cumulative_yoy_pct": 4.4,
@@ -87,6 +143,20 @@
           "cumulative_profit_100m": 2598.3,
           "cumulative_yoy_pct": -8.6,
           "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "cumulative_profit_100m": 3096.6,
+          "cumulative_yoy_pct": -7.6,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 3671.9,
+          "cumulative_yoy_pct": -5.2,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
           "status": "verified"
         },
         {
@@ -109,6 +179,20 @@
           "status": "verified"
         },
         {
+          "period": "2026-07",
+          "cumulative_profit_100m": 864.5,
+          "cumulative_yoy_pct": 12.2,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 984.8,
+          "cumulative_yoy_pct": 10.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
+          "status": "verified"
+        },
+        {
           "period": "2026-09",
           "cumulative_profit_100m": 1117.3,
           "cumulative_yoy_pct": 10,
@@ -125,6 +209,20 @@
           "cumulative_profit_100m": 3109.1,
           "cumulative_yoy_pct": 99.4,
           "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-07",
+          "cumulative_profit_100m": 3520.9,
+          "cumulative_yoy_pct": 91.8,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 3959.1,
+          "cumulative_yoy_pct": 82.9,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
           "status": "verified"
         },
         {
@@ -147,6 +245,20 @@
           "status": "verified"
         },
         {
+          "period": "2026-07",
+          "cumulative_profit_100m": 540.8,
+          "cumulative_yoy_pct": -12.3,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-08",
+          "cumulative_profit_100m": 592.0,
+          "cumulative_yoy_pct": -17.4,
+          "source_url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html",
+          "status": "verified"
+        },
+        {
           "period": "2026-09",
           "cumulative_profit_100m": 687.2,
           "cumulative_yoy_pct": -17.3,
@@ -158,6 +270,8 @@
   ],
   "sources": {
     "2026-06": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202607/t20260727_1964194.html",
-    "2026-09": "https://www.stats.gov.cn/sj/zxfb/202610/t20261027_1965697.html"
+    "2026-09": "https://www.stats.gov.cn/sj/zxfb/202610/t20261027_1965697.html",
+    "2026-07": "https://www.stats.gov.cn/sj/zxfb/202608/t20260827_1965126.html",
+    "2026-08": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260928_1965425.html"
   }
 }
