@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "methodology": "只发现官方项目、预算、实施相关公告。结果为待核验线索，不自动填写资金金额、项目开工或完成结论；各站点以公开列表第一页为覆盖范围。",
+  "methodology": "基建预算公告及其分页、国家发改委项目进展和地方动态、上海具体审批项目等官方来源。每个页面按链接标题发现并去重，仅作为待核验线索；网站动态表格可能无法直接采集，采集失败要透明报告。附件预算明细未解析前不推断项目金额。",
   "sources": [
     {
       "id": "mof_construction",
@@ -40,6 +40,38 @@
       "region": "广东",
       "agency": "广东省发展改革委",
       "url": "https://drc.gd.gov.cn/",
+      "category": "province"
+    },
+    {
+      "id": "mof_construction_archive",
+      "name": "财政部·中央基建预算历史公告",
+      "region": "全国",
+      "agency": "财政部",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/index_1.htm",
+      "category": "finance"
+    },
+    {
+      "id": "ndrc_progress_news",
+      "name": "国家发改委·项目建设进展",
+      "region": "全国",
+      "agency": "国家发展改革委",
+      "url": "https://www.ndrc.gov.cn/xwdt/xwfb/",
+      "category": "national"
+    },
+    {
+      "id": "ndrc_local_progress",
+      "name": "国家发改委·地方投资进展",
+      "region": "各地区",
+      "agency": "国家发展改革委",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/",
+      "category": "national"
+    },
+    {
+      "id": "shanghai_approvals",
+      "name": "上海市发改委·项目行政许可",
+      "region": "上海",
+      "agency": "上海市发展改革委",
+      "url": "https://fgw.sh.gov.cn/fgw-interaction-front/biz/projectApproval/projectPermissionList",
       "category": "province"
     }
   ]
