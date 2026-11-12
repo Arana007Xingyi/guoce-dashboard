@@ -1,7 +1,377 @@
 {
   "schema_version": 1,
-  "updated_at": null,
-  "methodology": "仅官方网页文号、预算用途和附件链接，无金额推断。首次运行后显示。",
-  "items": [],
-  "last_run": null
+  "updated_at": "2026-11-12T02:34:19.189291+00:00",
+  "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
+  "items": [
+    {
+      "document_number": null,
+      "purpose_excerpt": "“六网协同”新场景培育打造",
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/xwfb/202611/t20261106_1408663.html",
+      "source_hash": "479702f5574931b8b971830dd25c1d52108ab509f2e4b44e56034838f0297fcd",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/xwfb/202611/t20261106_1408663.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202611/t20261109_1408670.html",
+      "source_hash": "8c22d160e0ab434fe9d8196eeb1b9d736445e7b7e26217680b90db3527372c30",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202611/t20261109_1408670.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202611/t20261104_1408547.html",
+      "source_hash": "6c0c054d6670287e5e248d907b6145c3a4666ad4c076e28ab3beee6ce1c741b1",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202611/t20261104_1408547.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261028_1408421.html",
+      "source_hash": "75e1c966b7f0badf2b2fdab9dbead7ee7b10a5c88a378e323c6fbcb9bf2f2ec4",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261028_1408421.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "我省工业高质量发展",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261021_1408281.html",
+      "source_hash": "9c4dc49dd16fe97a0132d753fae00cac30e396fb0e5c49fe07b623a12f59ea4e",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261021_1408281.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "奠定坚实基础",
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261019_1408217.html",
+      "source_hash": "11e2fe652d134cdc3cb438fcbbaa59d92671139379f92601a1562f71b91af265",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261019_1408217.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261019_1408216.html",
+      "source_hash": "6b17ce19456851dbc68bb6b8b38097363a6ad19ed2d36c710c5ece75b9da4dbf",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261019_1408216.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261014_1408138.html",
+      "source_hash": "400544f866822f6b356943784153c61d751b9094376b0ac264dc253e81ceb2c0",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261014_1408138.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "以工代赈项目建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990346.htm",
+      "source_hash": "bb65287206ffd2ac5bb96207447d5e25e2bc673f5f5536d7eedd44d841642481",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990346.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "自主创新能力建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990345.htm",
+      "source_hash": "482cbea762b72b3df26f17cd41b2dee88547f13a5dbc78167fcc14045ef5bb96",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990345.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "医疗卫生服务体系建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990344.htm",
+      "source_hash": "97e0f63293a9be4a9b2a0796e722325bc6e315cf54e31ace4596613d2bf2eaa5",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990344.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "自主创新能力建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990342.htm",
+      "source_hash": "f08c369bc2c16aaa36cd7642c878665e493c0a3bb5f52fc3c69453d456e48d57",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990342.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "生态保护修复",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260520_3990271.htm",
+      "source_hash": "fe1aa19288d7c4bc68c9d103b653e341714d4e12d3554866cdb6d370fc98df0c",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260520_3990271.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "教育领域项目",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260520_3990266.htm",
+      "source_hash": "5c63c5be8a21ad9f626849d43f09fe9770fa4a42e8ba0a4a63eaaf0c95af1345",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260520_3990266.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "广东省 、海南省 台风灾害灾后应急恢复的通知》（发改投资〔 2025 〕 1 285 号）",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978652.htm",
+      "source_hash": "d09861a57f494d98f810d622875a30877cd8de51ae66abb7749c3bd95ccc9a14",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978652.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "广东省台风灾害灾后应急恢复的通知》（发改投资〔 2025 〕 1 257 号）",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978650.htm",
+      "source_hash": "a5154ca579063532f898d07991d2cbef305548b480918a1abd7fb7dddda78560",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978650.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "优质高效医疗卫生服务体系建设工程专项",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978648.htm",
+      "source_hash": "7651781ee48289d54feddf86249030aafbac70d3bc7585ce6eff51782ab3d375",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978648.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "教育强国和就业促进专项",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978646.htm",
+      "source_hash": "fbfb5e5bab0458cfc817a2da0a541c0253f717f4c5691e1f150c7372e8ca71c2",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202512/t20251209_3978646.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "附件：广东省粤东西北X波段双极化相控阵天气雷达网建设项目初步设计概算核定表.xls",
+          "url": "https://drc.gd.gov.cn/attachment/0/629/629342/4976472.xls"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4976472.html",
+      "source_hash": "4231da00c61d0aeab7d8dd0956494ae9b450c46a8b3c67d2d68d831c4b0d8f69",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4976472.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "附件.广东粤剧文化中心项目初步设计概算核定表.xls",
+          "url": "https://drc.gd.gov.cn/attachment/0/629/629341/4976463.xls"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4976463.html",
+      "source_hash": "9bead0a086fd55b87a0205c6c21f362d4610fed19fb7bc5f2f9e21c4d16fd93f",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4976463.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4975795.html",
+      "source_hash": "1b88197e0af6f2db17abaacad26f7c41458f5a0ce48259df04c2c027f606f4bc",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4975795.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "。 四、工程招标核准意见详见附件",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "广东省工程招标核准意见表.pdf",
+          "url": "https://drc.gd.gov.cn/attachment/0/629/629016/4974735.pdf"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4974735.html",
+      "source_hash": "4f15e8dc272bd5d648d9fdee7dad38a5b1486c9d4d83fdd55c040cdd8775e7fb",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4974735.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4974219.html",
+      "source_hash": "5c061a6361e27dc494147f85a9fe955f9b4551d404c624791b0c893cba8910be",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4974219.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "。 请按照批准的建设规模、内容和标准组织实施",
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "附件.华南师范大学汕尾新校区（学生宿舍、公共教学楼、科研楼）建设项目初步设计概算核定表.xls",
+          "url": "https://drc.gd.gov.cn/attachment/0/628/628921/4974205.xls"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4974205.html",
+      "source_hash": "9c8bf6c39fa6f4facc838dd765c7f6034c307b715cd1e6bebc5c912422b09d00",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4974205.html",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "extracted"
+    },
+    {
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992572.htm",
+      "checked_at": "2026-11-12T02:34:19.189291+00:00",
+      "status": "unavailable",
+      "error": "HTTPError",
+      "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    }
+  ],
+  "last_run": {
+    "checked": 25,
+    "extracted": 24,
+    "failed": 1
+  }
 }
