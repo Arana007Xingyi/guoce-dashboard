@@ -33,7 +33,11 @@ def positive(value):
         return None
 
 def parse_date(value):
-    x = str(value).strip()
+    # xlrd often exposes 20261111 as the float 20261111.0
+    if isinstance(value,(int,float)) and float(value).is_integer():
+        x=str(int(value))
+    else:
+        x=str(value).strip()
     if x.isdigit() and len(x) == 8:
         try: return dt.datetime.strptime(x,"%Y%m%d").date().isoformat()
         except ValueError: return None
