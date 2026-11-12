@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-12",
+  "methodology": "独立具名项目证据库；仅官方政府网页。五阶段分别按立项、实际开工、投资进度、资金执行、竣工验收审核。政府年度项目清单中的“新开工”“建成”仅为清单分类，不等同已获取开工许可或竣工验收证书。总投资/计划投资不是财政拨付和实际支出；未披露用null。存在冲突的投资额明确置空并提示。",
+  "stage_names": [
+    "立项/审批",
+    "开工/建设",
+    "投资进度",
+    "资金执行",
+    "竣工验收"
+  ],
+  "records": [
+    {
+      "id": "qingyang-zero-carbon",
+      "sector": "ai",
+      "sector_name": "AI算力",
+      "name": "西北零碳智慧云智算中心一期",
+      "region": "甘肃庆阳",
+      "latest_stage": "construction_started",
+      "as_of": "2026-02-28",
+      "total_investment_100m": 25.85,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
+      "note": "2月28日开工；总投资25.85亿元，6600架12kW高密机柜属于规划建设内容。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-02-28",
+          "reported_at": "2026-03-02",
+          "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
+          "description": "2月28日开工；总投资25.85亿元，6600架12kW高密机柜属于规划建设内容。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-02-28",
+          "amount_100m": 25.85,
+          "amount_type": "total_project_investment",
+          "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "tuoli-16000p",
+      "sector": "ai",
+      "sector_name": "AI算力",
+      "name": "塔城托里16000P算力项目",
+      "region": "新疆塔城",
+      "latest_stage": "construction_started",
+      "as_of": "2026-01-19",
+      "total_investment_100m": 22,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
+      "note": "1月19日举行开工仪式，总投资约22亿元，16000P是规划规模。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-01-19",
+          "reported_at": "2026-01-22",
+          "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
+          "description": "1月19日举行开工仪式，总投资约22亿元，16000P是规划规模。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-01-19",
+          "amount_100m": 22,
+          "amount_type": "total_project_investment",
+          "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "changzhou-datacenter",
+      "sector": "ai",
+      "sector_name": "AI算力",
+      "name": "常州电信核心网络运营中心项目",
+      "region": "江苏常州",
+      "latest_stage": "construction_started",
+      "as_of": "2026-09-08",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.cztn.gov.cn/index.php?a=show&c=phone&catid=36914&id=217664",
+      "note": "9月8日开工；总建筑面积约1.2万平方米，未核实投资额。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-09-08",
+          "reported_at": "2026-09-09",
+          "source_url": "https://www.cztn.gov.cn/index.php?a=show&c=phone&catid=36914&id=217664",
+          "description": "9月8日开工；总建筑面积约1.2万平方米，未核实投资额。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "wuxi-compute-park",
+      "sector": "ai",
+      "sector_name": "AI算力",
+      "name": "无锡算力装备产业园一期",
+      "region": "江苏无锡",
+      "latest_stage": "construction_started",
+      "as_of": "2026-05-06",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.wuxi.gov.cn/doc/2026/05/07/4770816.shtml",
+      "note": "5月6日开工；规划园区面积约1000亩，1200亿元为预计年产值，不能作为投资额。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-05-06",
+          "reported_at": "2026-05-07",
+          "source_url": "https://www.wuxi.gov.cn/doc/2026/05/07/4770816.shtml",
+          "description": "5月6日开工；规划园区面积约1000亩，1200亿元为预计年产值，不能作为投资额。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "langfang-runze",
+      "sector": "ai",
+      "sector_name": "AI算力",
+      "name": "廊坊润泽人工智能应用中心一期",
+      "region": "河北廊坊",
+      "latest_stage": "partial_operation",
+      "as_of": "2026-09-19",
+      "total_investment_100m": 218,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+      "note": "一期项目总投资218亿元；B1智算中心已率先投运，其他部分仍施工，不等于整体竣工。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "partial_operation",
+          "as_of": "2026-09-19",
+          "reported_at": "2026-09-19",
+          "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+          "description": "一期项目总投资218亿元；B1智算中心已率先投运，其他部分仍施工，不等于整体竣工。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-09-19",
+          "amount_100m": 218,
+          "amount_type": "total_project_investment",
+          "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        },
+        {
+          "stage": "operation",
+          "as_of": "2026-09-19",
+          "description": "项目B1机房率先投运；不是整个一期项目完工",
+          "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "suzhou-dexin",
+      "sector": "semiconductor",
+      "sector_name": "半导体芯片",
+      "name": "苏州德信高端功率器件晶圆研发生产项目",
+      "region": "江苏苏州工业园区",
+      "latest_stage": "acceptance_passed",
+      "as_of": "2026-04-17",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": true,
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202604/3355021f2c174e1fa2558e6469357f72.shtml",
+      "note": "2023年开工、2024年9月主体封顶、2026年4月通过竣工验收；无经核实的投资额。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "acceptance_passed",
+          "as_of": "2026-04-17",
+          "reported_at": "2026-04-17",
+          "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202604/3355021f2c174e1fa2558e6469357f72.shtml",
+          "description": "2023年开工、2024年9月主体封顶、2026年4月通过竣工验收；无经核实的投资额。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "nansha-anjieli",
+      "sector": "semiconductor",
+      "sector_name": "半导体芯片",
+      "name": "南沙安捷利美维先进封装基板制造基地",
+      "region": "广东广州南沙",
+      "latest_stage": "construction_started",
+      "as_of": "2026-09-29",
+      "total_investment_100m": 30,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
+      "note": "一期规划总投资30亿元，2026年9月项目启动并进入现场建设；建成后新增营收35亿元为预测，非实际收入。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-09-29",
+          "reported_at": "2026-09-29",
+          "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
+          "description": "一期规划总投资30亿元，2026年9月项目启动并进入现场建设；建成后新增营收35亿元为预测，非实际收入。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-09-29",
+          "amount_100m": 30,
+          "amount_type": "total_project_investment",
+          "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "baoan-iccarrier",
+      "sector": "semiconductor",
+      "sector_name": "半导体芯片",
+      "name": "礼鼎第二园区先进IC载板制造基地",
+      "region": "广东深圳宝安",
+      "latest_stage": "landed",
+      "as_of": "2026-09-19",
+      "total_investment_100m": 120,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
+      "note": "项目落地签约，计划投资不低于120亿元；没有据此认定正式开工，120亿元为投资下限。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "landed",
+          "as_of": "2026-09-19",
+          "reported_at": "2026-09-20",
+          "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
+          "description": "项目落地签约，计划投资不低于120亿元；没有据此认定正式开工，120亿元为投资下限。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-09-19",
+          "amount_100m": 120,
+          "amount_type": "minimum_planned_investment",
+          "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shenzhen-robot-park",
+      "sector": "robots",
+      "sector_name": "智能机器人",
+      "name": "深圳机器人科技园",
+      "region": "广东深圳龙岗",
+      "latest_stage": "construction_started",
+      "as_of": "2026-10-21",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.lg.gov.cn/gab/jddt/content/post_13033085.html",
+      "note": "机器人科技园已开工；预计年产值60亿元为建成后预测，不是已实现产值或投资额。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-10-21",
+          "reported_at": "2026-10-21",
+          "source_url": "https://www.lg.gov.cn/gab/jddt/content/post_13033085.html",
+          "description": "机器人科技园已开工；预计年产值60亿元为建成后预测，不是已实现产值或投资额。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "yancheng-hongqing",
+      "sector": "robots",
+      "sector_name": "智能机器人",
+      "name": "盐城宏擎四足智能机器人项目",
+      "region": "江苏盐城",
+      "latest_stage": "construction_started",
+      "as_of": "2026-10-21",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.yancheng.gov.cn/art/2026/10/23/art_21965_4462957.html",
+      "note": "10月21日开工，计划2027年一季度建成投产，计划完成时间不等于已验收。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "construction_started",
+          "as_of": "2026-10-21",
+          "reported_at": "2026-10-23",
+          "source_url": "https://www.yancheng.gov.cn/art/2026/10/23/art_21965_4462957.html",
+          "description": "10月21日开工，计划2027年一季度建成投产，计划完成时间不等于已验收。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "suzhou-zhilv",
+      "sector": "nev",
+      "sector_name": "新能源汽车",
+      "name": "苏州智绿科技总部基地（新能源汽车高压部件）",
+      "region": "江苏苏州工业园区",
+      "latest_stage": "acceptance_passed",
+      "as_of": "2026-09-09",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": true,
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202609/7cefbb3d3347423b9fef91526e1f0147.shtml",
+      "note": "9月9日完成竣工验收。两份官方公告分别报道投资5亿元和5.5亿元，口径不一致，暂不填金额。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "acceptance_passed",
+          "as_of": "2026-09-09",
+          "reported_at": "2026-09-21",
+          "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202609/7cefbb3d3347423b9fef91526e1f0147.shtml",
+          "description": "9月9日完成竣工验收。两份官方公告分别报道投资5亿元和5.5亿元，口径不一致，暂不填金额。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_discrepancy",
+          "as_of": "2026-09-09",
+          "description": "2026年9月9日官方稿总投资5亿元；9月21日稿总投资5.5亿元。不同口径尚未核清，禁止统一为任一数字。",
+          "source_url": "https://www.sipac.gov.cn/szgyyq/jsdt/202609/e717bcd9efa948bcae7adf50a4d79096.shtml",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "tianjin-mande",
+      "sector": "nev",
+      "sector_name": "新能源汽车",
+      "name": "长城汽车天津曼德热系统及光电工厂",
+      "region": "天津经开区",
+      "latest_stage": "acceptance_passed",
+      "as_of": "2026-01-21",
+      "total_investment_100m": 11.53,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": true,
+      "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
+      "note": "1月21日竣工验收，总投资11.53亿元；进入投产准备阶段，不能推断已满产。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "acceptance_passed",
+          "as_of": "2026-01-21",
+          "reported_at": "2026-01-22",
+          "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
+          "description": "1月21日竣工验收，总投资11.53亿元；进入投产准备阶段，不能推断已满产。",
+          "verification": "official_document"
+        },
+        {
+          "stage": "investment_plan",
+          "as_of": "2026-01-21",
+          "amount_100m": 11.53,
+          "amount_type": "total_project_investment",
+          "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
+          "description": "项目总投资或计划投资，绝不是资金已下达或支付",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "zhongshan-center",
+      "sector": "medical",
+      "sector_name": "医疗健康",
+      "name": "复旦大学附属中山医院国家医学中心建设项目",
+      "region": "上海",
+      "latest_stage": "listed_under_construction",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "2026年度上海重大工程清单列为在建；该清单不是资金支付或竣工证明。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_under_construction",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "2026年度上海重大工程清单列为在建；该清单不是资金支付或竣工证明。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "fudan-cancer-phase2",
+      "sector": "medical",
+      "sector_name": "医疗健康",
+      "name": "复旦大学附属肿瘤医院医学中心二期工程",
+      "region": "上海",
+      "latest_stage": "listed_new_start",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为“新开工”，系年度工程状态分类，仍需单独开工公告核实。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_new_start",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为“新开工”，系年度工程状态分类，仍需单独开工公告核实。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "united-imaging",
+      "sector": "medical",
+      "sector_name": "医疗健康",
+      "name": "联影医疗生产研发基地",
+      "region": "上海",
+      "latest_stage": "listed_completed",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为“建成”，不等同取得工程竣工验收文件。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_completed",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为“建成”，不等同取得工程竣工验收文件。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shanghai-health-emergency",
+      "sector": "medical",
+      "sector_name": "医疗健康",
+      "name": "上海市公共卫生临床中心应急医学中心项目",
+      "region": "上海",
+      "latest_stage": "listed_completed",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为“建成”，未查验独立竣工验收文件。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_completed",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为“建成”，未查验独立竣工验收文件。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shanghai-jita",
+      "sector": "semiconductor",
+      "sector_name": "半导体芯片",
+      "name": "积塔半导体特色工艺生产线项目",
+      "region": "上海",
+      "latest_stage": "listed_under_construction",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为在建，未披露单个项目当期资金支付。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_under_construction",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为在建，未披露单个项目当期资金支付。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shanghai-gek",
+      "sector": "semiconductor",
+      "sector_name": "半导体芯片",
+      "name": "格科半导体12英寸CIS集成电路研发与产业化项目",
+      "region": "上海",
+      "latest_stage": "listed_under_construction",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为在建，未提供百分比工程进度。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_under_construction",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为在建，未提供百分比工程进度。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shanghai-lexus",
+      "sector": "nev",
+      "sector_name": "新能源汽车",
+      "name": "雷克萨斯新能源汽车项目",
+      "region": "上海",
+      "latest_stage": "listed_under_construction",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为在建，暂未证实竣工或资金支付。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_under_construction",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为在建，暂未证实竣工或资金支付。",
+          "verification": "official_document"
+        }
+      ]
+    },
+    {
+      "id": "shanghai-catl",
+      "sector": "nev",
+      "sector_name": "新能源汽车",
+      "name": "宁德时代未来能源技术研发及产业化基地项目",
+      "region": "上海",
+      "latest_stage": "listed_under_construction",
+      "as_of": "2026-02-26",
+      "total_investment_100m": null,
+      "allocated_100m": null,
+      "paid_100m": null,
+      "spent_100m": null,
+      "investment_progress_pct": null,
+      "acceptance_verified": false,
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "note": "上海2026年重大工程清单列为在建，未逐项目披露已支付资金。",
+      "facts": [
+        {
+          "stage": "status",
+          "status": "listed_under_construction",
+          "as_of": "2026-02-26",
+          "reported_at": "2026-02-26",
+          "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+          "description": "上海2026年重大工程清单列为在建，未逐项目披露已支付资金。",
+          "verification": "official_document"
+        }
+      ]
+    }
+  ]
+}
