@@ -2031,7 +2031,7 @@ function renderSectorProjects() {
     '<span>资金执行待核验：'+data.filter(p=>p.paid_100m==null).length+'</span>'+
     '<span>筛选：'+selected.length+'</span>';
   const stages=[
-    ['立项/审批',p=>p.latest_stage==='landed'||p.latest_stage.startsWith('listed_'),p=>'项目落地或列入清单'],
+    ['立项/审批',p=>(p.facts||[]).some(e=>e.stage==='formal_approval'),p=>'政府正式审批文件已核实'],
     ['开工/建设',p=>['construction_started','partial_operation','acceptance_passed'].includes(p.latest_stage),p=>'已有明确的建设阶段原文'],
     ['投资进度',p=>p.investment_progress_pct!=null,p=>p.investment_progress_pct+'%'],
     ['资金执行',p=>p.allocated_100m!=null||p.paid_100m!=null||p.spent_100m!=null,p=>'有已核实资金执行事实'],
