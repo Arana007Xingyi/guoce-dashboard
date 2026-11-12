@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-11-12T02:55:36.704169+00:00",
+  "checked_at": "2026-11-12T07:05:38.195649+00:00",
   "methodology": "CSI历史行情peg字段为滚动市盈率相关数据；官方indicator.xls独立提供P/E1（总股本）、P/E2（计算用股本）。两套PE使用不同方法，数值不一致不能认定数据错误。本审计同时记录有效样本覆盖率、官方最近P/E1/P/E2、同日匹配情况。未独立认证peg具体TTM定义，历史分位仍标注探索性；成交额单位未认证，ETF不生成PE。不会修改历史行情。",
   "source": "https://www.csindex.com.cn/",
   "instruments": [

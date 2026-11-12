@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12T02:54:17.329568+00:00",
+  "updated_at": "2026-11-12T07:04:30.355217+00:00",
   "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
   "items": [
     {
@@ -566,8 +566,8 @@
     }
   ],
   "last_run": {
-    "checked": 14,
-    "extracted": 11,
-    "failed": 3
+    "checked": 0,
+    "extracted": 0,
+    "failed": 0
   }
 }
