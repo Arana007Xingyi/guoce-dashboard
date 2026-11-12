@@ -281,6 +281,18 @@ select { flex: 1; min-width: 130px; }
 .climate-metric strong {display:block;font-size:22px;margin:8px 0 4px;}
 .climate-metric small {display:block;color:#b8c8df;line-height:1.6;}
 .climate-stat-note {font-size:12px;color:#b5c7dd;line-height:1.75;margin-top:7px;}
+/* 具名项目全生命周期阶段证据 */
+.sector-project {border:1px solid #49617c;border-radius:12px;background:#1c2e48;padding:17px;margin:12px 0;}
+.sector-project h3 {font-size:17px;line-height:1.55;margin:6px 0;}
+.sector-project-stages {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:14px 0;}
+.sector-stage {padding:9px;border:1px solid #415a79;border-radius:8px;background:#263953;min-width:0;}
+.sector-stage b {font-size:12px;display:block;line-height:1.6;}
+.sector-stage span {display:block;font-size:12px;color:#bdcee4;margin-top:5px;line-height:1.6;}
+.sector-stage.verified {border-color:#568d7b;background:#244538;}
+.sector-project-meta {font-size:13px;color:#c4d4e9;line-height:1.85;}
+.sector-evidence-list {margin:10px 0;padding:0;list-style:none;}
+.sector-evidence-list li {padding:8px 0;border-top:1px solid #3b5270;font-size:12px;line-height:1.8;}
+@media(max-width:920px){.sector-project-stages{grid-template-columns:repeat(2,minmax(0,1fr));}}
 /* 官方落地事实，和仅有标题的公告线索分层展示 */
 .implementation-card {border:1px solid #45617d;border-radius:11px;background:#1e304a;padding:17px;margin:13px 0;}
 .implementation-card h3{font-size:17px;margin:8px 0;}
@@ -533,6 +545,37 @@ select { flex: 1; min-width: 130px; }
 
   <!-- 落地追踪：没有官方完成证据绝不显示完成 -->
   <section id="progress" class="page hidden">
+    <div class="panel" id="sectorProjectBoard">
+      <div class="home-panel-head">
+        <div><h2>重点产业 · 具名项目全生命周期档案</h2>
+          <p class="sub">优先追踪AI算力、半导体芯片、智能机器人、新能源汽车及医疗项目。将立项、开工、投资进度、资金执行、竣工验收分开记录，每条事实附政府原文。</p></div>
+        <span class="pill" id="sectorProjectsCount">正在读取</span>
+      </div>
+      <div class="toolbar">
+        <input id="sectorProjectSearch" placeholder="搜索项目名称、城市或建设事实">
+        <select id="sectorProjectSector">
+          <option value="">全部五大产业</option>
+          <option value="ai">AI算力</option>
+          <option value="semiconductor">半导体芯片</option>
+          <option value="robots">智能机器人</option>
+          <option value="nev">新能源汽车</option>
+          <option value="medical">医疗健康</option>
+        </select>
+        <select id="sectorProjectStage">
+          <option value="">所有核实阶段</option>
+          <option value="landed">项目落地</option>
+          <option value="construction_started">已明确开工</option>
+          <option value="partial_operation">部分投运</option>
+          <option value="acceptance_passed">竣工验收通过</option>
+          <option value="listed_under_construction">年度清单：在建</option>
+          <option value="listed_new_start">年度清单：新开工</option>
+          <option value="listed_completed">年度清单：建成</option>
+        </select>
+      </div>
+      <div class="evidence-summary" id="sectorProjectSummary"></div>
+      <div class="strategy-proof">每张项目档案都区分“有证据的阶段”和“未取得证据的阶段”。项目投资总额是计划或项目建设规模，并非财政资金实际支付；年度计划“建成”也不能自动等同完成竣工验收。</div>
+      <div id="sectorProjectCards"></div>
+    </div>
     <div class="panel" id="verifiedImplementationBoard">
       <div class="home-panel-head">
         <div><h2>重点落地证据 · 有金额与进度的官方事实</h2>
@@ -841,6 +884,7 @@ let projectFundingRecords = [];
 let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
 let verifiedImplementations = {records:[],as_of:null};
+let sectorProjectData = {records:[],updated_at:null};
 let noticeDetails = {items:[],updated_at:null};
 let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
@@ -1918,6 +1962,82 @@ async function loadIndustryClimate() {
 ['climateSearch','climateGroup','climatePeriod'].forEach(id=>
   $(id).addEventListener(id==='climateSearch'?'input':'change',renderIndustryClimate));
 
+const SECTOR_STAGE_LABELS={
+  landed:'已落地（非开工）',
+  construction_started:'已开工',
+  partial_operation:'部分投运（非整体竣工）',
+  acceptance_passed:'竣工验收通过',
+  listed_under_construction:'年度重大工程清单：在建',
+  listed_new_start:'年度重大工程清单：新开工',
+  listed_completed:'年度重大工程清单：建成'
+};
+function renderSectorProjects() {
+  const dest=$('sectorProjectCards');
+  if(!dest)return;
+  const data=sectorProjectData.records||[];
+  const q=$('sectorProjectSearch').value.trim().toLowerCase();
+  const sector=$('sectorProjectSector').value;
+  const stage=$('sectorProjectStage').value;
+  const selected=data.filter(p=>(!sector||p.sector===sector)&&
+    (!stage||p.latest_stage===stage)&&
+    (!q||[p.name,p.region,p.note,p.sector_name].join(' ').toLowerCase().includes(q)));
+  const confirmed=data.filter(p=>p.latest_stage==='construction_started'||p.latest_stage==='partial_operation');
+  $('sectorProjectsCount').textContent=data.length+' 个具名项目';
+  $('sectorProjectSummary').innerHTML=
+    '<span>已核实开工/部分投运：'+confirmed.length+'</span>'+
+    '<span>竣工验收已核实：'+data.filter(p=>p.acceptance_verified).length+'</span>'+
+    '<span>列入年度重大工程：'+data.filter(p=>p.latest_stage.startsWith('listed_')).length+'</span>'+
+    '<span>资金执行待核验：'+data.filter(p=>p.paid_100m==null).length+'</span>'+
+    '<span>筛选：'+selected.length+'</span>';
+  const stages=[
+    ['立项/审批',p=>p.latest_stage==='landed'||p.latest_stage.startsWith('listed_'),p=>'项目落地或列入清单'],
+    ['开工/建设',p=>['construction_started','partial_operation','acceptance_passed'].includes(p.latest_stage),p=>'已有明确的建设阶段原文'],
+    ['投资进度',p=>p.investment_progress_pct!=null,p=>p.investment_progress_pct+'%'],
+    ['资金执行',p=>p.allocated_100m!=null||p.paid_100m!=null||p.spent_100m!=null,p=>'有已核实资金执行事实'],
+    ['竣工验收',p=>p.acceptance_verified,p=>'已查到正式竣工验收报道']
+  ];
+  dest.innerHTML=selected.length?selected.slice().sort((a,b)=>
+    String(b.as_of||'').localeCompare(String(a.as_of||''))).map(p=>{
+    const amount=p.total_investment_100m==null?'未披露或存在口径冲突':
+      p.total_investment_100m.toLocaleString('zh-CN',{maximumFractionDigits:2})+'亿元';
+    const chain=stages.map(([name,pass,description])=>{
+      const yes=pass(p);
+      return '<div class="sector-stage '+(yes?'verified':'')+'"><b>'+escapeHtml(name)+
+        '</b><span>'+(yes?escapeHtml(description(p)):'未获得此阶段证据')+'</span></div>';
+    }).join('');
+    const official=(p.facts||[]).map(e=>'<li>'+
+      '<span class="sub">'+escapeHtml(e.as_of||'')+' · '+escapeHtml(e.stage||'')+'</span> · '+
+      escapeHtml(e.description||'')+' '+
+      '<a href="'+escapeHtml(strategyUrl(e.source_url))+'" target="_blank" rel="noopener noreferrer">官方证据 ↗</a></li>').join('');
+    return '<article class="sector-project">'+
+      '<div class="meta">'+escapeHtml(p.sector_name||'')+' · '+escapeHtml(p.region||'')+
+      ' · 官方信息截至 '+escapeHtml(p.as_of||'')+'</div>'+
+      '<h3>'+escapeHtml(p.name||'')+'</h3>'+
+      '<span class="implementation-status">'+escapeHtml(SECTOR_STAGE_LABELS[p.latest_stage]||'待核实')+'</span>'+
+      '<div class="sector-project-stages">'+chain+'</div>'+
+      '<div class="sector-project-meta">总投资/计划投资：<b>'+escapeHtml(amount)+'</b>'+
+      ' · 已下达资金：<b>'+escapeHtml(amountText(p.allocated_100m))+'</b>'+
+      ' · 已实际支付：<b>'+escapeHtml(amountText(p.paid_100m))+'</b></div>'+
+      '<p class="evidence-note">'+escapeHtml(p.note||'')+'</p>'+
+      '<ul class="sector-evidence-list">'+official+'</ul>'+
+      '</article>';
+  }).join(''):'<p class="empty">当前筛选下暂无具名项目，可以清除筛选查看全部。</p>';
+}
+async function loadSectorProjects() {
+  try {
+    const response=await fetch('./data/sector_projects.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok)throw Error('尚未生成行业项目档案');
+    const json=await response.json();
+    sectorProjectData={records:Array.isArray(json.records)?json.records:[],updated_at:json.updated_at||null};
+  }catch(e){
+    console.warn('行业项目档案加载失败',e);
+    sectorProjectData={records:[],updated_at:null};
+  }
+  renderSectorProjects();
+}
+['sectorProjectSearch','sectorProjectSector','sectorProjectStage'].forEach(id=>
+  $(id).addEventListener(id==='sectorProjectSearch'?'input':'change',renderSectorProjects));
+
 function renderVerifiedImplementation() {
   const list=$('implementationCards');
   if(!list)return;
@@ -2436,7 +2556,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadProjectNoticeDetails(), loadVerifiedImplementation(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadProjectNoticeDetails(), loadVerifiedImplementation(), loadSectorProjects(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
