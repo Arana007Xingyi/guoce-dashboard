@@ -667,6 +667,7 @@ select { flex: 1; min-width: 130px; }
         </select>
       </div>
       <div id="marketSourceHealth" class="evidence-summary"></div>
+      <div id="peAuditStatus" class="evidence-summary"></div>
       <div id="marketHistoryCards"></div>
       <p class="sub">样本PE分位只在同一指数至少750个有效样本及3年覆盖时计算，且在PE具体口径核实前始终标注待核。成交额尚未确认单位时只做原始数据保存；ETF数据若没有授权或接口不支持，将显示缺失，而不是推算。</p>
     </div>
@@ -805,6 +806,8 @@ let industryHistory = {series:[],sources:{}};
 let industryCollectorStatus = {index_state:'not_run',checked_at:null,new_points_added:0};
 let marketHistory = {instruments:[],status:[],updated_at:null};
 let industryProfits = {records:[],updated_at:null};
+let industryProfitHistory = {industries:[],updated_at:null};
+let marketPeAudit = {instruments:[],checked_at:null};
 let marketConfig = {indices:[],etfs:[]};
 const AI_QUEUE_KEY = 'guoce_manual_ai_policy_ids_v1';
 let manualAiQueue = [];
@@ -1493,13 +1496,18 @@ async function loadIndustryProfitsAndMarketConfig() {
     if(!res.ok)throw Error('无法读取'+path);
     return res.json();
   };
-  const [profit,config]=await Promise.allSettled([
-    fetchJson('industry_profit.json'),fetchJson('market_config.json')
+  const [profit,config,history,audit]=await Promise.allSettled([
+    fetchJson('industry_profit.json'),fetchJson('market_config.json'),
+    fetchJson('industry_profit_history.json'),fetchJson('market_audit.json')
   ]);
   industryProfits=profit.status==='fulfilled'&&Array.isArray(profit.value.records)
     ?profit.value:{records:[],updated_at:null};
   marketConfig=config.status==='fulfilled'&&Array.isArray(config.value.indices)
     ?config.value:{indices:[],etfs:[]};
+  industryProfitHistory=history.status==='fulfilled'&&Array.isArray(history.value.industries)
+    ?history.value:{industries:[],updated_at:null};
+  marketPeAudit=audit.status==='fulfilled'&&Array.isArray(audit.value.instruments)
+    ?audit.value:{instruments:[],checked_at:null};
 }
 async function loadMarketHistory() {
   try {
@@ -1525,6 +1533,34 @@ async function loadMarketHistory() {
 }
 $('marketInstrument').addEventListener('change',renderMarketHistory);
 $('marketKind').addEventListener('change',renderMarketHistory);
+/* Verified production/market facts and audited valuation references never share a scope. */
+function peAuditFor(id) {
+  return (marketPeAudit.instruments||[]).find(x=>x.id===id)||null;
+}
+function peScopeVerified(audit) {
+  return !!audit && ['matched_official_pe1','matched_official_pe2'].includes(audit.pe_field_status);
+}
+function profitHistoryFor(sectorId) {
+  const current=(industryProfits.records||[]).find(x=>x.sector_id===sectorId);
+  if(!current)return null;
+  const record=(industryProfitHistory.industries||[]).find(x=>x.industry===current.industry);
+  if(!record)return null;
+  return {
+    label:current.industry+'累计利润同比',
+    basis:'1—N月累计同比（不是N月单月同比）',
+    relation:'proxy',
+    points:(record.points||[]).filter(p=>Number.isFinite(p.cumulative_yoy_pct))
+      .map(p=>({period:p.period,value:p.cumulative_yoy_pct,source_url:p.source_url}))
+  };
+}
+function profitTrendDescription(series) {
+  const pts=(series?.points||[]).slice().sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  if(pts.length<2)return '累计利润历史样本不足，暂不能识别趋势。';
+  const a=pts[pts.length-2],b=pts[pts.length-1];
+  const delta=b.value-a.value;
+  return a.period+'至'+b.period+'：累计利润同比增速'+(delta>0?'提高 ':delta<0?'回落 ':'持平 ')+
+    Math.abs(delta).toFixed(1)+'个百分点；此为累计增速变化，非期间单月利润增长率。';
+}
 function renderValuationTriptych() {
   const target=$('valuationTriptych');
   if(!target)return;
@@ -1535,13 +1571,17 @@ function renderValuationTriptych() {
   const config=marketConfig.indices||[];
   target.innerHTML=targetSectors.map(sector=>{
     const profit=(industryProfits.records||[]).find(x=>x.sector_id===sector.id);
+    const cumulative=profitHistoryFor(sector.id);
     const match=config.find(x=>(x.sector_ids||[]).includes(sector.id));
     const officialIndex=match?all.find(x=>x.id===match.id):null;
     const benchmark=mode==='sector'?officialIndex:all.find(x=>x.kind==='index'&&x.id===mode);
     const isSectorIndex=mode==='sector'&&Boolean(match);
     const peRecords=(benchmark?.points||[]).filter(x=>Number.isFinite(x.pe_ttm));
     const last=peRecords.at(-1);
-    const percentile=Number.isFinite(benchmark?.pe_percentile)?benchmark.pe_percentile:null;
+    const audit=peAuditFor(benchmark?.id);
+    const confirmedPE=peScopeVerified(audit);
+    const percentile=confirmedPE&&Number.isFinite(benchmark?.pe_percentile)?
+      benchmark.pe_percentile:null;
     const prod=primaryHistory(sector.id);
     const matched=(all||[]).filter(x=>x.kind==='etf'&&(x.sector_ids||[]).includes(sector.id));
     const etf=matched.find(x=>(x.points||[]).length>1)||matched[0];
@@ -1551,8 +1591,12 @@ function renderValuationTriptych() {
       escapeHtml(match.scope_note||'行业指数成份口径与统计局分类不同'):
       '暂未配置对应的中证细分指数';
     const peStatus=last?
-      '最新 '+escapeHtml(last.date)+' · PE源字段 '+escapeHtml(formatMarketNumber(last.pe_ttm))+
-      ' · 样本内分位：'+(percentile===null?'样本不足或PE不可用':escapeHtml(formatMarketNumber(percentile,1)+'%（待核）')):
+      '最新 '+escapeHtml(last.date)+' · 接口源字段 '+escapeHtml(formatMarketNumber(last.pe_ttm))+
+      ' · 有效PE样本 '+escapeHtml(audit?.valid_pe_rows??'待审计')+
+      ' 条'+(audit?.pe_coverage_pct!=null?'（覆盖'+escapeHtml(audit.pe_coverage_pct)+'%）':'')+
+      ' · 官方PE口径：'+escapeHtml(confirmedPE?audit.identified_field:'尚未通过官方核验')+
+      ' · 样本内分位：'+(percentile===null?'暂不展示（口径未核或历史不足）':
+        escapeHtml(formatMarketNumber(percentile,1)+'%')):
       '当前没有有效历史PE，不推算、不用宽基代替';
     const profitDetail=profit?
       '规模以上工业 '+escapeHtml(profit.industry)+' 利润：'+
@@ -1569,14 +1613,16 @@ function renderValuationTriptych() {
       historicalChart(prod)+
       '<p class="triptych-hint">'+(prod?escapeHtml(prod.label)+' · '+
         (prod.relation==='direct'?'直接统计':'相关代理'):'暂无历史工业生产数据')+'</p>'+
-      '<div class="triptych-hint">'+profitDetail+'</div></div>'+
+      '<div class="triptych-hint">'+profitDetail+'</div>'+
+      '<h4>官方累计利润同比趋势</h4>'+historicalChart(cumulative)+
+      '<p class="triptych-hint">'+escapeHtml(profitTrendDescription(cumulative))+'</p></div>'+
       '<div class="triptych-panel"><h4>② '+(isSectorIndex?'细分行业指数':'宽基指数')+'PE历史</h4>'+
       (benchmark?marketTrendSvg(benchmark.points||[],'pe_ttm','中证接口 peg 字段，PE口径待核'):
         '<p class="empty">指数已配置，等待首次行业指数数据采集</p>')+
       '<p class="triptych-hint">'+
       (mode==='sector'?peDescription:escapeHtml(benchmark?.name||'宽基指数')+'；仅作市场比较，非行业估值')+'</p>'+
       '<p class="triptych-hint">'+peStatus+
-      '。peg是否为PE-TTM尚未经官方定义验证，历史分位只作参考。</p>'+
+      '。即使PE1或PE2核验通过，也不代表PE-TTM定义得到独立确认。</p>'+
       (match?'<a href="'+escapeHtml(strategyUrl(match.factsheet_url))+
         '" target="_blank" rel="noopener noreferrer">中证指数官方事实清单 ↗</a>':'')+'</div>'+
       '<div class="triptych-panel"><h4>③ 相关ETF收盘价</h4>'+
