@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12T02:34:19.189291+00:00",
+  "updated_at": "2026-11-12T02:54:17.329568+00:00",
   "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
   "items": [
     {
@@ -367,11 +367,207 @@
       "status": "unavailable",
       "error": "HTTPError",
       "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    },
+    {
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992571.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "unavailable",
+      "error": "HTTPError",
+      "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    },
+    {
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992570.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "unavailable",
+      "error": "HTTPError",
+      "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "优质教育资源扩容工程",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992569.htm",
+      "source_hash": "407d582ed09310ee546b79c0d18d3eeff4d103e7e17364dab2351f82462b66f8",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992569.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "灾后应急恢复",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992568.htm",
+      "source_hash": "f7ee792a6b1e86ec79ab1df54c676042b5f8e8fa35101949fe635bd6b604b53e",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202606/t20260630_3992568.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "工程专项2026 年中央 预算内投资计划的通知》（发改投资〔 2026 〕 538 号）",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990353.htm",
+      "source_hash": "87676720874d37d18b17a144561b2729b35fd015ff8d3cd0649829d58af77994",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990353.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "文化传承发展工程",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990352.htm",
+      "source_hash": "a2b77fb4530063fea7aaa79a754c46d941b9606befd40f080c4797c8759de306",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990352.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "医疗卫生服务体系建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990350.htm",
+      "source_hash": "0ecf8cce4c4f9d926653f870d37e497462e1fe68ddc8a5f4c636142c6890607d",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990350.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "养老托育项目建设",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [],
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990349.htm",
+      "source_hash": "4bb1523cbbe16aefab8fdab6b794e70b5b97f6f3f958545e67bbb99242493f76",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990349.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990347.htm",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "unavailable",
+      "error": "HTTPError",
+      "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": false,
+      "attachments": [],
+      "source_url": "https://tzxm.gd.gov.cn/",
+      "source_hash": "7cc553d19272ce621cf0e44acee053abe7945748e478104fa57ae3ac0bf14d2c",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://tzxm.gd.gov.cn/",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "2026年上海市重大工程项目清单.xlsx",
+          "url": "https://fgw.sh.gov.cn/cmsres/ec/ecc9bdbad1414ce98052d41343491c77/32e49b81e0b3cea2e818c85c94b0f104.xlsx"
+        }
+      ],
+      "source_url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20260212/859c412000014653b2d34146c1f55f6b.html",
+      "source_hash": "a4f899c53e9388e791361570c10a7dc82ab0e08c813457142277af7b7f9d5acf",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20260212/859c412000014653b2d34146c1f55f6b.html",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "2025年上海市重大工程清单.xlsx",
+          "url": "https://fgw.sh.gov.cn/cmsres/90/90b7b67b69fc49d981c438e6e1bf12db/1ccc90e90e910f3d061bac3e2e54514d.xlsx"
+        }
+      ],
+      "source_url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20250123/b663aaa57f704bcd8b2f1b13784b8210.html",
+      "source_hash": "9c551f9dd5a66a8aca0ebde97c529d91494ea7bafeff1939f8c9b18b27d530db",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://fgw.sh.gov.cn/fgw_zdjsxmqd/20250123/b663aaa57f704bcd8b2f1b13784b8210.html",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": "财建〔2023〕1号",
+      "purpose_excerpt": "项目范围",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "附件1_广东省2027年重大项目前期工作经费申报汇总表.xlsx",
+          "url": "https://drc.gd.gov.cn/attachment/0/627/627053/4965235.xlsx"
+        },
+        {
+          "title": "附件2_2027年省重大项目前期工作经费项目入库申报表.xlsx",
+          "url": "https://drc.gd.gov.cn/attachment/0/627/627052/4965235.xlsx"
+        },
+        {
+          "title": "附件3_2027年省重大项目前期工作经费项目绩效目标申报表.xlsx",
+          "url": "https://drc.gd.gov.cn/attachment/0/627/627051/4965235.xlsx"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/ywtz/content/post_4965235.html",
+      "source_hash": "853378f5c4084022688d9496fdb9f9fe71df4473c0137f9e9b18e12fc1b14fe8",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/ywtz/content/post_4965235.html",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": "本省各级人民政府投资主管部门管理的固定资产投资项目",
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/gfxwj5633/content/post_4965314.html",
+      "source_hash": "e18f60b360a2600a2a42f4d4399953f35c0c814a9cc640775bd6ec9ec596b621",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/gfxwj5633/content/post_4965314.html",
+      "checked_at": "2026-11-12T02:54:17.329568+00:00",
+      "status": "extracted"
     }
   ],
   "last_run": {
-    "checked": 25,
-    "extracted": 24,
-    "failed": 1
+    "checked": 14,
+    "extracted": 11,
+    "failed": 3
   }
 }

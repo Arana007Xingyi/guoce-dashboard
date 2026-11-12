@@ -1,7 +1,483 @@
 {
   "schema_version": 1,
-  "updated_at": null,
-  "methodology": "跟踪已核验项目的官方原文；变动仅提示复核，不自动升级项目阶段",
-  "tracked": {},
-  "events": []
+  "updated_at": "2026-11-12T02:54:37.535754+00:00",
+  "methodology": "官方原文项目邻近文本变动仅触发人工核验，不自动改动任何阶段、投资或支付数字；计划与实际进展永远分开。",
+  "tracked": {
+    "qingyang-zero-carbon": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": 25.85,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "140da009ab385aa51e09a22932d72d1267a3ea869dd36ce3e32e35ab82b77dfa",
+      "check_status": "ok"
+    },
+    "tuoli-16000p": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": 22,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "changzhou-datacenter": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.cztn.gov.cn/index.php?a=show&c=phone&catid=36914&id=217664",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "faa404f1959442218392ec0c466c3a9fc7d6250243c6103c2a582cae22d742f3",
+      "check_status": "ok"
+    },
+    "wuxi-compute-park": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.wuxi.gov.cn/doc/2026/05/07/4770816.shtml",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "3d1600623f81d4ab88ff4e77225fa92afc603b7748d3a722966375e3c7420d9b",
+      "check_status": "ok"
+    },
+    "langfang-runze": {
+      "fields": {
+        "latest_stage": "partial_operation",
+        "total_investment_100m": 218,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "source_unavailable",
+      "error": "HTTPError"
+    },
+    "suzhou-dexin": {
+      "fields": {
+        "latest_stage": "acceptance_passed",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": true
+      },
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202604/3355021f2c174e1fa2558e6469357f72.shtml",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "nansha-anjieli": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": 30,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "baoan-iccarrier": {
+      "fields": {
+        "latest_stage": "landed",
+        "total_investment_100m": 120,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "source_unavailable",
+      "error": "ConnectionError"
+    },
+    "shenzhen-robot-park": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.lg.gov.cn/gab/jddt/content/post_13033085.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "source_unavailable",
+      "error": "ConnectionError"
+    },
+    "yancheng-hongqing": {
+      "fields": {
+        "latest_stage": "construction_started",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.yancheng.gov.cn/art/2026/10/23/art_21965_4462957.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "suzhou-zhilv": {
+      "fields": {
+        "latest_stage": "acceptance_passed",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": true
+      },
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202609/7cefbb3d3347423b9fef91526e1f0147.shtml",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "tianjin-mande": {
+      "fields": {
+        "latest_stage": "acceptance_passed",
+        "total_investment_100m": 11.53,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": true
+      },
+      "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "check_status": "name_not_found"
+    },
+    "zhongshan-center": {
+      "fields": {
+        "latest_stage": "listed_under_construction",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "151d91c78bea7fbc30511967f8dfc79bb80e04613cc29036a6e556b99d389181",
+      "check_status": "ok"
+    },
+    "fudan-cancer-phase2": {
+      "fields": {
+        "latest_stage": "listed_new_start",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "0ef1c824f5bec027281e6e501c878306095fce71e3a23923f033fa37b5942a78",
+      "check_status": "ok"
+    },
+    "united-imaging": {
+      "fields": {
+        "latest_stage": "listed_completed",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "e7ad4e3852951086587fa3db7b0a3b786c21843dfe53d9646de622cc08f1522c",
+      "check_status": "ok"
+    },
+    "shanghai-health-emergency": {
+      "fields": {
+        "latest_stage": "listed_completed",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "a4ba5bb7c792a16d64392ad3f00165e0f0cb91cf9fbc8387ddbe73f08ecc8eb1",
+      "check_status": "ok"
+    },
+    "shanghai-jita": {
+      "fields": {
+        "latest_stage": "listed_under_construction",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "36c8789d424b1c590df8c96e4c39b9e835a27363a37f1957f41240bd1a0933e2",
+      "check_status": "ok"
+    },
+    "shanghai-gek": {
+      "fields": {
+        "latest_stage": "listed_under_construction",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "9d0a1372e0199d96cda340f4346561fff24b044a2139e61fed3bbc914170f315",
+      "check_status": "ok"
+    },
+    "shanghai-lexus": {
+      "fields": {
+        "latest_stage": "listed_under_construction",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "df742d49b003f38526e584d0bfcc15a9ae2c96b7124a8102b2e7df3cfe3c5d55",
+      "check_status": "ok"
+    },
+    "shanghai-catl": {
+      "fields": {
+        "latest_stage": "listed_under_construction",
+        "total_investment_100m": null,
+        "allocated_100m": null,
+        "paid_100m": null,
+        "spent_100m": null,
+        "investment_progress_pct": null,
+        "acceptance_verified": false
+      },
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "checked_at": "2026-11-12T02:54:37.535754+00:00",
+      "context_digest": "f2f9085fbaa45b6bd92841c145d342af6e62fb649f2799b4045198c55efa70e8",
+      "check_status": "ok"
+    }
+  },
+  "events": [
+    {
+      "id": "baseline:qingyang-zero-carbon",
+      "project_id": "qingyang-zero-carbon",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "西北零碳智慧云智算中心一期",
+      "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:tuoli-16000p",
+      "project_id": "tuoli-16000p",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "塔城托里16000P算力项目",
+      "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:changzhou-datacenter",
+      "project_id": "changzhou-datacenter",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "常州电信核心网络运营中心项目",
+      "source_url": "https://www.cztn.gov.cn/index.php?a=show&c=phone&catid=36914&id=217664",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:wuxi-compute-park",
+      "project_id": "wuxi-compute-park",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "无锡算力装备产业园一期",
+      "source_url": "https://www.wuxi.gov.cn/doc/2026/05/07/4770816.shtml",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:langfang-runze",
+      "project_id": "langfang-runze",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "廊坊润泽人工智能应用中心一期",
+      "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:suzhou-dexin",
+      "project_id": "suzhou-dexin",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "苏州德信高端功率器件晶圆研发生产项目",
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202604/3355021f2c174e1fa2558e6469357f72.shtml",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:nansha-anjieli",
+      "project_id": "nansha-anjieli",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "南沙安捷利美维先进封装基板制造基地",
+      "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:baoan-iccarrier",
+      "project_id": "baoan-iccarrier",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "礼鼎第二园区先进IC载板制造基地",
+      "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shenzhen-robot-park",
+      "project_id": "shenzhen-robot-park",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "深圳机器人科技园",
+      "source_url": "https://www.lg.gov.cn/gab/jddt/content/post_13033085.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:yancheng-hongqing",
+      "project_id": "yancheng-hongqing",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "盐城宏擎四足智能机器人项目",
+      "source_url": "https://www.yancheng.gov.cn/art/2026/10/23/art_21965_4462957.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:suzhou-zhilv",
+      "project_id": "suzhou-zhilv",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "苏州智绿科技总部基地（新能源汽车高压部件）",
+      "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202609/7cefbb3d3347423b9fef91526e1f0147.shtml",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:tianjin-mande",
+      "project_id": "tianjin-mande",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "长城汽车天津曼德热系统及光电工厂",
+      "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:zhongshan-center",
+      "project_id": "zhongshan-center",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "复旦大学附属中山医院国家医学中心建设项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:fudan-cancer-phase2",
+      "project_id": "fudan-cancer-phase2",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "复旦大学附属肿瘤医院医学中心二期工程",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:united-imaging",
+      "project_id": "united-imaging",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "联影医疗生产研发基地",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shanghai-health-emergency",
+      "project_id": "shanghai-health-emergency",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "上海市公共卫生临床中心应急医学中心项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shanghai-jita",
+      "project_id": "shanghai-jita",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "积塔半导体特色工艺生产线项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shanghai-gek",
+      "project_id": "shanghai-gek",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "格科半导体12英寸CIS集成电路研发与产业化项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shanghai-lexus",
+      "project_id": "shanghai-lexus",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "雷克萨斯新能源汽车项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    },
+    {
+      "id": "baseline:shanghai-catl",
+      "project_id": "shanghai-catl",
+      "type": "verified_baseline",
+      "observed_at": "2026-11-12T02:54:37.535754+00:00",
+      "title": "宁德时代未来能源技术研发及产业化基地项目",
+      "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
+      "description": "建立官方项目档案初始基线；不是新增开工或付款事件"
+    }
+  ]
 }
