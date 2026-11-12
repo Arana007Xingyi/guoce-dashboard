@@ -1456,9 +1456,9 @@ function renderMarketHistory() {
   $('marketHistoryCount').textContent=validCount+'/'+all.length+' 项有行情';
   const state=marketHistory.status||[];
   const audits=marketPeAudit.instruments||[];
-  const audited=audits.filter(x=>peScopeVerified(x));
+  const officialLoaded=audits.filter(x=>x.kind==='index'&&x.latest_official_indicator_date);
   $('peAuditStatus').innerHTML=
-    '<span>官方估值对照通过：'+audited.length+'/'+audits.filter(x=>x.kind==='index').length+'</span>'+
+    '<span>已取得官方P/E1、P/E2：'+officialLoaded.length+'/'+audits.filter(x=>x.kind==='index').length+'</span>'+
     '<span>本次审计：'+escapeHtml(marketPeAudit.checked_at?
       monitorTimestamp(marketPeAudit.checked_at):'尚未执行')+'</span>'+
     '<span>PE字段已核 ≠ PE-TTM已核</span>';
@@ -1477,17 +1477,22 @@ function renderMarketHistory() {
     const ratio=validAudit&&Number.isFinite(x.pe_percentile)?x.pe_percentile:null;
     const chips=[
       ['最新收盘',formatMarketNumber(last.close,isIndex?2:3)],
-      ['PE源字段 peg',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
-      ['样本内PE分位',ratio!==null?formatMarketNumber(ratio,1)+'%':'暂不展示'],
-      ['PB','未接入'],
+      ['历史滚动PE源字段 peg',hasPE?formatMarketNumber(last.pe_ttm):'暂无数据'],
+      ['官方P/E1（总股本）',isIndex?formatMarketNumber(audit?.latest_official_pe1):'不适用'],
+      ['官方P/E2（计算用股本）',isIndex?formatMarketNumber(audit?.latest_official_pe2):'不适用'],
+      ['样本PE分位（需同口径）',ratio!==null?formatMarketNumber(ratio,1)+'%':'暂不展示'],
+      ['PB','未接入']
     ];
     return '<article class="market-research"><h3>'+escapeHtml(x.name||x.code)+
       ' <span class="sub">'+escapeHtml(x.code)+'</span></h3>'+
       '<p class="market-meta">'+(isIndex?'中证官方指数':'第三方ETF行情')+
       ' · 最近交易日：'+escapeHtml(last.date||'未获得')+
       ' · '+escapeHtml(marketStatusMessage(x.id))+'</p>'+
-      (isIndex?'<div class="climate-stat-note">PE核验：'+
-        escapeHtml(validAudit?audit.identified_field:'未完成官方P/E1/P/E2交叉核验')+
+      (isIndex?'<div class="climate-stat-note">PE口径：'+
+        escapeHtml(validAudit?audit.identified_field:
+          audit?.pe_field_status==='distinct_valuation_methodologies'?
+          '历史滚动PE与官方P/E1、P/E2采用不同口径，不能直接比较':
+          '尚未独立核实')+
         ' · 有效PE记录：'+escapeHtml(audit?.valid_pe_rows??'尚未审计')+
         ' · 覆盖率：'+escapeHtml(audit?.pe_coverage_pct!=null?audit.pe_coverage_pct+'%':'待计算')+
         ' · TTM定义仍待独立确认</div>':'')+
@@ -1496,7 +1501,7 @@ function renderMarketHistory() {
       ).join('')+'</div>'+
       '<div class="market-series">'+marketTrendSvg(pts,'close','历史收盘价')+'</div>'+
       (isIndex?'<div class="market-series">'+'<p class="sub">接口成交额单位尚未核实，暂不呈现金额趋势。</p>'+'</div>':'')+
-      (isIndex ? '<div class="market-series">'+marketTrendSvg(pts,'pe_ttm','指数PE源字段 peg（口径待核）')+'</div>':
+      (isIndex ? '<div class="market-series">'+marketTrendSvg(pts,'pe_ttm','指数历史滚动PE源字段 peg（非P/E1、P/E2）')+'</div>':
         '<p class="sub">ETF收盘价不等于所跟踪指数的估值。ETF成交额如果未由来源提供，将保持空值。</p>')+
       '<p class="sub">已保留'+pts.length+'个交易日 · 官方/数据来源：'+
       '<a href="'+escapeHtml(isIndex?'https://www.csindex.com.cn/':
@@ -1596,6 +1601,11 @@ function renderValuationTriptych() {
     const confirmedPE=peScopeVerified(audit);
     const percentile=confirmedPE&&Number.isFinite(benchmark?.pe_percentile)?
       benchmark.pe_percentile:null;
+    const officialLevels=audit?.latest_official_indicator_date?
+      ' · 官方'+escapeHtml(audit.latest_official_indicator_date)+
+      ' P/E1（总股本）='+escapeHtml(formatMarketNumber(audit.latest_official_pe1))+
+      '、P/E2（计算用股本）='+escapeHtml(formatMarketNumber(audit.latest_official_pe2)):
+      ' · 官方P/E1、P/E2待抓取';
     const prod=primaryHistory(sector.id);
     const matched=(all||[]).filter(x=>x.kind==='etf'&&(x.sector_ids||[]).includes(sector.id));
     const etf=matched.find(x=>(x.points||[]).length>1)||matched[0];
@@ -1608,7 +1618,11 @@ function renderValuationTriptych() {
       '最新 '+escapeHtml(last.date)+' · 接口源字段 '+escapeHtml(formatMarketNumber(last.pe_ttm))+
       ' · 有效PE样本 '+escapeHtml(audit?.valid_pe_rows??'待审计')+
       ' 条'+(audit?.pe_coverage_pct!=null?'（覆盖'+escapeHtml(audit.pe_coverage_pct)+'%）':'')+
-      ' · 官方PE口径：'+escapeHtml(confirmedPE?audit.identified_field:'尚未通过官方核验')+
+      ' · 与官方P/E1/P/E2关系：'+
+      escapeHtml(confirmedPE?audit.identified_field:
+        audit?.pe_field_status==='distinct_valuation_methodologies'?
+          '不同计算方法，不要求数值相等':'尚未确认')+
+      officialLevels+
       ' · 样本内分位：'+(percentile===null?'暂不展示（口径未核或历史不足）':
         escapeHtml(formatMarketNumber(percentile,1)+'%')):
       '当前没有有效历史PE，不推算、不用宽基代替';
@@ -1636,7 +1650,7 @@ function renderValuationTriptych() {
       '<p class="triptych-hint">'+
       (mode==='sector'?peDescription:escapeHtml(benchmark?.name||'宽基指数')+'；仅作市场比较，非行业估值')+'</p>'+
       '<p class="triptych-hint">'+peStatus+
-      '。即使PE1或PE2核验通过，也不代表PE-TTM定义得到独立确认。</p>'+
+      '。行情源字段代表历史滚动PE相关序列，P/E1、P/E2为官方另一估值口径，不得混用；具体TTM定义仍待独立确认。</p>'+
       (match?'<a href="'+escapeHtml(strategyUrl(match.factsheet_url))+
         '" target="_blank" rel="noopener noreferrer">中证指数官方事实清单 ↗</a>':'')+'</div>'+
       '<div class="triptych-panel"><h4>③ 相关ETF收盘价</h4>'+
