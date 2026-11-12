@@ -575,6 +575,12 @@ select { flex: 1; min-width: 130px; }
       <div class="evidence-summary" id="sectorProjectSummary"></div>
       <div class="strategy-proof">每张项目档案都区分“有证据的阶段”和“未取得证据的阶段”。项目投资总额是计划或项目建设规模，并非财政资金实际支付；年度计划“建成”也不能自动等同完成竣工验收。</div>
       <div id="sectorProjectCards"></div>
+      <div class="strategy-list">
+        <h3>具名项目官方进展监测</h3>
+        <p class="sub">每日检测原始公告中项目相关文本是否变化，变动只触发待复核提醒；不自动认定资金拨付或工程竣工。</p>
+        <div id="sectorProjectMonitorSummary" class="evidence-summary"></div>
+        <div id="sectorProjectMonitorEvents"></div>
+      </div>
     </div>
     <div class="panel" id="verifiedImplementationBoard">
       <div class="home-panel-head">
@@ -885,6 +891,7 @@ let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
 let verifiedImplementations = {records:[],as_of:null};
 let sectorProjectData = {records:[],updated_at:null};
+let sectorProjectMonitor = {tracked:{},events:[],updated_at:null};
 let noticeDetails = {items:[],updated_at:null};
 let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
@@ -1971,6 +1978,40 @@ const SECTOR_STAGE_LABELS={
   listed_new_start:'年度重大工程清单：新开工',
   listed_completed:'年度重大工程清单：建成'
 };
+function renderSectorProjectMonitor() {
+  const events=sectorProjectMonitor.events||[];
+  const states=Object.values(sectorProjectMonitor.tracked||{});
+  const needs=events.filter(e=>e.type!=='verified_baseline');
+  const summary=$('sectorProjectMonitorSummary');
+  if(!summary)return;
+  summary.innerHTML='<span>源文核对成功：'+states.filter(x=>x.check_status==='ok').length+'</span>'+
+    '<span>待复核事件：'+needs.length+'</span>'+
+    '<span>异常或未定位：'+states.filter(x=>!['ok',null,undefined].includes(x.check_status)).length+'</span>'+
+    '<span>最近检查：'+escapeHtml(sectorProjectMonitor.updated_at?
+      monitorTimestamp(sectorProjectMonitor.updated_at):'尚未首次运行')+'</span>';
+  $('sectorProjectMonitorEvents').innerHTML=needs.length?needs.slice().reverse().slice(0,15).map(e=>
+    '<article class="monitor-entry"><span class="monitor-caution">待核查</span><h3>'+
+    escapeHtml(e.title||'')+'</h3><div class="meta">'+
+    escapeHtml(monitorTimestamp(e.observed_at))+'</div><p>'+
+    escapeHtml(e.description||'')+'</p><a href="'+escapeHtml(strategyUrl(e.source_url))+
+    '" target="_blank" rel="noopener noreferrer">核对项目官方原文 ↗</a></article>'
+  ).join(''):'<p class="sub">暂无新变化提醒。当前已核实的项目档案仍按原有证据展示。</p>';
+}
+async function loadSectorProjectMonitor() {
+  try {
+    const response=await fetch('./data/sector_project_monitor.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok)throw Error('尚未生成项目监测记录');
+    const json=await response.json();
+    sectorProjectMonitor={
+      tracked:json.tracked||{},events:Array.isArray(json.events)?json.events:[],
+      updated_at:json.updated_at||null
+    };
+  }catch(e){
+    console.warn('行业项目监测尚未可用',e);
+    sectorProjectMonitor={tracked:{},events:[],updated_at:null};
+  }
+  renderSectorProjectMonitor();
+}
 function renderSectorProjects() {
   const dest=$('sectorProjectCards');
   if(!dest)return;
@@ -2556,7 +2597,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadProjectNoticeDetails(), loadVerifiedImplementation(), loadSectorProjects(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadProjectNoticeDetails(), loadVerifiedImplementation(), loadSectorProjects(), loadSectorProjectMonitor(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
