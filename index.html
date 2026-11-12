@@ -281,6 +281,14 @@ select { flex: 1; min-width: 130px; }
 .climate-metric strong {display:block;font-size:22px;margin:8px 0 4px;}
 .climate-metric small {display:block;color:#b8c8df;line-height:1.6;}
 .climate-stat-note {font-size:12px;color:#b5c7dd;line-height:1.75;margin-top:7px;}
+/* 官方落地事实，和仅有标题的公告线索分层展示 */
+.implementation-card {border:1px solid #45617d;border-radius:11px;background:#1e304a;padding:17px;margin:13px 0;}
+.implementation-card h3{font-size:17px;margin:8px 0;}
+.implementation-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin:13px 0;}
+.implementation-fact{padding:12px;border-radius:9px;background:#2a3e5b;border:1px solid #496786;}
+.implementation-fact strong{display:block;color:#e9f5ff;font-size:23px;margin:5px 0;}
+.implementation-fact small{font-size:12px;color:#bbcee4;line-height:1.65;display:block;}
+.implementation-status{font-size:12px;color:#b9e5da;padding:4px 9px;border:1px solid #4f8e80;border-radius:6px;display:inline-block;}
 /* 新增省部级公告采集与来源状态 */
 .discovery-item {padding:13px 0;border-top:1px solid #40536e;line-height:1.75;}
 .discovery-item h3 {font-size:15px;margin:6px 0;}
@@ -525,6 +533,26 @@ select { flex: 1; min-width: 130px; }
 
   <!-- 落地追踪：没有官方完成证据绝不显示完成 -->
   <section id="progress" class="page hidden">
+    <div class="panel" id="verifiedImplementationBoard">
+      <div class="home-panel-head">
+        <div><h2>重点落地证据 · 有金额与进度的官方事实</h2>
+          <p class="sub">优先展示官方明确披露的资金安排、项目数量、开工率、投资进度和具体实施节点。每项数字均注明统计对象和时点；不将“已安排”误写成“已支付”。</p></div>
+        <span class="pill" id="implementationCount">正在读取</span>
+      </div>
+      <div class="toolbar">
+        <input id="implementationSearch" placeholder="搜索项目、资金、医疗、数字经济、地区">
+        <select id="implementationType">
+          <option value="">全部证据类型</option>
+          <option value="funding_allocation">资金与项目安排</option>
+          <option value="regional_progress">地区实际进展</option>
+          <option value="implementation_coordination">重大工程调度</option>
+          <option value="budget_notice">财政预算通知</option>
+        </select>
+      </div>
+      <div id="implementationSummary" class="evidence-summary"></div>
+      <div id="implementationCards"></div>
+      <p class="sub">重点证据为独立核实样本，不代表全国全部项目。全国/地方汇总金额不能合计，项目年度投资计划完成率不代表工程竣工率。</p>
+    </div>
     <div class="panel">
       <h2>政策落地追踪 · 证据链</h2>
       <p class="sectionintro">规划目标 → 专项政策 → 实施细则 → 执行进展。
@@ -812,6 +840,7 @@ let strategyCatalog = [];
 let projectFundingRecords = [];
 let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
+let verifiedImplementations = {records:[],as_of:null};
 let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
 let industryCollectorStatus = {index_state:'not_run',checked_at:null,new_points_added:0};
@@ -1888,6 +1917,56 @@ async function loadIndustryClimate() {
 ['climateSearch','climateGroup','climatePeriod'].forEach(id=>
   $(id).addEventListener(id==='climateSearch'?'input':'change',renderIndustryClimate));
 
+function renderVerifiedImplementation() {
+  const list=$('implementationCards');
+  if(!list)return;
+  const items=verifiedImplementations.records||[];
+  const search=$('implementationSearch').value.trim().toLowerCase();
+  const type=$('implementationType').value;
+  const subset=items.filter(r=>
+    (!type||r.type===type)&&
+    (!search||[r.title,r.region,r.note,r.agency,...(r.sector_tags||[])].join(' ').toLowerCase().includes(search)));
+  const count=items.filter(r=>(r.facts||[]).length);
+  $('implementationCount').textContent=items.length+' 条已核验';
+  $('implementationSummary').innerHTML='<span>含明确数值：'+count.length+'</span>'+
+    '<span>资金/项目：'+items.filter(r=>r.type==='funding_allocation').length+'</span>'+
+    '<span>地区进展：'+items.filter(r=>r.type==='regional_progress').length+'</span>'+
+    '<span>筛选结果：'+subset.length+'</span>';
+  list.innerHTML=subset.length?subset.slice().sort((a,b)=>String(b.as_of).localeCompare(String(a.as_of)))
+    .map(r=>'<article class="implementation-card"><div class="meta">'+
+      escapeHtml(r.as_of||'时间未知')+' · '+escapeHtml(r.agency||'官方')+' · '+escapeHtml(r.region||'')+
+      ' · '+escapeHtml(r.level==='national_aggregate'?'全国汇总':r.level==='regional_aggregate'?'地方汇总':'专项公告')+'</div>'+
+      '<h3>'+escapeHtml(r.title||'')+'</h3>'+
+      '<span class="implementation-status">'+escapeHtml(r.status||'已核验官方公告')+'</span>'+
+      (r.facts?.length?'<div class="implementation-facts">'+r.facts.map(f=>
+      '<div class="implementation-fact"><span class="sub">'+escapeHtml(f.label||'')+'</span>'+
+      '<strong>'+escapeHtml(String(f.value))+escapeHtml(f.unit||'')+'</strong>'+
+      '<small>'+escapeHtml(f.meaning||'')+'</small></div>').join('')+'</div>':'')+
+      '<p class="evidence-note">'+escapeHtml(r.note||'')+'</p>'+
+      (r.attachments?'<p class="evidence-note">附件：'+escapeHtml(r.attachments)+'</p>':'')+
+      '<div class="evidence-actions"><a href="'+escapeHtml(strategyUrl(r.source_url))+
+      '" target="_blank" rel="noopener noreferrer">核对政府原文 ↗</a>'+
+      '<span class="sub">'+escapeHtml((r.sector_tags||[]).join(' · '))+'</span></div></article>'
+    ).join(''):'<p class="empty">没有符合当前筛选条件的已核验证据；可清除筛选。</p>';
+}
+async function loadVerifiedImplementation() {
+  try {
+    const response=await fetch('./data/implementation_evidence.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok)throw Error('政府执行证据未加载');
+    const json=await response.json();
+    verifiedImplementations={
+      records:Array.isArray(json.records)?json.records.filter(r=>r.source_url):[],
+      as_of:json.as_of||null
+    };
+  }catch(e){
+    console.warn('政府执行证据数据不可用',e);
+    verifiedImplementations={records:[],as_of:null};
+  }
+  renderVerifiedImplementation();
+}
+['implementationSearch','implementationType'].forEach(id=>
+  $(id).addEventListener(id==='implementationSearch'?'input':'change',renderVerifiedImplementation));
+
 /* 新采集的部委和省级公告仅作待核验线索，不改变正式台账。 */
 function discoveryTime(s) {
   if (!s) return '尚未运行';
@@ -2328,7 +2407,7 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadVerifiedImplementation(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
