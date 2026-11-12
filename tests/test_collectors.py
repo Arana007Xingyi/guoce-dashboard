@@ -115,5 +115,41 @@ class TestSectorMapping(unittest.TestCase):
         self.assertFalse(any(r["relation"] == "direct" for r in data["records"]))
 
 
+class TestOfficialAuditAndProfit(unittest.TestCase):
+    def test_pe_audit_matches_only_one_official_definition(self):
+        import market_audit
+        official = {f"2026-11-{i:02d}": {"pe1": 20.0, "pe2": 12.0}
+                    for i in range(1, 7)}
+        points = [{"date":d, "pe_ttm":12.0} for d in official]
+        result = market_audit.compare_index(points, official)
+        self.assertEqual(result["pe_field_status"], "matched_official_pe2")
+        self.assertEqual(result["common_valid_dates"], 6)
+        self.assertEqual(result["identified_field"], "P/E2（计算用股本）")
+
+    def test_pe_audit_rejects_insufficient_or_ambiguous_overlap(self):
+        import market_audit
+        official = {f"2026-11-{i:02d}": {"pe1": 12.0, "pe2": 12.0}
+                    for i in range(1, 7)}
+        points = [{"date":d, "pe_ttm":12.0} for d in official]
+        self.assertEqual(market_audit.compare_index(
+            points[:3], official)["pe_field_status"], "insufficient_official_overlap")
+        self.assertEqual(market_audit.compare_index(
+            points, official)["pe_field_status"], "ambiguous_pe1_pe2")
+
+    def test_official_profit_table_is_cumulative_industry_row(self):
+        from bs4 import BeautifulSoup
+        import industry_profit_update
+        soup = BeautifulSoup(
+            '<table><tr><td>计算机、通信和其他电子设备制造业</td>'
+            '<td>94078.2</td><td>18.5</td><td>79832.0</td><td>15.4</td>'
+            '<td>5777.1</td><td>96.9</td></tr>'
+            '<tr><td>汽车制造业</td><td>51893.2</td><td>1.8</td>'
+            '<td>46100.3</td><td>2.8</td><td>1953.5</td><td>-19.5</td></tr></table>',
+            "html.parser")
+        rows = industry_profit_update.profit_rows(soup)
+        self.assertEqual(rows[industry_profit_update.compact(
+            "计算机、通信和其他电子设备制造业")]["cumulative_yoy_pct"], 96.9)
+        self.assertEqual(rows["汽车制造业"]["cumulative_profit_100m"], 1953.5)
+
 if __name__ == "__main__":
     unittest.main()
