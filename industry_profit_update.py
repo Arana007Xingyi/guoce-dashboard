@@ -7,6 +7,7 @@ import datetime as dt
 import json
 import re
 from pathlib import Path
+from urllib.parse import urljoin, urlparse, urldefrag
 import requests
 from bs4 import BeautifulSoup
 
@@ -50,13 +51,52 @@ def profit_rows(soup):
                                "cumulative_yoy_pct":vals[-1]})
     return found
 
+def discover_future_reports():
+    """Bounded official latest-release listing discovery for 2026+ future months.
+    Never assume the next report exists or fabricate values if a listing fails.
+    """
+    results={}
+    base="https://www.stats.gov.cn/sj/zxfb/"
+    title_re=re.compile(
+        r"(20\d{2})年\s*1\s*[-—–至到]\s*(\d{1,2})月份?.*工业企业利润"
+    )
+    for page in (base,base+"index_1.html",base+"index_2.html"):
+        try:
+            response=SESSION.get(page,timeout=12,allow_redirects=False)
+            response.raise_for_status()
+            soup=BeautifulSoup(response.text,"html.parser")
+        except requests.RequestException:
+            continue
+        for link in soup.select("a[href]"):
+            label="".join(link.get_text(" ",strip=True).split())
+            match=title_re.search(label)
+            if not match:
+                continue
+            year,month=map(int,match.groups())
+            if not (2026<=year<=2100 and 6<=month<=12):
+                continue
+            url=urldefrag(urljoin(page,link.get("href","")))[0]
+            host=(urlparse(url).hostname or "").lower()
+            if (url.startswith("https://") and
+                (host=="stats.gov.cn" or host.endswith(".stats.gov.cn")) and
+                url.endswith(".html")):
+                results[f"{year}-{month:02d}"]=url
+    return results
+
+
 def main():
     raw=json.loads(OUT.read_text(encoding="utf-8"))
     industries=raw.get("industries",[])
     targets={compact(x["industry"]):x for x in industries}
     reports=[]
     changes=0
-    for period,url in SOURCES.items():
+    discovered=discover_future_reports()
+    sources={**SOURCES,**{
+        period:url for period,url in discovered.items()
+        if period>"2026-09" and period<=dt.datetime.now(
+            dt.timezone(dt.timedelta(hours=8))).strftime("%Y-%m")
+    }}
+    for period,url in sorted(sources.items()):
         count=0
         state="ok"
         try:
@@ -90,7 +130,8 @@ def main():
     temp.write_text(json.dumps(raw,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     temp.replace(OUT)
     STATUS.write_text(json.dumps({
-        "updated_at":raw["updated_at"],"new_points":changes,"reports":reports,
+        "updated_at":raw["updated_at"],"new_points":changes,
+        "future_official_reports_discovered":sorted(discovered),"reports":reports,
         "note":"月份是1—N月累计同比，不是当月同比；未匹配到的数据保留缺口。"
     },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("行业利润数据新增",changes,"条；累计",
