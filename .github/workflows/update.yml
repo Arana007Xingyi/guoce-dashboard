@@ -52,6 +52,12 @@ jobs:
           DATABULL_API_KEY: ${{ secrets.DATABULL_API_KEY }}
         run: python market_history_update.py
 
+      - name: Audit CSI index PE against official valuation files (no AI)
+        run: python market_audit.py
+
+      - name: Update official industry profit history (no AI)
+        run: python industry_profit_update.py
+
       - name: Analyze selected policies with AI (manual only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.policy_ids != '' }}
         env:
@@ -70,6 +76,9 @@ jobs:
           if [ -f data/industry_history.json ]; then git add data/industry_history.json; fi
           if [ -f data/industry_update_status.json ]; then git add data/industry_update_status.json; fi
           if [ -f data/market_history.json ]; then git add data/market_history.json; fi
+          if [ -f data/market_audit.json ]; then git add data/market_audit.json; fi
+          if [ -f data/industry_profit_history.json ]; then git add data/industry_profit_history.json; fi
+          if [ -f data/industry_profit_status.json ]; then git add data/industry_profit_status.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update official policy data"
             git push
