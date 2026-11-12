@@ -841,6 +841,7 @@ let projectFundingRecords = [];
 let projectMonitoring = {records:{},history:[],candidates:[],updated_at:null};
 let projectDiscovery = {items:[],sources:[],updated_at:null};
 let verifiedImplementations = {records:[],as_of:null};
+let noticeDetails = {items:[],updated_at:null};
 let industryClimate = {sectors:[],as_of:null};
 let industryHistory = {series:[],sources:{}};
 let industryCollectorStatus = {index_state:'not_run',checked_at:null,new_points_added:0};
@@ -1973,6 +1974,17 @@ function discoveryTime(s) {
   const t=new Date(s);
   return isNaN(t.getTime())?String(s):t.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
 }
+async function loadProjectNoticeDetails() {
+  try {
+    const response=await fetch('./data/project_notice_details.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok)throw Error('公告正文详情尚未采集');
+    const body=await response.json();
+    noticeDetails={items:Array.isArray(body.items)?body.items:[],updated_at:body.updated_at||null};
+  } catch(e) {
+    console.warn('公告正文详情暂不可用',e);
+    noticeDetails={items:[],updated_at:null};
+  }
+}
 async function loadProjectDiscovery() {
   try {
     const response=await fetch('./data/project_discovery.json?t='+Date.now(),{cache:'no-store'});
@@ -1996,7 +2008,9 @@ async function loadProjectDiscovery() {
   renderProjectDiscovery();
 }
 function renderProjectDiscovery() {
-  const all=projectDiscovery.items||[];
+  const all=(projectDiscovery.items||[]).filter(d=>
+    !/投资项目在线审批监管平台|网上办事大厅|服务平台/.test(String(d.title||'')));
+  const detailByUrl=new Map((noticeDetails.items||[]).map(x=>[x.url,x]));
   const q=$('discoverySearch').value.trim().toLowerCase();
   const region=$('discoveryRegion').value;
   const kind=$('discoveryCategory').value;
@@ -2011,14 +2025,29 @@ function renderProjectDiscovery() {
     '<span>访问异常：'+sources.filter(x=>x.status==='failed').length+'</span>'+
     '<span>本轮数据更新时间：'+escapeHtml(discoveryTime(projectDiscovery.updated_at))+'</span>'+
     '<span>筛选结果：'+matches.length+'</span>';
-  $('discoveryList').innerHTML=matches.length?matches.slice(0,80).map(d=>
-    '<article class="discovery-item"><span class="monitor-caution">公告待核验</span>'+
+  $('discoveryList').innerHTML=matches.length?matches.slice(0,80).map(d=>{
+    const x=detailByUrl.get(d.url);
+    const ready=x?.status==='extracted';
+    const attachments=(x?.attachments||[]).slice(0,5);
+    return '<article class="discovery-item"><span class="monitor-caution">'+
+    (ready?'官方正文元信息已提取 · 资金未核实':'公告标题线索 · 待核验')+'</span>'+
     '<h3>'+escapeHtml(d.title||'')+'</h3>'+
     '<div class="meta">'+escapeHtml(d.region||'未知地区')+' · '+
     escapeHtml(d.source||'未知来源')+' · 发布：'+escapeHtml(d.published_at||'日期未识别')+
     ' · 首次发现：'+escapeHtml(discoveryTime(d.first_seen_at))+'</div>'+
-    '<a target="_blank" rel="noopener noreferrer" href="'+escapeHtml(strategyUrl(d.url))+'">打开政府官方公告 ↗</a></article>'
-  ).join(''):'<p class="empty">没有匹配的公告；如尚未首次采集，可在GitHub Actions手动运行一次（不填写policy_ids）。</p>';
+    (ready?'<div class="evidence-note">文件类型：'+escapeHtml(x.document_kind||'官方公告')+
+      (x.document_number?' · 文号：'+escapeHtml(x.document_number):'')+
+      (x.purpose_excerpt?' · 正文涉及：'+escapeHtml(x.purpose_excerpt):'')+
+      '</div><div class="evidence-note">'+(x.mentions_attachments?
+        '存在附件：项目金额可能在附件，尚未核验':'未识别到附件')+'</div>':
+      '<div class="evidence-note">尚未确认正文金额或项目阶段；采集状态：'+
+       escapeHtml(x?.status==='unavailable'?'正文暂不可读取':'待自动提取')+'</div>')+
+    (attachments.length?'<div class="evidence-actions">'+attachments.map(a=>
+      '<a href="'+escapeHtml(strategyUrl(a.url))+'" target="_blank" rel="noopener noreferrer">'+
+      escapeHtml(a.title||'官方附件')+' ↗</a>').join('')+'</div>':'')+
+    '<a target="_blank" rel="noopener noreferrer" href="'+escapeHtml(strategyUrl(d.url))+
+    '">打开政府官方公告 ↗</a></article>';
+  }).join(''):'<p class="empty">没有匹配的公告；可清除筛选。首轮正文提取在下一次GitHub Actions运行后完成。</p>';
   const sourceNodes=sources.map(x=>
     '<div class="discovery-status">'+(x.status==='ok'?'✓ ':'⚠ ')+
     escapeHtml(x.name||'来源')+' · '+(x.status==='ok'?'已发现 '+x.found+' 条':'检查异常 '+(x.error||''))+'</div>').join('');
@@ -2407,13 +2436,14 @@ async function load() {
         : ' · 数据读取成功');
 
     await Promise.all([loadAiAnalyses(), loadStrategies()]);
-    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadVerifiedImplementation(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
+    await Promise.all([loadProjectMonitor(), loadProjectDiscovery(), loadProjectNoticeDetails(), loadVerifiedImplementation(), loadIndustryClimate(), loadMarketHistory(), loadIndustryCollectorHealth(), loadIndustryProfitsAndMarketConfig()]);
     await Promise.all([loadProjectFunding(), loadIndustryHistory()]);
     renderAll();
     renderHomeInsights();
     renderStrategies();
     renderProgress();
     renderEvidenceBoard();
+    renderProjectDiscovery();
     renderMonitor();
     renderValuationLinks();
     renderValuationTriptych();
