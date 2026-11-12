@@ -97,7 +97,11 @@ def compare_index(points, official):
         elif a >= .9 and b >= .9:
             result["pe_field_status"] = "ambiguous_pe1_pe2"
         else:
-            result["pe_field_status"] = "mismatch_official_valuation"
+            # CSI historical /perf/ peg is labelled rolling P/E in third-party
+            # documentation; indicator.xls P/E1 and P/E2 follow separate equity
+            # denominator definitions. Non-matching values are NOT by themselves
+            # evidence that either dataset is corrupt.
+            result["pe_field_status"] = "distinct_valuation_methodologies"
     return result
 
 def local_audit(instrument):
@@ -141,6 +145,15 @@ def main():
             official=official_indicator_rows(r.content)
             item.update(compare_index(instrument.get("points",[]),official))
             item["latest_official_indicator_date"]=max(official)
+            official_last=official[max(official)]
+            item["latest_official_pe1"]=official_last.get("pe1")
+            item["latest_official_pe2"]=official_last.get("pe2")
+            item["latest_official_pe_basis"]="P/E1：总股本；P/E2：计算用股本"
+            item["methodology_note"]=(
+                "CSI historical rolling PE field and official P/E1/P/E2 "
+                "are separate valuation series. Cross-comparison is a "
+                "semantic check, not an equality test of identical ratios."
+            )
             print(item["id"],item["pe_field_status"],"PE rows",item["valid_pe_rows"],
                   "overlap",item["common_valid_dates"])
         except (requests.RequestException, ValueError, xlrd.XLRDError, IndexError) as exc:
@@ -149,7 +162,7 @@ def main():
             print(item["id"],"官方估值对照失败",type(exc).__name__)
         results.append(item)
     out={"schema_version":1,"checked_at":now(),"methodology":
-      "CSI peg 字段与中证官方 indicator.xls 的P/E1和P/E2按同日比对；最少5个有效重合日期且90%以上匹配方可声明对应股本口径。即使匹配也不代表已证实TTM；成交额单位未认证，ETF不生成PE。不会写回或修改行情历史。",
+      "CSI历史行情peg字段为滚动市盈率相关数据；官方indicator.xls独立提供P/E1（总股本）、P/E2（计算用股本）。两套PE使用不同方法，数值不一致不能认定数据错误。本审计同时记录有效样本覆盖率、官方最近P/E1/P/E2、同日匹配情况。未独立认证peg具体TTM定义，历史分位仍标注探索性；成交额单位未认证，ETF不生成PE。不会修改历史行情。",
       "source":"https://www.csindex.com.cn/","instruments":results}
     OUT.write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("PE审计完成",len(results),"指数",
