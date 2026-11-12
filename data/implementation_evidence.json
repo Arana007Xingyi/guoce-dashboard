@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-12",
+  "methodology": "仅记录官方政府网页明确披露的实施事实。全国汇总、地方统计、预算通知的统计口径不一致；资金下达不是实际支付；年度计划投资完成率不是竣工率；附件未解析时不推断金额。",
+  "records": [
+    {
+      "id": "ev-tw-national",
+      "title": "2026年“两重”建设项目清单全部下达",
+      "type": "funding_allocation",
+      "level": "national_aggregate",
+      "region": "全国",
+      "as_of": "2026-07-07",
+      "agency": "国家发展改革委",
+      "source_url": "https://www.ndrc.gov.cn/fggz/202607/t20260707_1406332.html",
+      "status": "项目清单已下达",
+      "facts": [
+        {
+          "label": "全年安排超长期特别国债资金",
+          "value": 8000,
+          "unit": "亿元",
+          "meaning": "全国安排口径，非单项项目实际支付"
+        },
+        {
+          "label": "涉及重大项目",
+          "value": 1417,
+          "unit": "个",
+          "meaning": "全国项目合计；未给出各项目资金"
+        },
+        {
+          "label": "第三批安排资金",
+          "value": 1935,
+          "unit": "亿元",
+          "meaning": "已包含在全年8000亿元中，不得重复累加"
+        }
+      ],
+      "note": "国家发展改革委披露第三批“两重”项目清单已下达，并说明全年安排规模。财政部上半年已下达6064.6亿元属于不同时间和财政执行口径，不能简单相加。",
+      "sector_tags": [
+        "科技创新",
+        "水利",
+        "交通",
+        "绿色发展"
+      ],
+      "verification": "official_direct"
+    },
+    {
+      "id": "ev-xinjiang-start",
+      "title": "新疆中央预算内投资项目开工情况",
+      "type": "regional_progress",
+      "level": "regional_aggregate",
+      "region": "新疆",
+      "as_of": "2026-10-19",
+      "agency": "新疆发展改革委（国家发展改革委转载）",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261019_1408216.html",
+      "status": "官方披露开工进度",
+      "facts": [
+        {
+          "label": "2026年中央预算内投资项目开工率",
+          "value": 90,
+          "unit": "%",
+          "meaning": "该地区当年中央预算内投资项目开工率，不代表竣工率"
+        }
+      ],
+      "note": "官方称已下达投资计划项目中央预算内资金全部到位，未给出可汇总的具体资金金额；开工率不是投资完成率。",
+      "sector_tags": [
+        "重大项目",
+        "基础设施"
+      ],
+      "verification": "official_direct"
+    },
+    {
+      "id": "ev-yunnan-digital",
+      "title": "云南第一批省级重大项目投资进度（2026年1—8月）",
+      "type": "regional_progress",
+      "level": "regional_aggregate",
+      "region": "云南",
+      "as_of": "2026-08-31",
+      "agency": "云南省发展改革委（国家发展改革委转载）",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202610/t20261014_1408138.html",
+      "status": "已披露年度计划投资进度",
+      "facts": [
+        {
+          "label": "第一批省级重大项目",
+          "value": 1677,
+          "unit": "个",
+          "meaning": "第一批项目样本"
+        },
+        {
+          "label": "项目年度计划投资完成率",
+          "value": 86.33,
+          "unit": "%",
+          "meaning": "入库项目的年度计划投资完成率"
+        },
+        {
+          "label": "数字经济项目",
+          "value": 19,
+          "unit": "个",
+          "meaning": "数字经济类子样本"
+        },
+        {
+          "label": "数字经济项目投资完成率",
+          "value": 47.39,
+          "unit": "%",
+          "meaning": "19个数字经济项目年度计划投资完成率，不是项目竣工率"
+        }
+      ],
+      "note": "数字经济项目进度明显低于本批项目整体进度；这是同一批项目下的子类比较，不代表全国数字经济项目。",
+      "sector_tags": [
+        "数字经济",
+        "基础设施"
+      ],
+      "verification": "official_direct"
+    },
+    {
+      "id": "ev-109-monitor",
+      "title": "十五五规划109项重大工程推进会议",
+      "type": "implementation_coordination",
+      "level": "national_aggregate",
+      "region": "全国",
+      "as_of": "2026-09-03",
+      "agency": "国家发展改革委",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/xwfb/202609/t20260904_1407416.html",
+      "status": "已召开进展调度会议",
+      "facts": [
+        {
+          "label": "规划涉及重大工程",
+          "value": 109,
+          "unit": "项",
+          "meaning": "本次会议调度的规划重大工程项目，不代表109项全部开工或竣工"
+        }
+      ],
+      "note": "会议调度建设进展并推动在建项目加快实施、部分新项目尽早开工。未披露项目级完工清单或资金使用率。",
+      "sector_tags": [
+        "重大工程",
+        "国家战略"
+      ],
+      "verification": "official_direct"
+    },
+    {
+      "id": "ev-workrelief",
+      "title": "2026年以工代赈项目与资金进展",
+      "type": "funding_allocation",
+      "level": "national_aggregate",
+      "region": "全国",
+      "as_of": "2026-07-31",
+      "agency": "国家发展改革委",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html",
+      "status": "资金已下达并推进项目",
+      "facts": [
+        {
+          "label": "已下达资金",
+          "value": 395,
+          "unit": "亿元",
+          "meaning": "全国资金下达；不等于已支付到个人"
+        },
+        {
+          "label": "实施项目",
+          "value": 7800,
+          "unit": "余个",
+          "meaning": "项目数量为约数，不可精确汇总"
+        },
+        {
+          "label": "吸纳带动务工人数",
+          "value": 150,
+          "unit": "万人",
+          "meaning": "官方披露的就业带动人数"
+        }
+      ],
+      "note": "同一官方发布会披露的资金、项目和就业指标。不是单个项目预算执行证明。",
+      "sector_tags": [
+        "乡村振兴",
+        "稳就业",
+        "基础设施"
+      ],
+      "verification": "official_direct"
+    },
+    {
+      "id": "ev-mof-health-notice",
+      "title": "医疗卫生服务体系专项第一批中央基建投资预算通知",
+      "type": "budget_notice",
+      "level": "program_notice",
+      "region": "多省份（具体见附件）",
+      "as_of": "2026-04-01",
+      "agency": "财政部",
+      "source_url": "https://jjs.mof.gov.cn/zxzyzf/jjzc/202605/t20260521_3990344.htm",
+      "status": "预算指标下达通知已发布",
+      "facts": [],
+      "note": "财建〔2026〕68号明确下达预算指标用于医疗卫生服务体系，具体项目和金额在附件中；网页正文没有可核实的金额，不显示具体资金数额。注意与医疗服务与保障能力提升补助资金避免交叉重复。",
+      "attachments": "网页提供中央基建投资预算总表、预算表和绩效目标表附件；附件明细尚未结构化核验",
+      "sector_tags": [
+        "医疗健康",
+        "基建投资"
+      ],
+      "verification": "official_direct"
+    }
+  ]
+}
