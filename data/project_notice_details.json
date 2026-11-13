@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12T07:04:30.355217+00:00",
+  "updated_at": "2026-11-13T06:33:32.683468+00:00",
   "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
   "items": [
     {
@@ -563,11 +563,33 @@
       "url": "https://drc.gd.gov.cn/gfxwj5633/content/post_4965314.html",
       "checked_at": "2026-11-12T02:54:17.329568+00:00",
       "status": "extracted"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "重大项目或投资工作公告",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "附件：广东省财经职业技术学校新校区建设项目初步设计概算核定表.xls",
+          "url": "https://drc.gd.gov.cn/attachment/0/629/629688/4979029.xls"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4979029.html",
+      "source_hash": "5700e7d76006686b5df20c59c6056cc37f30df1003f2a871c1d83c80aaaf33a3",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4979029.html",
+      "checked_at": "2026-11-13T06:33:32.683468+00:00",
+      "status": "extracted"
     }
   ],
   "last_run": {
-    "checked": 0,
-    "extracted": 0,
+    "checked": 1,
+    "extracted": 1,
     "failed": 0
   }
 }

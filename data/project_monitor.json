@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12T07:05:11.600589+00:00",
+  "updated_at": "2026-11-13T06:34:15.290833+00:00",
   "methodology": "人工核验正式台账与自动监测候选线索分离。监测只提出待核查变化，不自动认定开工、拨付、支付或竣工。",
   "records": {
     "p-sanxia-channel": {
@@ -16,7 +16,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html"
       },
       "source_hash": "21c764f3ad9ede40181fb077eb704b75201b001deaa41eaef996cdd49f9f4b9a",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -33,7 +33,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html"
       },
       "source_hash": "2ecf520186d87248e10d9fcb52adcfae94caefbf33f430eccf3750ad0756981e",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -50,7 +50,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html"
       },
       "source_hash": "43e65d59d0d4649ef7c676424d9199c02a0ebfce5bc44262c0bfe1a6dc78ebfb",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -67,7 +67,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html"
       },
       "source_hash": "3b735a4126018f792d039fefee0374749d76642a26b0be8d8540282e68a0ccb1",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -84,7 +84,7 @@
         "source_url": "https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202610/t20261009_4002434.htm"
       },
       "source_hash": "86e2bdcda7f9b5a396806616c0508347178b1e742b6b2512972ea43573c69ea5",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -101,7 +101,7 @@
         "source_url": "https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202610/t20261009_4002434.htm"
       },
       "source_hash": "83339f84701e2889c9c86ec9c916c99d89e40829f85649b081f63c56c5608a61",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -118,7 +118,7 @@
         "source_url": "https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202610/t20261009_4002434.htm"
       },
       "source_hash": "d243912ddc8f574b03a418c2871506ef642ae4ddc64949530af042b910f7e8b1",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -135,7 +135,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/wszb/7yxwfbh/wzsl/202607/t20260731_1406816.html"
       },
       "source_hash": "2b45553cc555eace51114882a8fc146cbab4b8ba7fa9620a60fcf4ff77f6617e",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     },
@@ -152,7 +152,7 @@
         "source_url": "https://www.ndrc.gov.cn/xwdt/dt/dfdt/202611/t20261104_1408547.html"
       },
       "source_hash": "e7654548c488cce5ca6ac1fee922a0f0cbd2c2bb4510c8236b461a6bedf7753b",
-      "last_checked_at": "2026-11-12T07:05:11.600589+00:00",
+      "last_checked_at": "2026-11-13T06:34:15.290833+00:00",
       "check_status": "ok",
       "last_error": null
     }
