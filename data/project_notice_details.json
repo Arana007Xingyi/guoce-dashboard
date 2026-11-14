@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-13T06:33:32.683468+00:00",
+  "updated_at": "2026-11-14T06:11:41.406733+00:00",
   "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
   "items": [
     {
@@ -585,11 +585,18 @@
       "url": "https://drc.gd.gov.cn/xmgg/content/post_4979029.html",
       "checked_at": "2026-11-13T06:33:32.683468+00:00",
       "status": "extracted"
+    },
+    {
+      "url": "https://drc.gd.gov.cn/hdjlpt/yjzj/answer/54111",
+      "checked_at": "2026-11-14T06:11:41.406733+00:00",
+      "status": "unavailable",
+      "error": "ValueError",
+      "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
     }
   ],
   "last_run": {
     "checked": 1,
-    "extracted": 1,
-    "failed": 0
+    "extracted": 0,
+    "failed": 1
   }
 }

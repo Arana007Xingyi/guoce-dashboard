@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-13T06:33:36.948992+00:00",
+  "updated_at": "2026-11-14T06:11:45.011421+00:00",
   "methodology": "官方原文项目邻近文本变动仅触发人工核验，不自动改动任何阶段、投资或支付数字；计划与实际进展永远分开。",
   "tracked": {
     "qingyang-zero-carbon": {
@@ -14,7 +14,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://ydyl.gansu.gov.cn/gsydyl/jmhz/gjcnhz/202603/t20260302_34140.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "140da009ab385aa51e09a22932d72d1267a3ea869dd36ce3e32e35ab82b77dfa",
       "check_status": "ok"
     },
@@ -29,7 +29,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.xjtc.gov.cn/zfxxgk/zdlygk/zdxmjs/content_60945",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "changzhou-datacenter": {
@@ -43,7 +43,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.cztn.gov.cn/index.php?a=show&c=phone&catid=36914&id=217664",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "faa404f1959442218392ec0c466c3a9fc7d6250243c6103c2a582cae22d742f3",
       "check_status": "ok"
     },
@@ -58,7 +58,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.wuxi.gov.cn/doc/2026/05/07/4770816.shtml",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "3d1600623f81d4ab88ff4e77225fa92afc603b7748d3a722966375e3c7420d9b",
       "check_status": "ok"
     },
@@ -73,7 +73,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.lf.gov.cn/Item/157564.aspx",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "source_unavailable",
       "error": "HTTPError"
     },
@@ -88,7 +88,7 @@
         "acceptance_verified": true
       },
       "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202604/3355021f2c174e1fa2558e6469357f72.shtml",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "nansha-anjieli": {
@@ -102,7 +102,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://kjj.gz.gov.cn/xwlb/yw/content/post_11026189.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "baoan-iccarrier": {
@@ -116,7 +116,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.baoan.gov.cn/zxbs/zsyz/zszx/content/post_12991096.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "source_unavailable",
       "error": "ConnectionError"
     },
@@ -131,7 +131,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.lg.gov.cn/gab/jddt/content/post_13033085.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "source_unavailable",
       "error": "ConnectionError"
     },
@@ -146,7 +146,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.yancheng.gov.cn/art/2026/10/23/art_21965_4462957.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "suzhou-zhilv": {
@@ -160,7 +160,7 @@
         "acceptance_verified": true
       },
       "source_url": "https://www.sipac.gov.cn/jsgczlaqjdz/gzdt/202609/7cefbb3d3347423b9fef91526e1f0147.shtml",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "tianjin-mande": {
@@ -174,7 +174,7 @@
         "acceptance_verified": true
       },
       "source_url": "https://www.teda.gov.cn/bmztc/contents/107/52172.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "check_status": "name_not_found"
     },
     "zhongshan-center": {
@@ -188,7 +188,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "151d91c78bea7fbc30511967f8dfc79bb80e04613cc29036a6e556b99d389181",
       "check_status": "ok"
     },
@@ -203,7 +203,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "0ef1c824f5bec027281e6e501c878306095fce71e3a23923f033fa37b5942a78",
       "check_status": "ok"
     },
@@ -218,7 +218,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "e7ad4e3852951086587fa3db7b0a3b786c21843dfe53d9646de622cc08f1522c",
       "check_status": "ok"
     },
@@ -233,7 +233,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "a4ba5bb7c792a16d64392ad3f00165e0f0cb91cf9fbc8387ddbe73f08ecc8eb1",
       "check_status": "ok"
     },
@@ -248,7 +248,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "36c8789d424b1c590df8c96e4c39b9e835a27363a37f1957f41240bd1a0933e2",
       "check_status": "ok"
     },
@@ -263,7 +263,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "9d0a1372e0199d96cda340f4346561fff24b044a2139e61fed3bbc914170f315",
       "check_status": "ok"
     },
@@ -278,7 +278,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "df742d49b003f38526e584d0bfcc15a9ae2c96b7124a8102b2e7df3cfe3c5d55",
       "check_status": "ok"
     },
@@ -293,7 +293,7 @@
         "acceptance_verified": false
       },
       "source_url": "https://www.shanghai.gov.cn/nw48306/20260226/81f6559887674c8bb40402a4f1428953.html",
-      "checked_at": "2026-11-13T06:33:36.948992+00:00",
+      "checked_at": "2026-11-14T06:11:45.011421+00:00",
       "context_digest": "f2f9085fbaa45b6bd92841c145d342af6e62fb649f2799b4045198c55efa70e8",
       "check_status": "ok"
     }
