@@ -1,70 +1,72 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-14T06:11:41.227985+00:00",
+  "updated_at": "2026-11-15T06:19:21.685134+00:00",
   "methodology": "官方列表页标题级候选；未自动核验项目实际进度、资金金额或拨付。来源仅覆盖当前指定页面，不代表全量官方项目。",
   "sources": [
     {
       "source_id": "mof_construction",
       "name": "财政部·中央基建投资预算",
-      "status": "ok",
-      "found": 10,
-      "checked_at": "2026-11-14T06:11:27.217457+00:00"
+      "status": "failed",
+      "error": "HTTPError",
+      "found": 0,
+      "checked_at": "2026-11-15T06:19:10.708482+00:00"
     },
     {
       "source_id": "ndrc_notices",
       "name": "国家发改委·通知公告",
       "status": "no_matching_articles",
       "found": 0,
-      "checked_at": "2026-11-14T06:11:27.614458+00:00"
+      "checked_at": "2026-11-15T06:19:11.347904+00:00"
     },
     {
       "source_id": "shanghai_projects",
       "name": "上海市发改委·重大工程清单",
       "status": "ok",
       "found": 2,
-      "checked_at": "2026-11-14T06:11:29.466644+00:00"
+      "checked_at": "2026-11-15T06:19:12.863500+00:00"
     },
     {
       "source_id": "jiangsu_fgw",
       "name": "江苏省发改委·官方信息",
       "status": "no_matching_articles",
       "found": 0,
-      "checked_at": "2026-11-14T06:11:33.410357+00:00"
+      "checked_at": "2026-11-15T06:19:15.686513+00:00"
     },
     {
       "source_id": "guangdong_fgw",
       "name": "广东省发改委·官方信息",
       "status": "ok",
       "found": 7,
-      "checked_at": "2026-11-14T06:11:36.236119+00:00"
+      "checked_at": "2026-11-15T06:19:18.867478+00:00"
     },
     {
       "source_id": "mof_construction_archive",
       "name": "财政部·中央基建预算历史公告",
-      "status": "ok",
-      "found": 10,
-      "checked_at": "2026-11-14T06:11:39.318725+00:00"
+      "status": "failed",
+      "error": "HTTPError",
+      "found": 0,
+      "checked_at": "2026-11-15T06:19:20.007528+00:00"
     },
     {
       "source_id": "ndrc_progress_news",
       "name": "国家发改委·项目建设进展",
       "status": "ok",
       "found": 1,
-      "checked_at": "2026-11-14T06:11:39.827871+00:00"
+      "checked_at": "2026-11-15T06:19:20.265490+00:00"
     },
     {
       "source_id": "ndrc_local_progress",
       "name": "国家发改委·地方投资进展",
       "status": "ok",
       "found": 7,
-      "checked_at": "2026-11-14T06:11:40.370376+00:00"
+      "checked_at": "2026-11-15T06:19:20.776166+00:00"
     },
     {
       "source_id": "shanghai_approvals",
       "name": "上海市发改委·项目行政许可",
       "status": "no_matching_articles",
       "found": 0,
-      "checked_at": "2026-11-14T06:11:40.977772+00:00"
+      "checked_at": "2026-11-15T06:19:21.434962+00:00"
     }
   ],
   "items": [
@@ -81,7 +83,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-14T06:11:24.234584+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "10ce22089134f20a372a",
@@ -96,7 +98,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-13T06:33:18.276044+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "18e019f8ba15dffe87e1",
@@ -111,7 +113,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "89803c6d14bea5afdc29",
@@ -126,7 +128,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "f2374065b72dd51a011a",
@@ -141,7 +143,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "0d414071879f6c5ae6f3",
@@ -156,7 +158,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "608a1578e6ae2899720e",
@@ -171,7 +173,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "6f939e01645e8340e329",
@@ -186,7 +188,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "ec5cfccf273373baf3ec",
@@ -201,7 +203,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "a864cfac62f46f996d60",
@@ -216,7 +218,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "58e35a21fe2976ba1499",
@@ -381,7 +383,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "e83f71ebc398d0e6814d",
@@ -396,7 +398,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "d2bc73bf7333a83c75a6",
@@ -411,7 +413,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-12T02:34:01.570096+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "ee39d2566bdc2f702eb1",
@@ -636,7 +638,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "4ffabbf58101c7c6619c",
@@ -651,7 +653,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "1bac7672a3b7a83ab1f7",
@@ -666,7 +668,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     },
     {
       "id": "e1fd96036c44a24a8c86",
@@ -681,7 +683,7 @@
       "review_status": "unverified_candidate",
       "reason": "由官方公告列表自动发现；尚未核对正文、资金数额和实际执行状态",
       "first_seen_at": "2026-11-11T06:48:43.871675+00:00",
-      "last_seen_at": "2026-11-14T06:11:24.234584+00:00"
+      "last_seen_at": "2026-11-15T06:19:08.535280+00:00"
     }
   ]
 }
