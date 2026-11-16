@@ -1,12 +1,19 @@
 {
-  "checked_at": "2026-11-15T06:20:02.971070+00:00",
-  "index_state": "no_matching_new_month",
+  "checked_at": "2026-11-16T06:19:47.593436+00:00",
+  "index_state": "ok",
   "next_expected_month": "2026-10",
-  "release_state": "official_release_not_verified",
-  "new_month_pages_found": 0,
-  "new_points_added": 0,
+  "release_state": "official_release_discovered",
+  "new_month_pages_found": 1,
+  "new_points_added": 13,
   "failed_pages": 0,
-  "monthly_checks": [],
-  "latest_stored_month": "2026-09",
+  "monthly_checks": [
+    {
+      "period": "2026-10",
+      "status": "ok",
+      "rows": 68,
+      "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html"
+    }
+  ],
+  "latest_stored_month": "2026-10",
   "note": "未核实新月份官方公报时保留旧数据；不可断言尚未发布，也不得补造指标。"
 }

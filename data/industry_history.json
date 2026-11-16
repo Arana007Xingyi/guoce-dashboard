@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-11",
+  "updated_at": "2026-11-16",
   "explanation": "国家统计局规模以上工业生产月度同比历史数据。不同指标和行业的统计范围不同，研究赛道与官方统计类别并非一一对应，代理指标不代表该赛道利润或股市表现。缺失月不插值；月度同比不能当成环比，不能与累计同比混用。",
   "sources": {
     "2026-06": "https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260715_1964123.html",
     "2026-07": "https://www.stats.gov.cn/sj/zxfbhjd/202608/t20260817_1965055.html",
     "2026-08": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260915_1965308.html",
-    "2026-09": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html"
+    "2026-09": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+    "2026-10": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html"
   },
   "series": [
     {
@@ -41,6 +42,12 @@
           "period": "2026-09",
           "value": 15.3,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 17.6,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]
@@ -79,6 +86,12 @@
           "value": 16.4,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 19.4,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -108,6 +121,12 @@
           "period": "2026-09",
           "value": 18.4,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 21.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]
@@ -145,6 +164,12 @@
           "value": 18.9,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 26.0,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -181,6 +206,12 @@
           "value": 16.9,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 17.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -211,6 +242,12 @@
           "period": "2026-09",
           "value": 4.9,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 5.9,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]
@@ -248,6 +285,12 @@
           "value": 12.1,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 11.5,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -283,6 +326,12 @@
           "period": "2026-09",
           "value": 8.1,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 8.1,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]
@@ -320,6 +369,12 @@
           "value": 11.7,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 9.2,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -355,6 +410,12 @@
           "period": "2026-09",
           "value": 7.3,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 8.6,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]
@@ -392,6 +453,12 @@
           "value": -5.1,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": -4.4,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -428,6 +495,12 @@
           "value": 4.1,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
           "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": 4.0,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
+          "status": "verified"
         }
       ]
     },
@@ -457,6 +530,12 @@
           "period": "2026-09",
           "value": -5.1,
           "source_url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+          "status": "verified"
+        },
+        {
+          "period": "2026-10",
+          "value": -1.3,
+          "source_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965842.html",
           "status": "verified"
         }
       ]

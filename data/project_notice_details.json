@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-15T06:19:21.844664+00:00",
+  "updated_at": "2026-11-16T06:18:41.610887+00:00",
   "methodology": "仅提取官方网页文号、资金用途短语及官方附件链接。未阅读附件明细，不自动填项目金额或认定拨款支付。若提取失败，显式展示未核验。",
   "items": [
     {
@@ -592,11 +592,55 @@
       "status": "unavailable",
       "error": "ValueError",
       "caution": "未能提取网页正文，不能认为文件没有附件或没有资金"
+    },
+    {
+      "document_number": null,
+      "purpose_excerpt": null,
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "广东省发展改革委行政审批前公示意见反馈表",
+          "url": "https://drc.gd.gov.cn/attachment/0/487/487850/3144159.doc"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgs/content/post_4980024.html",
+      "source_hash": "19ef4c09261720fb2e3856db635e77ca5b019e48d22406d89ec3944a7f986b89",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgs/content/post_4980024.html",
+      "checked_at": "2026-11-16T06:18:41.610887+00:00",
+      "status": "extracted"
+    },
+    {
+      "document_number": "财建〔2025〕93号",
+      "purpose_excerpt": "。根据《广东省财政厅 广东省发展和改革委员会关于进一步做好广东省政府投资项目资金穿透式监管工作的通知》（粤财建〔2025〕93号）要求",
+      "document_kind": "中央基建预算下达文件",
+      "mentions_attachments": true,
+      "attachments": [
+        {
+          "title": "查询下载",
+          "url": "https://drc.gd.gov.cn/cxxz/index.html"
+        },
+        {
+          "title": "广东省工程招标核准意见表.pdf",
+          "url": "https://drc.gd.gov.cn/attachment/0/629/629871/4980225.pdf"
+        }
+      ],
+      "source_url": "https://drc.gd.gov.cn/xmgg/content/post_4980225.html",
+      "source_hash": "9a5ba50046f8554c89883a8f75f31b03a86bec381da587ae4d8607943ae9d9c3",
+      "caution": "正文已提取文件元信息；并未验证附件中项目或具体金额，不代表资金实际拨付/支付或项目竣工。",
+      "url": "https://drc.gd.gov.cn/xmgg/content/post_4980225.html",
+      "checked_at": "2026-11-16T06:18:41.610887+00:00",
+      "status": "extracted"
     }
   ],
   "last_run": {
-    "checked": 0,
-    "extracted": 0,
+    "checked": 2,
+    "extracted": 2,
     "failed": 0
   }
 }
