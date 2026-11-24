@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-23T07:27:38.393620+00:00",
+  "updated_at": "2026-11-24T09:47:45.825525+00:00",
   "methodology": "指数历史收盘及接口字段来自中证指数官网。接口字段 peg 被第三方实现解释为PE，但未核实是否为滚动PE-TTM；pe_ttm为旧存储字段名，并不构成口径认证。pe_percentile仅表示同一接口历史样本分布位置且待核实，不是行业估值百分位。接口amount字段成交金额单位未由官方文档验证，禁止转换成元/亿元或绘制有金额单位的成交额图。PB暂无可靠同口径历史数据。ETF收盘来自第三方K线（无凭据时腾讯备用源），未核实成交金额字段。行业与ETF/宽基指数仅研究性映射，不能据此判断行业高低估。 细分指数包括中证半导体931865、中证机器人H30590、中证新能源汽车产业930997、中证医药卫生000933（代码来自各自官方编制或事实清单）；某些指数PE可能缺失，缺失不解释为低估或零。",
   "sources": {
     "index": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
@@ -10269,11 +10269,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 13.09,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 3958.29,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 13.02,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 56.2,
+      "pe_percentile": 54.4,
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
+      "last_data_date": "2026-11-23",
       "pe_source_field": "peg",
       "pe_basis_verified": false,
       "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
@@ -20542,11 +20549,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 12.1,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 2762.1,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 11.92,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 85.3,
+      "pe_percentile": 83.6,
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
+      "last_data_date": "2026-11-23",
       "pe_source_field": "peg",
       "pe_basis_verified": false,
       "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
@@ -30815,11 +30829,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 20.32,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 6128.99,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 20.71,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 54.9,
+      "pe_percentile": 56.2,
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
+      "last_data_date": "2026-11-23",
       "pe_source_field": "peg",
       "pe_basis_verified": false,
       "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
@@ -41088,11 +41109,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 22.79,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 5812.32,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 23.44,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 27.4,
+      "pe_percentile": 35.5,
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
+      "last_data_date": "2026-11-23",
       "pe_source_field": "peg",
       "pe_basis_verified": false,
       "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
@@ -51361,11 +51389,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 15.68,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 4813.17,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 15.79,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
-      "pe_percentile": 42.1,
+      "pe_percentile": 43.5,
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
+      "last_data_date": "2026-11-23",
       "pe_source_field": "peg",
       "pe_basis_verified": false,
       "pe_basis_note": "CSI interface peg field is interpreted as PE by independent client code; official TTM definition not yet verified.",
@@ -54942,11 +54977,18 @@
           "volume": 13939903.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 4.033,
+          "volume": 13717503.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -58518,11 +58560,18 @@
           "volume": 7015537.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 6.126,
+          "volume": 6797433.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -62096,11 +62145,18 @@
           "volume": 14022452.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 0.759,
+          "volume": 15259789.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -65674,11 +65730,18 @@
           "volume": 11086278.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 0.816,
+          "volume": 8588925.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -69252,11 +69315,18 @@
           "volume": 971390.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 1.229,
+          "volume": 796191.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -72831,11 +72901,18 @@
           "volume": 9373021.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 0.374,
+          "volume": 6040169.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -76410,11 +76487,18 @@
           "volume": 86900764.0,
           "volume_unit": "hands",
           "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+        },
+        {
+          "date": "2026-11-24",
+          "close": 1.319,
+          "volume": 91301917.0,
+          "volume_unit": "hands",
+          "source_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
         }
       ],
       "pe_percentile": null,
       "provider": "Tencent unofficial free API",
-      "last_data_date": "2026-11-23",
+      "last_data_date": "2026-11-24",
       "pe_percentile_verified": false
     },
     {
@@ -86381,11 +86465,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 83.42,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 6173.3,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 82.41,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
-      "pe_percentile": 74.4,
+      "last_data_date": "2026-11-23",
+      "pe_percentile": 73.9,
       "pe_percentile_verified": false
     },
     {
@@ -96658,11 +96749,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 36.32,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 1523.09,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 38.67,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
-      "pe_percentile": 40.2,
+      "last_data_date": "2026-11-23",
+      "pe_percentile": 56.6,
       "pe_percentile_verified": false
     },
     {
@@ -106935,11 +107033,18 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 15.75,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 1961.03,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 15.95,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
-      "pe_percentile": 9.2,
+      "last_data_date": "2026-11-23",
+      "pe_percentile": 9.5,
       "pe_percentile_verified": false
     },
     {
@@ -117213,142 +117318,149 @@
           "turnover_unit": "source_units_unconfirmed",
           "pe_ttm": 20.46,
           "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+        },
+        {
+          "date": "2026-11-23",
+          "close": 7622.1,
+          "turnover_unit": "source_units_unconfirmed",
+          "pe_ttm": 20.75,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf"
         }
       ],
       "provider": "CSI official",
-      "last_data_date": "2026-11-20",
-      "pe_percentile": 0.4,
+      "last_data_date": "2026-11-23",
+      "pe_percentile": 1.6,
       "pe_percentile_verified": false
     }
   ],
   "status": [
     {
       "instrument_id": "csi300",
-      "checked_at": "2026-11-23T07:27:29.826797+00:00",
+      "checked_at": "2026-11-24T09:47:37.414187+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "sse50",
-      "checked_at": "2026-11-23T07:27:30.763236+00:00",
+      "checked_at": "2026-11-24T09:47:38.508939+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "csi500",
-      "checked_at": "2026-11-23T07:27:31.203908+00:00",
+      "checked_at": "2026-11-24T09:47:38.951371+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "csi1000",
-      "checked_at": "2026-11-23T07:27:31.644110+00:00",
+      "checked_at": "2026-11-24T09:47:39.393998+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "csi_all",
-      "checked_at": "2026-11-23T07:27:32.083816+00:00",
+      "checked_at": "2026-11-24T09:47:39.834950+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "sector_semiconductor",
-      "checked_at": "2026-11-23T07:27:32.963494+00:00",
+      "checked_at": "2026-11-24T09:47:40.276933+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "sector_robot",
-      "checked_at": "2026-11-23T07:27:33.403883+00:00",
+      "checked_at": "2026-11-24T09:47:40.718209+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "sector_nev",
-      "checked_at": "2026-11-23T07:27:33.843464+00:00",
+      "checked_at": "2026-11-24T09:47:41.159581+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "sector_health",
-      "checked_at": "2026-11-23T07:27:34.292711+00:00",
+      "checked_at": "2026-11-24T09:47:41.601338+00:00",
       "state": "ok",
-      "new_or_updated_rows": 0,
-      "rows_total": 1465,
-      "last_data_date": "2026-11-20"
+      "new_or_updated_rows": 1,
+      "rows_total": 1466,
+      "last_data_date": "2026-11-23"
     },
     {
       "instrument_id": "etf_300",
-      "checked_at": "2026-11-23T07:27:34.733426+00:00",
+      "checked_at": "2026-11-24T09:47:42.042398+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_500",
-      "checked_at": "2026-11-23T07:27:35.897761+00:00",
+      "checked_at": "2026-11-24T09:47:43.292685+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_chip",
-      "checked_at": "2026-11-23T07:27:36.309723+00:00",
+      "checked_at": "2026-11-24T09:47:43.710458+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_robot",
-      "checked_at": "2026-11-23T07:27:36.737885+00:00",
+      "checked_at": "2026-11-24T09:47:44.143177+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_nev",
-      "checked_at": "2026-11-23T07:27:37.146932+00:00",
+      "checked_at": "2026-11-24T09:47:44.562133+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_health",
-      "checked_at": "2026-11-23T07:27:37.557203+00:00",
+      "checked_at": "2026-11-24T09:47:44.980977+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     },
     {
       "instrument_id": "etf_sci",
-      "checked_at": "2026-11-23T07:27:37.984117+00:00",
+      "checked_at": "2026-11-24T09:47:45.408628+00:00",
       "state": "ok",
       "new_or_updated_rows": 1,
-      "rows_total": 509,
-      "last_data_date": "2026-11-23"
+      "rows_total": 510,
+      "last_data_date": "2026-11-24"
     }
   ]
 }
