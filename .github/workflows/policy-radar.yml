@@ -2,6 +2,12 @@ name: Policy radar
 on:
   schedule:
     - cron: '7,22,37,52 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'policy_radar.py'
+      - 'finance_policy_sources.py'
+      - '.github/workflows/policy-radar.yml'
   workflow_dispatch:
   pull_request:
     paths:
