@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - 'tests/test_policy_radar.py'
       - 'policy_radar.py'
       - 'finance_policy_sources.py'
       - '.github/workflows/policy-radar.yml'
@@ -26,6 +27,7 @@ jobs:
           python-version: '3.11'
       - run: pip install requests beautifulsoup4
       - run: python -m py_compile policy_radar.py finance_policy_sources.py
+      - run: python -m unittest discover -s tests -p test_policy_radar.py
       - run: python policy_radar.py
       - name: Publish radar data
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
