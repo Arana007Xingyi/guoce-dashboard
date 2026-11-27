@@ -1,5 +1,6 @@
 """Generate candidate policy signals from the existing official policy feed."""
 import json
+from finance_policy_sources import collect, allowed
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
@@ -16,7 +17,7 @@ RULES = [
 def classify(item):
     url = urlparse(item.get("url",""))
     host = url.hostname or ""
-    if url.scheme != "https" or not any(host == d or host.endswith("."+d) for d in ("gov.cn","pbc.gov.cn","csrc.gov.cn","huijin-inv.cn","news.cn")):
+    if not allowed(item.get("url","")):
         return []
     title = item.get("title","")
     body = item.get("content","") if item.get("content_status") == "success" else ""
@@ -33,14 +34,17 @@ def main():
     source = json.loads(Path("data/policies.json").read_text(encoding="utf-8"))
     now = datetime.now(timezone(timedelta(hours=8)))
     cutoff = (now.date()-timedelta(days=7)).isoformat()
-    events = {}
-    for item in source.get("items",[]):
+    fresh, failures = collect(now.date(), classify)
+    out = Path("data/policy_radar.json")
+    previous = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
+    events = {(e["signal"],e["url"]):e for e in previous.get("events",[]) if cutoff <= e["date"] <= now.date().isoformat()}
+    for item in source.get("items",[]) + fresh:
         if not cutoff <= (item.get("date") or "") <= now.date().isoformat():
             continue
         for event in classify(item):
             events[(event["signal"],event["url"])] = event
     payload = {"updated_at":now.isoformat(),"source_updated_at":source.get("updated_at"),
-               "sources_failed":source.get("sources_failed",[]),
+               "sources_failed":source.get("sources_failed",[]) + failures,
                "signals":[{"id":k,"name":n,"candidate_level":l} for k,n,l,_ in RULES],
                "events":sorted(events.values(),key=lambda e:e["date"],reverse=True)}
     out = Path("data/policy_radar.json")
