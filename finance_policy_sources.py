@@ -12,7 +12,7 @@ SOURCES = [
  ("中央汇金","https://www.huijin-inv.cn/huijin-inv/Corporate_History/index.shtml"),
  ("中国政府网","https://www.gov.cn/yaowen/"),
 ]
-HOSTS = ("gov.cn","huijin-inv.cn","china-inv.cn","news.cn")
+HOSTS = ("gov.cn","huijin-inv.cn","china-inv.cn","news.cn","xinhuanet.com")
 DATE = re.compile(r"(20\d{2})[-年/](\d{1,2})[-月/](\d{1,2})")
 def allowed(url):
     p=urlparse(url)
