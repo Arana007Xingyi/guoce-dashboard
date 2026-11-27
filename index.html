@@ -453,6 +453,10 @@ select { flex: 1; min-width: 130px; }
           const age=Date.now()-Date.parse(d.updated_at);
           status.textContent='更新时间：'+d.updated_at+' ｜ 异常记录：'+(d.sources_failed||[]).length+(age>3600000?' ｜ 数据可能过期':'');
           list.replaceChildren();
+          const health=d.finance_sources||[];
+          const ok=health.filter(h=>h.status==='parsed').length;
+          const warning=document.createElement('p');warning.textContent=health.length?'来源覆盖：'+ok+'/'+health.length+'（'+Math.round(ok/health.length*100)+'%）'+(ok*2<health.length?'｜监测能力下降，勿将无候选视为无政策':''):'来源健康状态未知';warning.style.color=ok*2<health.length?'#f6bc68':'inherit';list.append(warning);
+          for(const h of health){const p=document.createElement('p');p.className='sub';p.textContent=h.source+'：'+({parsed:'解析成功',error:'异常',unverified:'未验证'}[h.status]||'未知')+'｜有效日期 '+h.dated+' 篇';list.append(p);}
           const events=d.events||[];
           const summary=document.createElement('p');
           summary.textContent='S级候选 '+events.filter(e=>e.candidate_level==='S').length+' 条；A级候选 '+events.filter(e=>e.candidate_level==='A').length+' 条';
