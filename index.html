@@ -436,6 +436,37 @@ select { flex: 1; min-width: 130px; }
 
   <!-- 首页总览：五大信息区，严格区分真实数据与待接入指标 -->
   <section id="home" class="page">
+    <div class="panel" id="policyRadarHome">
+      <div class="home-panel-head"><h2>924 · 重大政策雷达</h2><a href="policy-radar.html">查看六大信号 ↗</a></div>
+      <p class="sub" id="radarHomeStatus" aria-live="polite">正在读取候选预警…</p>
+      <div id="radarHomeEvents"></div>
+      <p class="sub">S/A为候选等级，均需核实，不代表买入建议。计划每15分钟采集。</p>
+    </div>
+    <script>
+    (() => {
+      const status=document.getElementById('radarHomeStatus'), list=document.getElementById('radarHomeEvents');
+      async function loadRadar(){
+        try {
+          const r=await fetch('data/policy_radar.json',{cache:'no-store'});
+          if(!r.ok) throw Error('数据尚未生成');
+          const d=await r.json();
+          const age=Date.now()-Date.parse(d.updated_at);
+          status.textContent='更新时间：'+d.updated_at+' ｜ 异常记录：'+(d.sources_failed||[]).length+(age>3600000?' ｜ 数据可能过期':'');
+          list.replaceChildren();
+          const events=d.events||[];
+          const summary=document.createElement('p');
+          summary.textContent='S级候选 '+events.filter(e=>e.candidate_level==='S').length+' 条；A级候选 '+events.filter(e=>e.candidate_level==='A').length+' 条';
+          list.append(summary);
+          for(const e of events.slice(0,5)){
+            const p=document.createElement('p');p.textContent=e.date+' · '+e.candidate_level+'级候选 · '+e.title;list.append(p);
+          }
+          if(!events.length){const p=document.createElement('p');p.textContent='当前无匹配候选，不代表无重大政策。';list.append(p);}
+        }catch(e){status.textContent='雷达数据不可用：'+e.message;}
+      }
+      loadRadar();document.getElementById('refresh').addEventListener('click',loadRadar);
+    })();
+    </script>
+
     <div class="home-eyebrow">政策研究驾驶舱 · 数据均来自当前已采集的官方文件</div>
     <div class="stats">
       <div class="stat"><strong id="total">—</strong><span>累计收录政策</span></div>
