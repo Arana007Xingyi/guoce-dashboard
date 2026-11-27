@@ -20,7 +20,7 @@ from bs4 import BeautifulSoup
 SOURCES = [
  ("央行",["https://www.pbc.gov.cn/"]),
  ("证监会",["https://www.csrc.gov.cn/csrc/xwfb/index.shtml","https://www.csrc.gov.cn/"]),
- ("金融监管总局",["https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html","https://www.nfra.gov.cn/"]),
+ ("金融监管总局",["https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=928&itemPId=928&itemUrl=ItemListRightList.html","https://www.nfra.gov.cn/cn/view/pages/zhengwuxinxi/zhengwuxinxi.html"]),
  ("中央汇金",["https://www.huijin-inv.cn/","https://www.china-inv.cn/"]),
  ("中国政府网",["https://www.gov.cn/zhengce/","https://www.gov.cn/yaowen/","https://www.gov.cn/"]),
  ("新华社",["https://www.news.cn/fortune/","https://www.news.cn/"]),
@@ -29,6 +29,7 @@ SOURCES = [
 DOCUMENT_SOURCES = [
  ("国务院政策文件库",["https://sousuo.www.gov.cn/zcwjk/policyDocumentLibrary?t=zhengcelibrary"]),
  ("发展改革委文件库",["https://www.ndrc.gov.cn/xxgk/wjk/index.html?tab=qt"]),
+ ("国务院文件专栏",["https://www.beijing.gov.cn/zhengce/gwywj/"]),
 ]
 HOSTS = ("gov.cn","huijin-inv.cn","china-inv.cn","news.cn","xinhuanet.com","cctv.com")
 DATE = re.compile(r"(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})")
