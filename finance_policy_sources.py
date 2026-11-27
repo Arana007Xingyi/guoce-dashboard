@@ -49,7 +49,7 @@ def collect(today, classify):
                 if not 10<=len(title)<=180 or link in seen or not allowed(link): continue
                 seen.add(link)
                 item={"title":title,"url":link,"source":name}
-                if not classify(item): continue
+                if not classify(item) and not any(k in title for k in ("发布会","政治局会议","金融支持","货币政策","资本市场","增量政策")): continue
                 if scanned>=30: break
                 scanned+=1
                 try:
@@ -61,7 +61,11 @@ def collect(today, classify):
                     if not d: continue
                     dated+=1
                     if not today-timedelta(days=7)<=d<=today: continue
+                    content_nodes=doc.select("#UCAP-CONTENT, .TRS_Editor, .article-content, .article_content, article, #zoom")
+                    if content_nodes:
+                        item.update(content=max((n.get_text(" ",strip=True) for n in content_nodes),key=len)[:50000],content_status="success")
                     item.update(date=d.isoformat(),url=article.url)
+                    if not classify(item): continue
                     items.append(item)
                 except Exception as exc: failed.append({"source":name,"error":str(exc)[:160]})
             if not seen or (scanned and not dated):
