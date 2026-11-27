@@ -22,9 +22,13 @@ SOURCES = [
  ("证监会",["https://www.csrc.gov.cn/csrc/xwfb/index.shtml","https://www.csrc.gov.cn/"]),
  ("金融监管总局",["https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html","https://www.nfra.gov.cn/"]),
  ("中央汇金",["https://www.huijin-inv.cn/","https://www.china-inv.cn/"]),
- ("中国政府网",["https://www.gov.cn/yaowen/","https://www.gov.cn/"]),
+ ("中国政府网",["https://www.gov.cn/zhengce/","https://www.gov.cn/yaowen/","https://www.gov.cn/"]),
  ("新华社",["https://www.news.cn/fortune/","https://www.news.cn/"]),
- ("央视新闻",["https://news.cctv.com/","https://jingji.cctv.com/"]),
+ ("央视新闻",["https://news.cctv.com/china/","https://jingji.cctv.com/","https://news.cctv.com/"]),
+]
+DOCUMENT_SOURCES = [
+ ("国务院政策文件库",["https://sousuo.www.gov.cn/zcwjk/policyDocumentLibrary?t=zhengcelibrary"]),
+ ("发展改革委文件库",["https://www.ndrc.gov.cn/xxgk/wjk/index.html?tab=qt"]),
 ]
 HOSTS = ("gov.cn","huijin-inv.cn","china-inv.cn","news.cn","xinhuanet.com","cctv.com")
 DATE = re.compile(r"(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})")
@@ -51,7 +55,7 @@ def parse_date(text):
         except ValueError: pass
     return None
 
-def collect_one(name,url,today,classify):
+def collect_one(name,url,today,classify,documents=False):
     items=[]; failed=[]; health=[]
     started=time.monotonic()
     for name,url in [(name,url)]:
@@ -60,18 +64,18 @@ def collect_one(name,url,today,classify):
             r=fetch(url); soup=BeautifulSoup(r.text,"html.parser")
             seen=set(); scanned=0; dated=0
             for a in soup.select("a[href]"):
-                title=" ".join(a.get_text(" ",strip=True).split())
+                title=" ".join((a.get("title") or a.get_text(" ",strip=True)).split())
                 link=urldefrag(urljoin(r.url,a["href"]))[0]
                 if not 10<=len(title)<=180 or link in seen or not allowed(link): continue
                 seen.add(link)
                 item={"title":title,"url":link,"source":name}
-                if not classify(item) and not any(k in title for k in ("发布会","政治局会议","金融支持","货币政策","资本市场","增量政策")): continue
+                if not documents and not classify(item) and not any(k in title for k in ("发布会","政治局会议","金融支持","货币政策","资本市场","增量政策","金融监管","保险资金","中央汇金","证券","金融政策")): continue
                 if scanned>=10 or time.monotonic()-started>65: break
                 scanned+=1
                 try:
                     article=fetch(link); doc=BeautifulSoup(article.text,"html.parser")
-                    dates=[m.get("content","") for m in doc.select('meta[name="PubDate"],meta[name="publishdate"],meta[property="article:published_time"]')]
-                    dates += [n.get_text(" ",strip=True) for n in doc.select("time,.date,.pubtime,.publish-time")]
+                    dates=[m.get("content","") for m in doc.select('meta[name="PubDate"],meta[name="publishdate"],meta[name="PubTime"],meta[name="pubdate"],meta[name="publishDate"],meta[property="article:published_time"]')]
+                    dates += [n.get_text(" ",strip=True) for n in doc.select("time,.date,.pubtime,.publish-time,.time,.pub-date,.source-time,#pubtime")]
                     dates += [a.parent.get_text(" ",strip=True)[:250]]
                     d=next((v for t in dates if (v:=parse_date(t))),None)
                     if not d: continue
@@ -80,8 +84,8 @@ def collect_one(name,url,today,classify):
                     content_nodes=doc.select("#UCAP-CONTENT, .TRS_Editor, .article-content, .article_content, article, #zoom")
                     if content_nodes:
                         item.update(content=max((n.get_text(" ",strip=True) for n in content_nodes),key=len)[:50000],content_status="success")
-                    item.update(date=d.isoformat(),url=article.url)
-                    if not classify(item): continue
+                    item.update(date=d.isoformat(),url=article.url,collection_channel="policy_library" if documents else "news")
+                    if not documents and not classify(item): continue
                     items.append(item)
                 except Exception as exc: failed.append({"source":name,"error":str(exc)[:160]})
             if not seen or (scanned and not dated):
@@ -95,13 +99,13 @@ def collect(today,classify):
         name,urls=source
         all_items=[]; all_errors=[]; attempts=[]
         for url in urls:
-            items,errors,health=collect_one(name,url,today,classify)
+            items,errors,health=collect_one(name,url,today,classify,source in DOCUMENT_SOURCES)
             all_items.extend(items); all_errors.extend(errors)
             h=health[0]; h["endpoint"]=url; attempts.append(h)
             if h["status"]=="parsed": break
-        best=max(attempts,key=lambda h:(h["status"]=="parsed",h["dated"]))
-        best=dict(best,attempts=attempts)
+        best=max(attempts,key=lambda h:(h["status"]=="parsed",h["dated"],h["links"]))
+        best=dict(best,attempts=attempts,channel="documents" if source in DOCUMENT_SOURCES else "news")
         return all_items,all_errors,[best]
     with ThreadPoolExecutor(max_workers=5) as pool:
-        results=list(pool.map(run,SOURCES))
+        results=list(pool.map(run,SOURCES+DOCUMENT_SOURCES))
     return tuple([v for result in results for v in result[i]] for i in range(3))
