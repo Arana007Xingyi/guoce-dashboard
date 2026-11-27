@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T15:16:08.371392+08:00",
+  "updated_at": "2026-11-27T15:16:27.477005+08:00",
   "source_updated_at": "2026-11-26T08:07:01.311754+00:00",
   "finance_sources": [
     {
@@ -56,7 +56,7 @@
       "matches": 0,
       "errors": 1,
       "status": "error",
-      "endpoint": "https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html",
+      "endpoint": "https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=928&itemPId=928&itemUrl=ItemListRightList.html",
       "attempts": [
         {
           "source": "金融监管总局",
@@ -66,7 +66,7 @@
           "matches": 0,
           "errors": 1,
           "status": "error",
-          "endpoint": "https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html"
+          "endpoint": "https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=928&itemPId=928&itemUrl=ItemListRightList.html"
         },
         {
           "source": "金融监管总局",
@@ -76,7 +76,7 @@
           "matches": 0,
           "errors": 1,
           "status": "error",
-          "endpoint": "https://www.nfra.gov.cn/"
+          "endpoint": "https://www.nfra.gov.cn/cn/view/pages/zhengwuxinxi/zhengwuxinxi.html"
         }
       ],
       "channel": "news"
@@ -232,7 +232,9 @@
         }
       ],
       "channel": "news"
-    },
+    }
+  ],
+  "document_sources": [
     {
       "source": "国务院政策文件库",
       "links": 0,
@@ -278,11 +280,35 @@
         }
       ],
       "channel": "documents"
+    },
+    {
+      "source": "国务院文件专栏",
+      "links": 11,
+      "attempted": 10,
+      "dated": 10,
+      "matches": 0,
+      "errors": 0,
+      "status": "parsed",
+      "endpoint": "https://www.beijing.gov.cn/zhengce/gwywj/",
+      "attempts": [
+        {
+          "source": "国务院文件专栏",
+          "links": 11,
+          "attempted": 10,
+          "dated": 10,
+          "matches": 0,
+          "errors": 0,
+          "status": "parsed",
+          "endpoint": "https://www.beijing.gov.cn/zhengce/gwywj/"
+        }
+      ],
+      "channel": "documents"
     }
   ],
+  "document_candidates": [],
   "coverage": {
     "parsed": 3,
-    "total": 9,
+    "total": 7,
     "degraded": true
   },
   "sources_failed": [
