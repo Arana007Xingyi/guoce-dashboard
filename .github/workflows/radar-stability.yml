@@ -6,13 +6,9 @@ on:
 permissions:
   contents: read
 jobs:
-  stability:
+  window0:
     runs-on: ubuntu-latest
     timeout-minutes: 355
-    strategy:
-      fail-fast: false
-      matrix:
-        window: [0, 1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,7 +16,7 @@ jobs:
           python-version: '3.11'
       - run: pip install requests beautifulsoup4 playwright
       - run: python -m playwright install --with-deps chromium
-      - name: Sample collector for five hours
+      - name: Sample collector
         run: |
           mkdir -p stability
           for i in $(seq 1 20); do
@@ -36,5 +32,125 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: stability-${{ matrix.window }}
+          name: stability-0
+          path: stability/
+  window1:
+    needs: window0
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4 playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Sample collector
+        run: |
+          mkdir -p stability
+          for i in $(seq 1 20); do
+            start=$(date +%s)
+            if timeout 720 python policy_radar.py; then
+              cp data/policy_radar.json "stability/$(date -u +%Y%m%dT%H%M%SZ).json"
+            else
+              echo "failed $(date -u +%FT%TZ)" >> stability/errors.txt
+            fi
+            remaining=$((900 - $(date +%s) + start))
+            if [ "$remaining" -gt 0 ]; then sleep "$remaining"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stability-1
+          path: stability/
+  window2:
+    needs: window1
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4 playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Sample collector
+        run: |
+          mkdir -p stability
+          for i in $(seq 1 20); do
+            start=$(date +%s)
+            if timeout 720 python policy_radar.py; then
+              cp data/policy_radar.json "stability/$(date -u +%Y%m%dT%H%M%SZ).json"
+            else
+              echo "failed $(date -u +%FT%TZ)" >> stability/errors.txt
+            fi
+            remaining=$((900 - $(date +%s) + start))
+            if [ "$remaining" -gt 0 ]; then sleep "$remaining"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stability-2
+          path: stability/
+  window3:
+    needs: window2
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4 playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Sample collector
+        run: |
+          mkdir -p stability
+          for i in $(seq 1 20); do
+            start=$(date +%s)
+            if timeout 720 python policy_radar.py; then
+              cp data/policy_radar.json "stability/$(date -u +%Y%m%dT%H%M%SZ).json"
+            else
+              echo "failed $(date -u +%FT%TZ)" >> stability/errors.txt
+            fi
+            remaining=$((900 - $(date +%s) + start))
+            if [ "$remaining" -gt 0 ]; then sleep "$remaining"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stability-3
+          path: stability/
+  window4:
+    needs: window3
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4 playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Sample collector
+        run: |
+          mkdir -p stability
+          for i in $(seq 1 16); do
+            start=$(date +%s)
+            if timeout 720 python policy_radar.py; then
+              cp data/policy_radar.json "stability/$(date -u +%Y%m%dT%H%M%SZ).json"
+            else
+              echo "failed $(date -u +%FT%TZ)" >> stability/errors.txt
+            fi
+            remaining=$((900 - $(date +%s) + start))
+            if [ "$remaining" -gt 0 ]; then sleep "$remaining"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stability-4
           path: stability/
