@@ -1,5 +1,7 @@
 """Generate candidate policy signals from the existing official policy feed."""
 import json
+import re
+from difflib import SequenceMatcher
 from finance_policy_sources import collect, allowed
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
@@ -30,6 +32,20 @@ def classify(item):
             for key,name,level,groups in RULES
             if all(any(w in text for w in group) for group in groups)]
 
+def corroborate(events):
+    # Similar titles on the same day are leads, not independent confirmation.
+    for e in events:
+        e["related_reports"]=[]
+        a=re.sub(r"[^\w]","",e["title"])
+        for other in events:
+            if e["signal"]!=other["signal"] or e["date"]!=other["date"] or e["url"]==other["url"]: continue
+            if e["source"]==other["source"]: continue
+            b=re.sub(r"[^\w]","",other["title"])
+            if SequenceMatcher(None,a,b).ratio()>=0.75:
+                e["related_reports"].append({"source":other["source"],"url":other["url"],"title":other["title"]})
+        e["verification"]="多来源相似报道，独立性待核实" if e["related_reports"] else "单来源候选，待核实"
+    return events
+
 def main():
     source = json.loads(Path("data/policies.json").read_text(encoding="utf-8"))
     now = datetime.now(timezone(timedelta(hours=8)))
@@ -45,9 +61,10 @@ def main():
             events[(event["signal"],event["url"])] = event
     payload = {"updated_at":now.isoformat(),"source_updated_at":source.get("updated_at"),
                "finance_sources":health,
+               "coverage":{"parsed":sum(h["status"]=="parsed" for h in health),"total":len(health),"degraded":sum(h["status"]=="parsed" for h in health)*2<len(health)},
                "sources_failed":source.get("sources_failed",[]) + failures,
                "signals":[{"id":k,"name":n,"candidate_level":l} for k,n,l,_ in RULES],
-               "events":sorted(events.values(),key=lambda e:e["date"],reverse=True)}
+               "events":sorted(corroborate(list(events.values())),key=lambda e:e["date"],reverse=True)}
     print(json.dumps(health, ensure_ascii=False))
     out = Path("data/policy_radar.json")
     tmp = out.with_suffix(".tmp")
