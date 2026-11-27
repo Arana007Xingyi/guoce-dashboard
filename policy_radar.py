@@ -1,0 +1,52 @@
+"""Generate candidate policy signals from the existing official policy feed."""
+import json
+from pathlib import Path
+from datetime import datetime, timedelta, timezone
+from urllib.parse import urlparse
+
+RULES = [
+ ("joint", "三部门联合政策", "S", [["人民银行","央行"],["金融监管总局","金融监督管理总局"],["证监会"],["发布会","联合"]]),
+ ("rate", "降准降息", "S", [["降准","降息","下调存款准备金率","下调政策利率"]]),
+ ("tools", "资本市场支持工具", "S", [["互换便利","回购增持再贷款","资本市场支持工具"]]),
+ ("huijin", "中央汇金增持ETF", "S", [["中央汇金"],["增持","买入"],["ETF","交易型开放式指数基金"]]),
+ ("macro", "重大宏观增量政策", "S", [["政治局"],["增量政策","稳住股市","稳股市","提振资本市场"]]),
+ ("longterm", "中长期资金入市", "A", [["保险资金","社保基金","中长期资金"],["入市","权益投资","股票投资"]]),
+]
+
+def classify(item):
+    url = urlparse(item.get("url",""))
+    host = url.hostname or ""
+    if url.scheme != "https" or not any(host == d or host.endswith("."+d) for d in ("gov.cn","pbc.gov.cn","csrc.gov.cn","huijin-inv.cn","news.cn")):
+        return []
+    title = item.get("title","")
+    body = item.get("content","") if item.get("content_status") == "success" else ""
+    # A match is a candidate, never a confirmation of magnitude or implementation.
+    text = title + " " + body
+    return [{"signal": key, "name": name, "candidate_level": level,
+             "status": "待核实", "title": title, "url": item["url"],
+             "date": item.get("date"), "source": item.get("source",""),
+             "matched": [next(w for w in group if w in text) for group in groups]}
+            for key,name,level,groups in RULES
+            if all(any(w in text for w in group) for group in groups)]
+
+def main():
+    source = json.loads(Path("data/policies.json").read_text(encoding="utf-8"))
+    now = datetime.now(timezone(timedelta(hours=8)))
+    cutoff = (now.date()-timedelta(days=7)).isoformat()
+    events = {}
+    for item in source.get("items",[]):
+        if not cutoff <= (item.get("date") or "") <= now.date().isoformat():
+            continue
+        for event in classify(item):
+            events[(event["signal"],event["url"])] = event
+    payload = {"updated_at":now.isoformat(),"source_updated_at":source.get("updated_at"),
+               "sources_failed":source.get("sources_failed",[]),
+               "signals":[{"id":k,"name":n,"candidate_level":l} for k,n,l,_ in RULES],
+               "events":sorted(events.values(),key=lambda e:e["date"],reverse=True)}
+    out = Path("data/policy_radar.json")
+    tmp = out.with_suffix(".tmp")
+    tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
+    tmp.replace(out)
+
+if __name__ == "__main__":
+    main()
