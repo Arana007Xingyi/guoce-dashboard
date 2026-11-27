@@ -41,6 +41,10 @@ jobs:
         with:
           name: radar-acceptance
           path: data/policy_radar.json
+      - name: Check live coverage (PR only)
+        if: github.event_name == 'pull_request'
+        run: |
+          python -c 'import json; d=json.load(open("data/policy_radar.json")); assert d["coverage"]["parsed"] >= 6 and sum(h["status"]=="parsed" for h in d["document_sources"]) >= 3, "Live coverage below acceptance threshold"'
       - name: Publish radar data
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
