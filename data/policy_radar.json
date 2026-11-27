@@ -1,24 +1,50 @@
 {
-  "updated_at": "2026-11-27T15:01:52.102775+08:00",
+  "updated_at": "2026-11-27T15:12:41.052730+08:00",
   "source_updated_at": "2026-11-26T08:07:01.311754+00:00",
   "finance_sources": [
     {
       "source": "央行",
-      "links": 76,
+      "links": 79,
       "attempted": 4,
       "dated": 4,
       "matches": 0,
       "errors": 0,
-      "status": "parsed"
+      "status": "parsed",
+      "endpoint": "https://www.pbc.gov.cn/",
+      "attempts": [
+        {
+          "source": "央行",
+          "links": 79,
+          "attempted": 4,
+          "dated": 4,
+          "matches": 0,
+          "errors": 0,
+          "status": "parsed",
+          "endpoint": "https://www.pbc.gov.cn/"
+        }
+      ]
     },
     {
       "source": "证监会",
-      "links": 0,
-      "attempted": 0,
-      "dated": 0,
+      "links": 18,
+      "attempted": 10,
+      "dated": 10,
       "matches": 0,
-      "errors": 1,
-      "status": "error"
+      "errors": 0,
+      "status": "parsed",
+      "endpoint": "https://www.csrc.gov.cn/csrc/xwfb/index.shtml",
+      "attempts": [
+        {
+          "source": "证监会",
+          "links": 18,
+          "attempted": 10,
+          "dated": 10,
+          "matches": 0,
+          "errors": 0,
+          "status": "parsed",
+          "endpoint": "https://www.csrc.gov.cn/csrc/xwfb/index.shtml"
+        }
+      ]
     },
     {
       "source": "金融监管总局",
@@ -27,7 +53,30 @@
       "dated": 0,
       "matches": 0,
       "errors": 1,
-      "status": "error"
+      "status": "error",
+      "endpoint": "https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html",
+      "attempts": [
+        {
+          "source": "金融监管总局",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.nfra.gov.cn/cn/view/pages/xinwenzixun/xinwenzixun.html"
+        },
+        {
+          "source": "金融监管总局",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.nfra.gov.cn/"
+        }
+      ]
     },
     {
       "source": "中央汇金",
@@ -36,7 +85,30 @@
       "dated": 0,
       "matches": 0,
       "errors": 1,
-      "status": "error"
+      "status": "error",
+      "endpoint": "https://www.huijin-inv.cn/",
+      "attempts": [
+        {
+          "source": "中央汇金",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.huijin-inv.cn/"
+        },
+        {
+          "source": "中央汇金",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.china-inv.cn/"
+        }
+      ]
     },
     {
       "source": "中国政府网",
@@ -45,17 +117,109 @@
       "dated": 0,
       "matches": 0,
       "errors": 1,
-      "status": "error"
+      "status": "error",
+      "endpoint": "https://www.gov.cn/yaowen/",
+      "attempts": [
+        {
+          "source": "中国政府网",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.gov.cn/yaowen/"
+        },
+        {
+          "source": "中国政府网",
+          "links": 30,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 0,
+          "status": "unverified",
+          "endpoint": "https://www.gov.cn/"
+        }
+      ]
+    },
+    {
+      "source": "新华社",
+      "links": 183,
+      "attempted": 1,
+      "dated": 1,
+      "matches": 0,
+      "errors": 0,
+      "status": "parsed",
+      "endpoint": "https://www.news.cn/",
+      "attempts": [
+        {
+          "source": "新华社",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.news.cn/fortune/"
+        },
+        {
+          "source": "新华社",
+          "links": 183,
+          "attempted": 1,
+          "dated": 1,
+          "matches": 0,
+          "errors": 0,
+          "status": "parsed",
+          "endpoint": "https://www.news.cn/"
+        }
+      ]
+    },
+    {
+      "source": "央视新闻",
+      "links": 6,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 0,
+      "status": "unverified",
+      "endpoint": "https://news.cctv.com/",
+      "attempts": [
+        {
+          "source": "央视新闻",
+          "links": 6,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 0,
+          "status": "unverified",
+          "endpoint": "https://news.cctv.com/"
+        },
+        {
+          "source": "央视新闻",
+          "links": 1,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 0,
+          "status": "unverified",
+          "endpoint": "https://jingji.cctv.com/"
+        }
+      ]
     }
   ],
+  "coverage": {
+    "parsed": 3,
+    "total": 7,
+    "degraded": true
+  },
   "sources_failed": [
     {
       "source": "工业和信息化部·政策通知",
       "error": "未识别到符合条件且带日期的政策"
     },
     {
-      "source": "证监会",
-      "error": "HTTPSConnectionPool(host='www.csrc.gov.cn', port=443): Max retries exceeded with url: /csrc/xwfb/index.shtml (Caused by ConnectTimeoutError(<HTTPSConnection(hos"
+      "source": "金融监管总局",
+      "error": "未识别有效链接或完整发布日期"
     },
     {
       "source": "金融监管总局",
@@ -63,10 +227,18 @@
     },
     {
       "source": "中央汇金",
-      "error": "未识别有效链接或完整发布日期"
+      "error": "405 Client Error: Not Allowed for url: https://www.huijin-inv.cn/"
+    },
+    {
+      "source": "中央汇金",
+      "error": "405 Client Error: Not Allowed for url: https://www.china-inv.cn/"
     },
     {
       "source": "中国政府网",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "新华社",
       "error": "未识别有效链接或完整发布日期"
     }
   ],
