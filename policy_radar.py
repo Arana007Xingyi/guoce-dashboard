@@ -28,6 +28,7 @@ def classify(item):
     return [{"signal": key, "name": name, "candidate_level": level,
              "status": "待核实", "title": title, "url": item["url"],
              "date": item.get("date"), "source": item.get("source",""),
+             "collection_channel":item.get("collection_channel","existing_feed"),
              "matched": [next(w for w in group if w in text) for group in groups]}
             for key,name,level,groups in RULES
             if all(any(w in text for w in group) for group in groups)]
@@ -60,8 +61,10 @@ def main():
         for event in classify(item):
             events[(event["signal"],event["url"])] = event
     payload = {"updated_at":now.isoformat(),"source_updated_at":source.get("updated_at"),
-               "finance_sources":health,
-               "coverage":{"parsed":sum(h["status"]=="parsed" for h in health),"total":len(health),"degraded":sum(h["status"]=="parsed" for h in health)*2<len(health)},
+               "finance_sources":[h for h in health if h.get("channel")!="documents"],
+               "document_sources":[h for h in health if h.get("channel")=="documents"],
+               "document_candidates":[{"title":i["title"],"url":i["url"],"date":i["date"],"source":i["source"]} for i in fresh if i.get("collection_channel")=="policy_library"],
+               "coverage":{"parsed":sum(h["status"]=="parsed" for h in health if h.get("channel")!="documents"),"total":sum(h.get("channel")!="documents" for h in health),"degraded":sum(h["status"]=="parsed" for h in health if h.get("channel")!="documents")*2<sum(h.get("channel")!="documents" for h in health)},
                "sources_failed":source.get("sources_failed",[]) + failures,
                "signals":[{"id":k,"name":n,"candidate_level":l} for k,n,l,_ in RULES],
                "events":sorted(corroborate(list(events.values())),key=lambda e:e["date"],reverse=True)}
