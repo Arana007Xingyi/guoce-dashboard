@@ -1,6 +1,7 @@
 import unittest
 from policy_radar import classify
-from finance_policy_sources import allowed, parse_date
+from finance_policy_sources import allowed, parse_date, article_link, publication_dates
+from bs4 import BeautifulSoup
 
 class RadarTests(unittest.TestCase):
     def signals(self,title,body="",url="https://www.csrc.gov.cn/csrc/c106311/c7508374/content.shtml"):
@@ -25,5 +26,19 @@ class RadarTests(unittest.TestCase):
     def test_url(self):
         self.assertFalse(allowed("http://www.gov.cn/"))
         self.assertFalse(allowed("https://evil@www.gov.cn/"))
+
+    def test_924_full_wording(self):
+        self.assertTrue({"rate","tools"} <= self.signals("金融支持经济高质量发展", "降低存款准备金率，创设证券基金保险公司互换便利"))
+    def test_publication_metadata(self):
+        doc=BeautifulSoup('<script type="application/ld+json">{"datePublished":"2024-09-24T09:00:00+08:00"}</script>',"html.parser")
+        self.assertEqual(parse_date(publication_dates(doc)[0]).isoformat(),"2024-09-24")
+    def test_article_paths(self):
+        self.assertFalse(article_link("https://www.ndrc.gov.cn/xxgk/wjk/"))
+        self.assertTrue(article_link("https://www.ndrc.gov.cn/xxgk/zcfb/tz/202409/t20240924_1234567.html"))
+        self.assertTrue(article_link("https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=123"))
+    def test_reprint_label(self):
+        e=classify(dict(title="中央汇金增持ETF",url="https://www.news.cn/",collection_channel="reprint"))[0]
+        self.assertEqual(e["collection_channel"],"reprint")
+        self.assertEqual(e["status"],"待核实")
 
 if __name__ == "__main__": unittest.main()

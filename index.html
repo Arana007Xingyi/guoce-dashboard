@@ -453,6 +453,9 @@ select { flex: 1; min-width: 130px; }
           const age=Date.now()-Date.parse(d.updated_at);
           status.textContent='更新时间：'+d.updated_at+' ｜ 异常记录：'+(d.sources_failed||[]).length+(age>3600000?' ｜ 数据可能过期':'');
           list.replaceChildren();
+          const rep=d.reprint_sources||[];for(const h of rep){const p=document.createElement('p');p.textContent=h.source+'（非官网）：'+h.status+'｜有效日期 '+h.dated+' 篇';list.append(p);}
+          const docs=d.document_sources||[]; const dp=document.createElement('p');dp.textContent='政策文件通道：'+docs.filter(h=>h.status==='parsed').length+'/'+docs.length+'（独立统计）';list.append(dp);for(const h of docs){const p=document.createElement('p');p.textContent=h.source+'：'+({parsed:'解析成功',error:'异常',unverified:'未验证'}[h.status]||'未知');list.append(p);}
+          for(const item of (d.document_candidates||[]).slice(0,5)){try{const u=new URL(item.url);if(u.protocol!=='https:')continue;const a=document.createElement('a');a.href=u.href;a.textContent=item.date+' · '+item.title;a.target='_blank';a.rel='noopener noreferrer';const p=document.createElement('p');p.append(a);list.append(p);}catch{}}
           const health=d.finance_sources||[];
           const ok=health.filter(h=>h.status==='parsed').length;
           const warning=document.createElement('p');warning.textContent=health.length?'来源覆盖：'+ok+'/'+health.length+'（'+Math.round(ok/health.length*100)+'%）'+(ok*2<health.length?'｜监测能力下降，勿将无候选视为无政策':''):'来源健康状态未知';warning.style.color=ok*2<health.length?'#f6bc68':'inherit';list.append(warning);
