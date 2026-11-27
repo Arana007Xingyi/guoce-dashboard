@@ -1,0 +1,106 @@
+{
+  "updated_at": "2026-11-27T15:01:52.102775+08:00",
+  "source_updated_at": "2026-11-26T08:07:01.311754+00:00",
+  "finance_sources": [
+    {
+      "source": "央行",
+      "links": 76,
+      "attempted": 4,
+      "dated": 4,
+      "matches": 0,
+      "errors": 0,
+      "status": "parsed"
+    },
+    {
+      "source": "证监会",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error"
+    },
+    {
+      "source": "金融监管总局",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error"
+    },
+    {
+      "source": "中央汇金",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error"
+    },
+    {
+      "source": "中国政府网",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error"
+    }
+  ],
+  "sources_failed": [
+    {
+      "source": "工业和信息化部·政策通知",
+      "error": "未识别到符合条件且带日期的政策"
+    },
+    {
+      "source": "证监会",
+      "error": "HTTPSConnectionPool(host='www.csrc.gov.cn', port=443): Max retries exceeded with url: /csrc/xwfb/index.shtml (Caused by ConnectTimeoutError(<HTTPSConnection(hos"
+    },
+    {
+      "source": "金融监管总局",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "中央汇金",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "中国政府网",
+      "error": "未识别有效链接或完整发布日期"
+    }
+  ],
+  "signals": [
+    {
+      "id": "joint",
+      "name": "三部门联合政策",
+      "candidate_level": "S"
+    },
+    {
+      "id": "rate",
+      "name": "降准降息",
+      "candidate_level": "S"
+    },
+    {
+      "id": "tools",
+      "name": "资本市场支持工具",
+      "candidate_level": "S"
+    },
+    {
+      "id": "huijin",
+      "name": "中央汇金增持ETF",
+      "candidate_level": "S"
+    },
+    {
+      "id": "macro",
+      "name": "重大宏观增量政策",
+      "candidate_level": "S"
+    },
+    {
+      "id": "longterm",
+      "name": "中长期资金入市",
+      "candidate_level": "A"
+    }
+  ],
+  "events": []
+}
