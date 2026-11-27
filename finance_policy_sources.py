@@ -38,8 +38,9 @@ def parse_date(text):
     return None
 
 def collect(today, classify):
-    items=[]; failed=[]
+    items=[]; failed=[]; health=[]
     for name,url in SOURCES:
+        scanned=dated=0; seen=set(); start=len(items); errors=len(failed)
         try:
             r=fetch(url); soup=BeautifulSoup(r.text,"html.parser")
             seen=set(); scanned=0; dated=0
@@ -71,4 +72,5 @@ def collect(today, classify):
             if not seen or (scanned and not dated):
                 raise ValueError("未识别有效链接或完整发布日期")
         except Exception as exc: failed.append({"source":name,"error":str(exc)[:160]})
-    return items,failed
+        health.append({"source":name,"links":len(seen),"attempted":scanned,"dated":dated,"matches":len(items)-start,"errors":len(failed)-errors,"status":"error" if len(failed)>errors else ("parsed" if dated else "unverified")})
+    return items,failed,health
