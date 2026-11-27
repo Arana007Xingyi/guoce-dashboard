@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-11-27T15:16:27.477005+08:00",
-  "source_updated_at": "2026-11-26T08:07:01.311754+00:00",
+  "updated_at": "2026-11-28T01:24:24.174272+08:00",
+  "source_updated_at": "2026-11-27T08:16:55.320485+00:00",
   "finance_sources": [
     {
       "source": "央行",
       "links": 87,
-      "attempted": 8,
-      "dated": 8,
+      "attempted": 7,
+      "dated": 7,
       "matches": 0,
       "errors": 0,
       "status": "parsed",
@@ -15,8 +15,8 @@
         {
           "source": "央行",
           "links": 87,
-          "attempted": 8,
-          "dated": 8,
+          "attempted": 7,
+          "dated": 7,
           "matches": 0,
           "errors": 0,
           "status": "parsed",
@@ -27,7 +27,7 @@
     },
     {
       "source": "证监会",
-      "links": 18,
+      "links": 17,
       "attempted": 10,
       "dated": 10,
       "matches": 0,
@@ -37,7 +37,7 @@
       "attempts": [
         {
           "source": "证监会",
-          "links": 18,
+          "links": 17,
           "attempted": 10,
           "dated": 10,
           "matches": 0,
@@ -117,21 +117,21 @@
     {
       "source": "中国政府网",
       "links": 30,
-      "attempted": 0,
+      "attempted": 1,
       "dated": 0,
       "matches": 0,
-      "errors": 0,
-      "status": "unverified",
+      "errors": 1,
+      "status": "error",
       "endpoint": "https://www.gov.cn/",
       "attempts": [
         {
           "source": "中国政府网",
           "links": 20,
-          "attempted": 0,
+          "attempted": 1,
           "dated": 0,
           "matches": 0,
-          "errors": 0,
-          "status": "unverified",
+          "errors": 1,
+          "status": "error",
           "endpoint": "https://www.gov.cn/zhengce/"
         },
         {
@@ -147,11 +147,11 @@
         {
           "source": "中国政府网",
           "links": 30,
-          "attempted": 0,
+          "attempted": 1,
           "dated": 0,
           "matches": 0,
-          "errors": 0,
-          "status": "unverified",
+          "errors": 1,
+          "status": "error",
           "endpoint": "https://www.gov.cn/"
         }
       ],
@@ -159,9 +159,9 @@
     },
     {
       "source": "新华社",
-      "links": 183,
-      "attempted": 1,
-      "dated": 1,
+      "links": 187,
+      "attempted": 2,
+      "dated": 2,
       "matches": 0,
       "errors": 0,
       "status": "parsed",
@@ -179,9 +179,9 @@
         },
         {
           "source": "新华社",
-          "links": 183,
-          "attempted": 1,
-          "dated": 1,
+          "links": 187,
+          "attempted": 2,
+          "dated": 2,
           "matches": 0,
           "errors": 0,
           "status": "parsed",
@@ -331,6 +331,14 @@
     {
       "source": "中央汇金",
       "error": "405 Client Error: Not Allowed for url: https://www.china-inv.cn/"
+    },
+    {
+      "source": "中国政府网",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "中国政府网",
+      "error": "未识别有效链接或完整发布日期"
     },
     {
       "source": "中国政府网",
