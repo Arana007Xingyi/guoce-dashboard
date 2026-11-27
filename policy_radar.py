@@ -34,7 +34,7 @@ def main():
     source = json.loads(Path("data/policies.json").read_text(encoding="utf-8"))
     now = datetime.now(timezone(timedelta(hours=8)))
     cutoff = (now.date()-timedelta(days=7)).isoformat()
-    fresh, failures = collect(now.date(), classify)
+    fresh, failures, health = collect(now.date(), classify)
     out = Path("data/policy_radar.json")
     previous = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
     events = {(e["signal"],e["url"]):e for e in previous.get("events",[]) if cutoff <= e["date"] <= now.date().isoformat()}
@@ -44,9 +44,11 @@ def main():
         for event in classify(item):
             events[(event["signal"],event["url"])] = event
     payload = {"updated_at":now.isoformat(),"source_updated_at":source.get("updated_at"),
+               "finance_sources":health,
                "sources_failed":source.get("sources_failed",[]) + failures,
                "signals":[{"id":k,"name":n,"candidate_level":l} for k,n,l,_ in RULES],
                "events":sorted(events.values(),key=lambda e:e["date"],reverse=True)}
+    print(json.dumps(health, ensure_ascii=False))
     out = Path("data/policy_radar.json")
     tmp = out.with_suffix(".tmp")
     tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
