@@ -56,6 +56,21 @@ def parse_date(text):
         except ValueError: pass
     return None
 
+def render_listing(url):
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True)
+        try:
+            page=browser.new_page()
+            page.route("**/*",lambda route: route.continue_() if allowed(route.request.url) and route.request.resource_type not in ("image","media","font") else route.abort())
+            response=page.goto(url,wait_until="domcontentloaded",timeout=15000)
+            if not response or response.status>=400 or not allowed(page.url):
+                raise ValueError("动态页面访问失败")
+            page.wait_for_timeout(2500)
+            return BeautifulSoup(page.content(),"html.parser"),page.url
+        finally:
+            browser.close()
+
 def collect_one(name,url,today,classify,documents=False):
     items=[]; failed=[]; health=[]
     started=time.monotonic()
@@ -64,19 +79,27 @@ def collect_one(name,url,today,classify,documents=False):
         try:
             r=fetch(url); soup=BeautifulSoup(r.text,"html.parser")
             seen=set(); scanned=0; dated=0
+            base=r.url
+            mode="html"
+            if len(soup.select("a[href]"))<15:
+                try:
+                    soup,base=render_listing(url); mode="browser"
+                except Exception as exc:
+                    failed.append({"source":name,"error":"动态采集："+str(exc)[:120]})
             for a in soup.select("a[href]"):
                 title=" ".join((a.get("title") or a.get_text(" ",strip=True)).split())
-                link=urldefrag(urljoin(r.url,a["href"]))[0]
-                if not 10<=len(title)<=180 or link in seen or not allowed(link): continue
+                link=urldefrag(urljoin(base,a["href"]))[0]
+                if not 6<=len(title)<=180 or link in seen or not allowed(link): continue
                 seen.add(link)
                 item={"title":title,"url":link,"source":name}
-                if not documents and not classify(item) and not any(k in title for k in ("发布会","政治局会议","金融支持","货币政策","资本市场","增量政策","金融监管","保险资金","中央汇金","证券","金融政策")): continue
+                if not documents and name not in ("中国政府网","央视新闻","金融监管总局") and not classify(item) and not any(k in title for k in ("发布会","政治局会议","金融支持","货币政策","资本市场","增量政策","金融监管","保险资金","中央汇金","证券","金融政策")): continue
                 if scanned>=10 or time.monotonic()-started>65: break
                 scanned+=1
                 try:
                     article=fetch(link); doc=BeautifulSoup(article.text,"html.parser")
                     dates=[m.get("content","") for m in doc.select('meta[name="PubDate"],meta[name="publishdate"],meta[name="PubTime"],meta[name="pubdate"],meta[name="publishDate"],meta[property="article:published_time"]')]
                     dates += [n.get_text(" ",strip=True) for n in doc.select("time,.date,.pubtime,.publish-time,.time,.pub-date,.source-time,#pubtime")]
+                    dates += [n.get("datetime","") for n in doc.select("time[datetime]")]
                     dates += [a.parent.get_text(" ",strip=True)[:250]]
                     d=next((v for t in dates if (v:=parse_date(t))),None)
                     if not d: continue
