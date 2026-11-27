@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-11-27T15:12:41.052730+08:00",
+  "updated_at": "2026-11-27T15:16:08.371392+08:00",
   "source_updated_at": "2026-11-26T08:07:01.311754+00:00",
   "finance_sources": [
     {
       "source": "央行",
-      "links": 79,
-      "attempted": 4,
-      "dated": 4,
+      "links": 87,
+      "attempted": 8,
+      "dated": 8,
       "matches": 0,
       "errors": 0,
       "status": "parsed",
@@ -14,15 +14,16 @@
       "attempts": [
         {
           "source": "央行",
-          "links": 79,
-          "attempted": 4,
-          "dated": 4,
+          "links": 87,
+          "attempted": 8,
+          "dated": 8,
           "matches": 0,
           "errors": 0,
           "status": "parsed",
           "endpoint": "https://www.pbc.gov.cn/"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "证监会",
@@ -44,7 +45,8 @@
           "status": "parsed",
           "endpoint": "https://www.csrc.gov.cn/csrc/xwfb/index.shtml"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "金融监管总局",
@@ -76,7 +78,8 @@
           "status": "error",
           "endpoint": "https://www.nfra.gov.cn/"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "中央汇金",
@@ -108,18 +111,29 @@
           "status": "error",
           "endpoint": "https://www.china-inv.cn/"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "中国政府网",
-      "links": 0,
+      "links": 30,
       "attempted": 0,
       "dated": 0,
       "matches": 0,
-      "errors": 1,
-      "status": "error",
-      "endpoint": "https://www.gov.cn/yaowen/",
+      "errors": 0,
+      "status": "unverified",
+      "endpoint": "https://www.gov.cn/",
       "attempts": [
+        {
+          "source": "中国政府网",
+          "links": 20,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 0,
+          "status": "unverified",
+          "endpoint": "https://www.gov.cn/zhengce/"
+        },
         {
           "source": "中国政府网",
           "links": 0,
@@ -140,7 +154,8 @@
           "status": "unverified",
           "endpoint": "https://www.gov.cn/"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "新华社",
@@ -172,7 +187,8 @@
           "status": "parsed",
           "endpoint": "https://www.news.cn/"
         }
-      ]
+      ],
+      "channel": "news"
     },
     {
       "source": "央视新闻",
@@ -186,13 +202,13 @@
       "attempts": [
         {
           "source": "央视新闻",
-          "links": 6,
+          "links": 1,
           "attempted": 0,
           "dated": 0,
           "matches": 0,
           "errors": 0,
           "status": "unverified",
-          "endpoint": "https://news.cctv.com/"
+          "endpoint": "https://news.cctv.com/china/"
         },
         {
           "source": "央视新闻",
@@ -203,13 +219,70 @@
           "errors": 0,
           "status": "unverified",
           "endpoint": "https://jingji.cctv.com/"
+        },
+        {
+          "source": "央视新闻",
+          "links": 6,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 0,
+          "status": "unverified",
+          "endpoint": "https://news.cctv.com/"
         }
-      ]
+      ],
+      "channel": "news"
+    },
+    {
+      "source": "国务院政策文件库",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error",
+      "endpoint": "https://sousuo.www.gov.cn/zcwjk/policyDocumentLibrary?t=zhengcelibrary",
+      "attempts": [
+        {
+          "source": "国务院政策文件库",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://sousuo.www.gov.cn/zcwjk/policyDocumentLibrary?t=zhengcelibrary"
+        }
+      ],
+      "channel": "documents"
+    },
+    {
+      "source": "发展改革委文件库",
+      "links": 0,
+      "attempted": 0,
+      "dated": 0,
+      "matches": 0,
+      "errors": 1,
+      "status": "error",
+      "endpoint": "https://www.ndrc.gov.cn/xxgk/wjk/index.html?tab=qt",
+      "attempts": [
+        {
+          "source": "发展改革委文件库",
+          "links": 0,
+          "attempted": 0,
+          "dated": 0,
+          "matches": 0,
+          "errors": 1,
+          "status": "error",
+          "endpoint": "https://www.ndrc.gov.cn/xxgk/wjk/index.html?tab=qt"
+        }
+      ],
+      "channel": "documents"
     }
   ],
   "coverage": {
     "parsed": 3,
-    "total": 7,
+    "total": 9,
     "degraded": true
   },
   "sources_failed": [
@@ -239,6 +312,14 @@
     },
     {
       "source": "新华社",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "国务院政策文件库",
+      "error": "未识别有效链接或完整发布日期"
+    },
+    {
+      "source": "发展改革委文件库",
       "error": "未识别有效链接或完整发布日期"
     }
   ],
