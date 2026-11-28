@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-28T08:41:06.422325+08:00",
-  "source_updated_at": "2026-11-27T08:16:55.320485+00:00",
+  "updated_at": "2026-11-28T16:29:59.168793+08:00",
+  "source_updated_at": "2026-11-28T07:38:52.503255+00:00",
   "finance_sources": [
     {
       "source": "央行",
@@ -159,7 +159,7 @@
     },
     {
       "source": "新华社",
-      "links": 187,
+      "links": 184,
       "attempted": 1,
       "dated": 1,
       "matches": 0,
@@ -179,7 +179,7 @@
         },
         {
           "source": "新华社",
-          "links": 187,
+          "links": 184,
           "attempted": 1,
           "dated": 1,
           "matches": 0,
